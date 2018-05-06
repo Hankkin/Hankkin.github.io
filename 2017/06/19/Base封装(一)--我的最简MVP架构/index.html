@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="架构,MVP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="绪论最近懒癌症犯了，好久都没写博客了，当然也在做一些东西，也在整理自己一直以来使用的一些技术点，从Retrofit到OkGO，从ListView到RecycleView，从Java到Kotlin….总之一直在尝试新的技术，今天分享一下自己一直所用的MVP，整理完了分享给大家，有不合适或者不正确的地方还希望大家多多指正，共同交流。  对了 打一波广告 我的新的个人博客 http://hankkin.">
+<meta name="keywords" content="架构,MVP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Base封装(一)--我的最简MVP架构">
+<meta property="og:url" content="http://yoursite.com/2017/06/19/Base封装(一)--我的最简MVP架构/index.html">
+<meta property="og:site_name" content="Hankkin的博客">
+<meta property="og:description" content="绪论最近懒癌症犯了，好久都没写博客了，当然也在做一些东西，也在整理自己一直以来使用的一些技术点，从Retrofit到OkGO，从ListView到RecycleView，从Java到Kotlin….总之一直在尝试新的技术，今天分享一下自己一直所用的MVP，整理完了分享给大家，有不合适或者不正确的地方还希望大家多多指正，共同交流。  对了 打一波广告 我的新的个人博客 http://hankkin.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20160120100717863">
+<meta property="og:image" content="http://ac-47sd2ifv.clouddn.com/385b4eac447fc45b9791.png">
+<meta property="og:updated_time" content="2018-05-05T16:19:14.101Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Base封装(一)--我的最简MVP架构">
+<meta name="twitter:description" content="绪论最近懒癌症犯了，好久都没写博客了，当然也在做一些东西，也在整理自己一直以来使用的一些技术点，从Retrofit到OkGO，从ListView到RecycleView，从Java到Kotlin….总之一直在尝试新的技术，今天分享一下自己一直所用的MVP，整理完了分享给大家，有不合适或者不正确的地方还希望大家多多指正，共同交流。  对了 打一波广告 我的新的个人博客 http://hankkin.">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160120100717863">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/19/Base封装(一)--我的最简MVP架构/"/>
+
+
+
+
+
+  <title>Base封装(一)--我的最简MVP架构 | Hankkin的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+
+<a href="https://github/Hankkin" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hankkin的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡泊明志，宁静致远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/19/Base封装(一)--我的最简MVP架构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hankkin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hankkin的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Base封装(一)--我的最简MVP架构</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-19T18:42:34+08:00">
+                2017-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/19/Base封装(一)--我的最简MVP架构/" class="leancloud_visitors" data-flag-title="Base封装(一)--我的最简MVP架构">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,462
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h3><p>最近懒癌症犯了，好久都没写博客了，当然也在做一些东西，也在整理自己一直以来使用的一些技术点，从Retrofit到OkGO，从ListView到RecycleView，从Java到Kotlin….总之一直在尝试新的技术，今天分享一下自己一直所用的MVP，整理完了分享给大家，有不合适或者不正确的地方还希望大家多多指正，共同交流。</p>
+<blockquote>
+<p>对了 打一波广告 我的新的个人博客 <a href="http://hankkin.cn/" target="_blank" rel="noopener">http://hankkin.cn/</a></p>
+</blockquote>
+<p>好了接下来开始我们的MVP</p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>众所周知 MVP这种架构模式已经出现很久了，大体时间应该是2014年吧，现在网上的关于MVP的文章也很多，各式各样的关于MVP的架构知识都涌现出来，可想而知现在这种架构有多么火，还有目前风头正劲的MVVM，当然我并不觉得我现在写MVP有些晚，因为每个人都有每个人的架构，每个人都可以根据自己的逻辑封装出来自己的架构模式，今天我介绍的便是我自己通过项目总结出来的<strong>MVP</strong></p>
+<h3 id="什么是MVP"><a href="#什么是MVP" class="headerlink" title="什么是MVP"></a>什么是MVP</h3><h4 id="MVP知识点"><a href="#MVP知识点" class="headerlink" title="MVP知识点"></a>MVP知识点</h4><p>MVP - Model-View-Presenter</p>
+<p><img src="http://img.blog.csdn.net/20160120100717863" alt=""></p>
+<p>MVP和MVC的区别仅仅在于P和Control,MVC中View和Model是互通的可以互相通信，在Android中View一般代表着我们的xml进行界面的描述，而对于模型Model部分则大多对应于本地的数据文件或网络获取的数据体，很多情况下我们对这些数据的处理也会在这一层中进行，最后的控制器Controller则当之无愧的是右Activity承担。</p>
+<p>而MVP中view通过presenter访问model，大大的减小了耦合性，业务逻辑都交给P处理，通过P访问V层更改UI。MVP模式可以分离显示层与逻辑层，它们之间通过接口进行通信，降低耦合。理想化的MVP模式可以实现同一份逻辑代码搭配不同的显示界面，因为它们之间并不依赖与具体，而是依赖于抽象。这使得Presenter可以运用于任何实现了View逻辑接口的UI，使之具有更广泛的适用性，保证了灵活度。</p>
+<p>这里不多介绍MVC了，相信大家都很熟悉</p>
+<h4 id="MVP的优缺点"><a href="#MVP的优缺点" class="headerlink" title="MVP的优缺点"></a>MVP的优缺点</h4><p><strong>优点：</strong></p>
+<ul>
+<li>降低耦合度，实现了M层和V层的完全分离，可以修改V层不影响M层</li>
+<li>模块职责划分明显，层次清晰</li>
+<li>P层可以复用，一个P可以对应多个V，不需要修改P的逻辑</li>
+<li>单元测试更加简单方便</li>
+<li>代码灵活度高</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>V层和P层交互频繁</li>
+<li>代码量多，类变多了</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>M层负责存储、检索、操纵数据，代表着一类组件或者类，这些组件或类可以向外部提供数据，同时也能从外部获取数据将数据存储起来</li>
+<li>V层负责将数据UI呈现给用户。一般的视图UI只包含界面，并不包含界面逻辑，V层收P层控制，在Android中一般是Activity、Fragment、View、ViewGroup。。。</li>
+<li>P层作为V层和M层的中间枢纽，处理用户交互的业务逻辑</li>
+</ul>
+<h3 id="MVP实现"><a href="#MVP实现" class="headerlink" title="MVP实现"></a>MVP实现</h3><h4 id="1-基本实现"><a href="#1-基本实现" class="headerlink" title="1.基本实现"></a>1.基本实现</h4><p>我们都知道一般MVP架构一共需要以下四步：</p>
+<ul>
+<li>定义一个interface接口XView，对应的Activity，Fragment实现这个interface</li>
+<li>编写Molde，里面的业务逻辑主要包括网络请求获取数据，数据库读取等耗时操作，通过M层回调给P层通知V层更新UI</li>
+<li>编写Presenter，P层持有V和M的引用，实现P层的回调，并且回调给V层更新</li>
+<li>Activity中调用P执行业务逻辑，更新UI</li>
+</ul>
+<p>具体代码就不贴了，相信了解过MVP的都会写基本的代码</p>
+<p>但是问题也就出来了，由于P层需要和V层进行通信，更新UI时需要持有V层的view对象，那么我们每个P里面一般都用构造去初始化这个View，类多了之后感觉很烦，而View层里的一些常用的方法我们也可以封到base里面，比如loading的显示隐藏,空布局和错误布局的显示…</p>
+<h4 id="2-Base封装"><a href="#2-Base封装" class="headerlink" title="2.Base封装"></a>2.Base封装</h4><h5 id="1-BaseView"><a href="#1-BaseView" class="headerlink" title="1.BaseView"></a>1.BaseView</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hankkin.xlibrary.mvp;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by hankkin on 2017/3/29.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BaseView</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 显示loading框</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showProgress</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 隐藏loading框</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">hideProgress</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">toast</span><span class="params">(CharSequence s)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">toast</span><span class="params">(<span class="keyword">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">toastLong</span><span class="params">(CharSequence s)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">toastLong</span><span class="params">(<span class="keyword">int</span> id)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 显示空数据布局</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showNullLayout</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 隐藏空数据布局</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">hideNullLayout</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 显示异常布局</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> listener</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">showErrorLayout</span><span class="params">(View.OnClickListener listener)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">hideErrorLayout</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-BasePresenter"><a href="#2-BasePresenter" class="headerlink" title="2.BasePresenter"></a>2.BasePresenter</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hankkin.xlibrary.mvp;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by hankkin on 2017/3/29.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BasePresent</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> T view;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">attach</span><span class="params">(T view)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.view = view;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">detach</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.view = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们在BasePresenter里面去初始化View对象，同时提供释放View对象以防止内存溢出</p>
+<h5 id="3-MvpActivity"><a href="#3-MvpActivity" class="headerlink" title="3.MvpActivity"></a>3.MvpActivity</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hankkin.hlibrary.base;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.annotation.Nullable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.lzy.okgo.OkGo;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by hankkin on 2017/3/29.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">MvpActivity</span>&lt;<span class="title">V</span>,<span class="title">P</span> <span class="keyword">extends</span> <span class="title">BasePresent</span>&lt;<span class="title">V</span>&gt;&gt; <span class="keyword">extends</span> <span class="title">BaseAcitvity</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> P presenter;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        presenter = initPresenter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onResume();</span><br><span class="line">        presenter.attach((V) <span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        presenter.detach();</span><br><span class="line">        OkGo.getInstance().cancelTag(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">super</span>.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> P <span class="title">initPresenter</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样我们在Activity中初始化P，并且连接V，在onDestroy()生命周期中释放P中引用的V。</p>
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>我们按照功能模块来构造我们的MVP,可能大家注意到了没有M层啊，是的，这里我把M层舍弃掉了，把业务逻辑、网络请求直接放在了P层，大大减少了类的数量，这样我们每个功能模块只需要新建一个View和一个Presenter就可以满足了，特殊的需求再通过特殊方法来处理，下面我们举一个简单的例子：</p>
+<p>网络请求我用的 <a href="https://github.com/jeasonlzy" target="_blank" rel="noopener">jeasonlzy</a> 大神的OKGo3，刚出锅没几天，尝试一下，个人认为封装的非常非常好，继承了Rx，Retrofit，相信你会喜欢的。</p>
+<p><a href="https://github.com/jeasonlzy/okhttp-OkGo" target="_blank" rel="noopener">https://github.com/jeasonlzy/okhttp-OkGo</a></p>
+<p>好了下面看我们的例子吧：</p>
+<h5 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h5><p>看一下项目结构</p>
+<p><img src="http://ac-47sd2ifv.clouddn.com/385b4eac447fc45b9791.png" alt="结构图"></p>
+<h5 id="HomeView"><a href="#HomeView" class="headerlink" title="HomeView"></a>HomeView</h5><p>我用的Gank.io里面的一个接口获取数据，首先我们定义我们的<strong>HomeView</strong>,里面有两个方法获取数据成功和获取失败</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hankkin.mvpdemo.home;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hankkin.hlibrary.BaseView;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by hankkin on 2017/6/19.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HomeView</span> <span class="keyword">extends</span> <span class="title">BaseView</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getDataHttp</span><span class="params">(String data)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">getDataHttpFail</span><span class="params">(String msg)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="HomePresenter"><a href="#HomePresenter" class="headerlink" title="HomePresenter"></a>HomePresenter</h5><p>然后我们定义HomePresenter,里面只有我们的网络请求，因为我们的BasePresenter持有View对象，所以在回调中直接调用HomeView的两个成功失败的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hankkin.mvpdemo.home;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hankkin.hlibrary.BasePresent;</span><br><span class="line"><span class="keyword">import</span> com.lzy.okgo.OkGo;</span><br><span class="line"><span class="keyword">import</span> com.lzy.okgo.callback.StringCallback;</span><br><span class="line"><span class="keyword">import</span> com.lzy.okgo.model.Response;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Created by hankkin on 2017/6/19.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HomePresenter</span> <span class="keyword">extends</span> <span class="title">BasePresent</span>&lt;<span class="title">HomeView</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getGankData</span><span class="params">()</span></span>&#123;</span><br><span class="line">        OkGo.&lt;String&gt;get(<span class="string">"http://gank.io/api/data/Android/10/1"</span>)</span><br><span class="line">                .tag(<span class="keyword">this</span>)</span><br><span class="line">                .execute(<span class="keyword">new</span> StringCallback() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(Response&lt;String&gt; response)</span> </span>&#123;</span><br><span class="line">                        view.getDataHttp(response.body());</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Response&lt;String&gt; response)</span> </span>&#123;</span><br><span class="line">                        <span class="keyword">super</span>.onError(response);</span><br><span class="line">                        view.getDataHttpFail(response.message());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h5><p>最后看一下Activity，我们的Activity继承了MVPActivity并实现了HomeView,同时将泛型对象设为我们的HomeView和HomePresenter，这样我们就可以直接调用P层的网络请求方法，同时也能回调更新UI</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.hankkin.mvpdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.support.annotation.NonNull;</span><br><span class="line"><span class="keyword">import</span> android.support.design.widget.BottomNavigationView;</span><br><span class="line"><span class="keyword">import</span> android.view.MenuItem;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.TextView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.hankkin.hlibrary.MvpActivity;</span><br><span class="line"><span class="keyword">import</span> com.hankkin.mvpdemo.home.HomePresenter;</span><br><span class="line"><span class="keyword">import</span> com.hankkin.mvpdemo.home.HomeView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.hankkin.mvpdemo.R.id.btn_get;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">MvpActivity</span>&lt;<span class="title">HomeView</span>,<span class="title">HomePresenter</span>&gt; <span class="keyword">implements</span> <span class="title">HomeView</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView mTextMessage;</span><br><span class="line">    <span class="keyword">private</span> Button btnGet;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener</span><br><span class="line">            = <span class="keyword">new</span> BottomNavigationView.OnNavigationItemSelectedListener() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onNavigationItemSelected</span><span class="params">(@NonNull MenuItem item)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">                <span class="keyword">case</span> R.id.navigation_home:</span><br><span class="line">                    mTextMessage.setText(R.string.home);</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">case</span> R.id.navigation_dashboard:</span><br><span class="line">                    mTextMessage.setText(R.string.control);</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">case</span> R.id.navigation_notifications:</span><br><span class="line">                    mTextMessage.setText(R.string.notification);</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        mTextMessage = (TextView) findViewById(R.id.message);</span><br><span class="line">        btnGet = (Button) findViewById(btn_get);</span><br><span class="line">        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);</span><br><span class="line">        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);</span><br><span class="line"></span><br><span class="line">        btnGet.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                showProgress();</span><br><span class="line">                presenter.getGankData();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> HomePresenter <span class="title">initPresenter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HomePresenter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDataHttp</span><span class="params">(String data)</span> </span>&#123;</span><br><span class="line">        mTextMessage.setText(data);</span><br><span class="line">        hideProgress();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getDataHttpFail</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        toast(msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">toast</span><span class="params">(CharSequence s)</span> </span>&#123;</span><br><span class="line">        toast(<span class="string">"获取成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>对于BaseActivity我在之前的文章里面已经介绍了，还不了解的请看</p>
+<p><a href="http://hankkin.cn/2016/12/25/Base:1/" target="_blank" rel="noopener">Android谈谈封装那些事–BaseActivity和BaseFragment(一)</a></p>
+<p><a href="http://hankkin.cn/2016/12/26/Base:2/" target="_blank" rel="noopener">Android谈谈封装那些事–BaseActivity和BaseFragment(二)</a></p>
+<p>也已经优化过了相关的封装逻辑，也会在接下来的文章继续介绍的。</p>
+<blockquote>
+<p>下一篇文章我会继续介绍我的封装之路，近期会将我的HLibrary提到我的Github上，大家可以star一下我的Github。</p>
+</blockquote>
+<p>代码已经上传到我的Github </p>
+<p><a href="https://github.com/Hankkin/MvpDemo" target="_blank" rel="noopener">https://github.com/Hankkin/MvpDemo</a></p>
+<p>好了是不是很简单呢？小伙伴们如果有啥好的建议或者觉得不妥的地方希望及时指正，共同交流，谢谢。</p>
+<p>其实MVP有好多种，这里给大家推荐几个我觉得比较好的</p>
+<p><a href="http://www.jianshu.com/p/3a17382d44de#" target="_blank" rel="noopener">http://www.jianshu.com/p/3a17382d44de#</a></p>
+<p><a href="http://www.jianshu.com/p/9a6845b26856" target="_blank" rel="noopener">http://www.jianshu.com/p/9a6845b26856</a></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&amp;mid=2653577546&amp;idx=1&amp;sn=e10be159645a3aa8f6d6f209420fb412&amp;scene=23&amp;srcid=0803PcjVpHmC7UOJHjpcQTdD#rd" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&amp;mid=2653577546&amp;idx=1&amp;sn=e10be159645a3aa8f6d6f209420fb412&amp;scene=23&amp;srcid=0803PcjVpHmC7UOJHjpcQTdD#rd</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/tags/MVP/" rel="tag"># MVP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/30/我的2016--远方不一定有诗，但有更好的自己/" rel="next" title="我的2016--远方不一定有诗，但有更好的自己">
+                <i class="fa fa-chevron-left"></i> 我的2016--远方不一定有诗，但有更好的自己
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/06/Base封装(二)-- 封装属于自己的Library(UI篇)/" rel="prev" title="Base封装(二)-- 封装属于自己的Library(UI篇)">
+                Base封装(二)-- 封装属于自己的Library(UI篇) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDg1My83NDAy"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hankkin" />
+            
+              <p class="site-author-name" itemprop="name">Hankkin</p>
+              <p class="site-description motion-element" itemprop="description">淡泊明志，宁静致远</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hankkin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2179169605" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/1ff65e347973" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/lyhhj" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/55dea68160b291d79422c1bb" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#绪论"><span class="nav-number">1.</span> <span class="nav-text">绪论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是MVP"><span class="nav-number">3.</span> <span class="nav-text">什么是MVP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVP知识点"><span class="nav-number">3.1.</span> <span class="nav-text">MVP知识点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVP的优缺点"><span class="nav-number">3.2.</span> <span class="nav-text">MVP的优缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">3.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVP实现"><span class="nav-number">4.</span> <span class="nav-text">MVP实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-基本实现"><span class="nav-number">4.1.</span> <span class="nav-text">1.基本实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Base封装"><span class="nav-number">4.2.</span> <span class="nav-text">2.Base封装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-BaseView"><span class="nav-number">4.2.1.</span> <span class="nav-text">1.BaseView</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-BasePresenter"><span class="nav-number">4.2.2.</span> <span class="nav-text">2.BasePresenter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-MvpActivity"><span class="nav-number">4.2.3.</span> <span class="nav-text">3.MvpActivity</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Example"><span class="nav-number">4.3.</span> <span class="nav-text">Example</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#项目结构"><span class="nav-number">4.3.1.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HomeView"><span class="nav-number">4.3.2.</span> <span class="nav-text">HomeView</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HomePresenter"><span class="nav-number">4.3.3.</span> <span class="nav-text">HomePresenter</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Activity"><span class="nav-number">4.3.4.</span> <span class="nav-text">Activity</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结论"><span class="nav-number">4.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hankkin</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">31.3k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("47sd2IfvIDsgCfG3HzCo3m5i-gzGzoHsz", "aT9mmWaSOHJjX8z5T8tbe8nb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

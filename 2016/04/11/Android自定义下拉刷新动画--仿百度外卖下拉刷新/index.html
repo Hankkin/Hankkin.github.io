@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="下拉刷新,自定义View," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="好久没写博客了，小编之前一段时间一直在找工作，从天津来到了我们的大帝都，感觉还不错。好了废话不多说了，开始我们今天的主题吧。现如今的APP各式各样，同样也带来了各种需求，一个下拉刷新都能玩出花样了，前两天订饭的时候不经意间看到了“百度外卖”的下拉刷新，今天的主题就是它–自定义下拉刷新动画。 看一下实现效果吧： ###动画我们先来看看Android中的动画吧：Android中的动画分为三种：  Tw">
+<meta name="keywords" content="下拉刷新,自定义View">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android自定义下拉刷新动画--仿百度外卖下拉刷新">
+<meta property="og:url" content="http://yoursite.com/2016/04/11/Android自定义下拉刷新动画--仿百度外卖下拉刷新/index.html">
+<meta property="og:site_name" content="Hankkin的博客">
+<meta property="og:description" content="好久没写博客了，小编之前一段时间一直在找工作，从天津来到了我们的大帝都，感觉还不错。好了废话不多说了，开始我们今天的主题吧。现如今的APP各式各样，同样也带来了各种需求，一个下拉刷新都能玩出花样了，前两天订饭的时候不经意间看到了“百度外卖”的下拉刷新，今天的主题就是它–自定义下拉刷新动画。 看一下实现效果吧： ###动画我们先来看看Android中的动画吧：Android中的动画分为三种：  Tw">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20160411115612150">
+<meta property="og:image" content="http://img.blog.csdn.net/20160411105133233">
+<meta property="og:image" content="http://img.blog.csdn.net/20160411105747911">
+<meta property="og:image" content="http://img.blog.csdn.net/20160411110728739">
+<meta property="og:updated_time" content="2018-05-05T16:32:35.102Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android自定义下拉刷新动画--仿百度外卖下拉刷新">
+<meta name="twitter:description" content="好久没写博客了，小编之前一段时间一直在找工作，从天津来到了我们的大帝都，感觉还不错。好了废话不多说了，开始我们今天的主题吧。现如今的APP各式各样，同样也带来了各种需求，一个下拉刷新都能玩出花样了，前两天订饭的时候不经意间看到了“百度外卖”的下拉刷新，今天的主题就是它–自定义下拉刷新动画。 看一下实现效果吧： ###动画我们先来看看Android中的动画吧：Android中的动画分为三种：  Tw">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160411115612150">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/04/11/Android自定义下拉刷新动画--仿百度外卖下拉刷新/"/>
+
+
+
+
+
+  <title>Android自定义下拉刷新动画--仿百度外卖下拉刷新 | Hankkin的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+
+<a href="https://github/Hankkin" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hankkin的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡泊明志，宁静致远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/04/11/Android自定义下拉刷新动画--仿百度外卖下拉刷新/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hankkin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hankkin的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android自定义下拉刷新动画--仿百度外卖下拉刷新</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-04-11T12:01:19+08:00">
+                2016-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/自定义View/" itemprop="url" rel="index">
+                    <span itemprop="name">自定义View</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/04/11/Android自定义下拉刷新动画--仿百度外卖下拉刷新/" class="leancloud_visitors" data-flag-title="Android自定义下拉刷新动画--仿百度外卖下拉刷新">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,430
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>好久没写博客了，小编之前一段时间一直在找工作，从天津来到了我们的大帝都，感觉还不错。好了废话不多说了，开始我们今天的主题吧。现如今的APP各式各样，同样也带来了各种需求，一个下拉刷新都能玩出花样了，前两天订饭的时候不经意间看到了“百度外卖”的下拉刷新，今天的主题就是它–<strong>自定义下拉刷新动画</strong>。</p>
+<p>看一下实现效果吧：<br><img src="http://img.blog.csdn.net/20160411115612150" alt="这里写图片描述"></p>
+<p>###动画<br>我们先来看看Android中的动画吧：<br>Android中的动画分为三种：</p>
+<ul>
+<li>Tween动画，这一类的动画提供了旋转、平移、缩放等效果。<ul>
+<li>Alpha – 淡入淡出</li>
+<li>Scale – 缩放效果</li>
+<li>Roate – 旋转效果</li>
+<li>Translate – 平移效果</li>
+</ul>
+</li>
+<li>Frame动画（帧动画），这一类动画可以创建一个Drawable序列，按照指定时间间歇一个一个显示出来。</li>
+<li>Property动画（属性动画），Android3.0之后引入出来的属性动画，它更改的是对象的实际属性。</li>
+</ul>
+<p>###分析<br><img src="http://img.blog.csdn.net/20160411105133233" alt="这里写图片描述"></p>
+<p>我们可以看到百度外卖的下拉刷新的头是一个骑车的快递员在路上疾行，分析一下我们得到下面的动画：</p>
+<ol>
+<li>背景图片的平移动画</li>
+<li>太阳的自旋转动画</li>
+<li>两个小轮子的自旋转动画</li>
+</ol>
+<p>这就很简单了，接下来我们去百度外面的图片资源文件里找到这几张图片：（下载百度外卖的apk直接解压即可）<br><img src="http://img.blog.csdn.net/20160411105747911" alt="这里写图片描述"></p>
+<p>定义下拉刷新头文件：headview.xml</p>
+<p>这里注意一下：我们定义了两张背景图片的ImageView是为了可以实现背景的平移动画效果。</p>
+<p><img src="http://img.blog.csdn.net/20160411110728739" alt="这里写图片描述"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:orientation=&quot;vertical&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;wrap_content&quot;&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:id=&quot;@+id/iv_back1&quot;</span><br><span class="line">        android:src=&quot;@drawable/pull_back&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;100dp&quot; /&gt;</span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:id=&quot;@+id/iv_back2&quot;</span><br><span class="line">        android:src=&quot;@drawable/pull_back&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;100dp&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;RelativeLayout</span><br><span class="line">        android:id=&quot;@+id/main&quot;</span><br><span class="line">        android:layout_centerHorizontal=&quot;true&quot;</span><br><span class="line">        android:layout_width=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;&gt;</span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:layout_marginTop=&quot;45dp&quot;</span><br><span class="line">            android:id=&quot;@+id/iv_rider&quot;</span><br><span class="line">            android:background=&quot;@drawable/pull_rider&quot;</span><br><span class="line">            android:layout_width=&quot;50dp&quot;</span><br><span class="line">            android:layout_height=&quot;50dp&quot; /&gt;</span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:id=&quot;@+id/wheel1&quot;</span><br><span class="line">            android:layout_marginLeft=&quot;10dp&quot;</span><br><span class="line">            android:layout_marginTop=&quot;90dp&quot;</span><br><span class="line">            android:background=&quot;@drawable/pull_wheel&quot;</span><br><span class="line">            android:layout_width=&quot;15dp&quot;</span><br><span class="line">            android:layout_height=&quot;15dp&quot; /&gt;</span><br><span class="line">        &lt;ImageView</span><br><span class="line">            android:id=&quot;@+id/wheel2&quot;</span><br><span class="line">            android:layout_marginLeft=&quot;40dp&quot;</span><br><span class="line">            android:layout_marginTop=&quot;90dp&quot;</span><br><span class="line">            android:background=&quot;@drawable/pull_wheel&quot;</span><br><span class="line">            android:layout_width=&quot;15dp&quot;</span><br><span class="line">            android:layout_height=&quot;15dp&quot; /&gt;</span><br><span class="line">    &lt;/RelativeLayout&gt;</span><br><span class="line">    &lt;ImageView</span><br><span class="line">        android:id=&quot;@+id/ivsun&quot;</span><br><span class="line">        android:layout_marginTop=&quot;20dp&quot;</span><br><span class="line">        android:layout_toRightOf=&quot;@+id/main&quot;</span><br><span class="line">        android:background=&quot;@drawable/pull_sun&quot;</span><br><span class="line">        android:layout_width=&quot;30dp&quot;</span><br><span class="line">        android:layout_height=&quot;30dp&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>接下来我们定义动画效果：</p>
+<p> 背景图片的平移效果：<br> 实现两个animation xml文件，一个起始位置在100%，结束位置在0%，设置repeat属性为循环往复。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:interpolator=&quot;@android:anim/accelerate_interpolator&quot;&gt;</span><br><span class="line">    &lt;translate android:fromXDelta=&quot;100%p&quot; android:toXDelta=&quot;0%p&quot;</span><br><span class="line">        android:repeatMode=&quot;restart&quot;</span><br><span class="line">        android:interpolator=&quot;@android:anim/linear_interpolator&quot;</span><br><span class="line">        android:repeatCount=&quot;infinite&quot;</span><br><span class="line">        android:duration=&quot;5000&quot; /&gt;</span><br><span class="line">&lt;/set&gt;</span><br></pre></td></tr></table></figure>
+<p>另一个起始位置在0%，结束位置在-100%</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot; android:interpolator=&quot;@android:anim/accelerate_interpolator&quot;&gt;</span><br><span class="line">    &lt;translate android:fromXDelta=&quot;0%p&quot; android:toXDelta=&quot;-100%p&quot;</span><br><span class="line">        android:repeatMode=&quot;restart&quot;</span><br><span class="line">        android:interpolator=&quot;@android:anim/linear_interpolator&quot;</span><br><span class="line">        android:repeatCount=&quot;infinite&quot;</span><br><span class="line">        android:duration=&quot;5000&quot; /&gt;</span><br><span class="line">&lt;/set&gt;</span><br></pre></td></tr></table></figure>
+<p>太阳围绕中心旋转动画：<br>从0-360度开始循环旋转，旋转所用时间为1s，旋转中心距离view的左定点上边缘为50%的距离，也就是正中心。</p>
+<p>下面是具体属性：</p>
+<blockquote>
+<p>android:fromDegrees 起始的角度度数</p>
+</blockquote>
+<blockquote>
+<p>android:toDegrees 结束的角度度数，负数表示逆时针，正数表示顺时针。如10圈则比android:fromDegrees大3600即可</p>
+</blockquote>
+<blockquote>
+<p>android:pivotX 旋转中心的X坐标</p>
+</blockquote>
+<blockquote>
+<p>浮点数或是百分比。浮点数表示相对于Object的左边缘，如5; 百分比表示相对于Object的左边缘，如5%; 另一种百分比表示相对于父容器的左边缘，如5%p; 一般设置为50%表示在Object中心</p>
+</blockquote>
+<blockquote>
+<p>android:pivotY 旋转中心的Y坐标</p>
+</blockquote>
+<blockquote>
+<p>浮点数或是百分比。浮点数表示相对于Object的上边缘，如5; 百分比表示相对于Object的上边缘，如5%; 另一种百分比表示相对于父容器的上边缘，如5%p; 一般设置为50%表示在Object中心</p>
+</blockquote>
+<blockquote>
+<p>android:duration 表示从android:fromDegrees转动到android:toDegrees所花费的时间，单位为毫秒。可以用来计算速度。</p>
+</blockquote>
+<blockquote>
+<p>android:interpolator表示变化率，但不是运行速度。一个插补属性，可以将动画效果设置为加速，减速，反复，反弹等。默认为开始和结束慢中间快，</p>
+</blockquote>
+<blockquote>
+<p>android:startOffset 在调用start函数之后等待开始运行的时间，单位为毫秒，若为10，表示10ms后开始运行</p>
+</blockquote>
+<blockquote>
+<p>android:repeatCount 重复的次数，默认为0，必须是int，可以为-1表示不停止</p>
+</blockquote>
+<blockquote>
+<p>android:repeatMode 重复的模式，默认为restart，即重头开始重新运行，可以为reverse即从结束开始向前重新运行。在android:repeatCount大于0或为infinite时生效</p>
+</blockquote>
+<blockquote>
+<p>android:detachWallpaper 表示是否在壁纸上运行</p>
+</blockquote>
+<blockquote>
+<p>android:zAdjustment 表示被animated的内容在运行时在z轴上的位置，默认为normal。</p>
+</blockquote>
+<blockquote>
+<p>normal保持内容当前的z轴顺序</p>
+</blockquote>
+<blockquote>
+<p>top运行时在最顶层显示</p>
+</blockquote>
+<blockquote>
+<p>bottom运行时在最底层显示</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;set xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</span><br><span class="line">    &lt;rotate</span><br><span class="line">        android:fromDegrees=&quot;0&quot;</span><br><span class="line">        android:toDegrees=&quot;360&quot;</span><br><span class="line">        android:duration=&quot;1000&quot;</span><br><span class="line">        android:repeatCount=&quot;-1&quot;</span><br><span class="line">        android:pivotX=&quot;50%&quot;</span><br><span class="line">        android:pivotY=&quot;50%&quot; /&gt;</span><br><span class="line">&lt;/set&gt;</span><br></pre></td></tr></table></figure>
+<p>同理轮子的动画也一样，不占代码了。</p>
+<p>动画定义完了我们开始定义下拉刷新列表，下拉刷新网上有很多，不详细的说了，简单的改造一下，根据刷新状态开启关闭动画即可。<br>注释写的很详细，看一下代码吧：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br></pre></td><td class="code"><pre><span class="line">package com.hankkin.baidugoingrefreshlayout;</span><br><span class="line"></span><br><span class="line">import android.widget.AbsListView;</span><br><span class="line">import android.widget.ListView;</span><br><span class="line"></span><br><span class="line">import android.content.Context;</span><br><span class="line">import android.util.AttributeSet;</span><br><span class="line">import android.view.LayoutInflater;</span><br><span class="line">import android.view.MotionEvent;</span><br><span class="line">import android.view.View;</span><br><span class="line">import android.view.ViewGroup;</span><br><span class="line">import android.view.animation.Animation;</span><br><span class="line">import android.view.animation.AnimationUtils;</span><br><span class="line">import android.widget.ImageView;</span><br><span class="line">import android.widget.RelativeLayout;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Hankkin on 16/4/10.</span><br><span class="line"> */</span><br><span class="line">public class BaiDuRefreshListView extends ListView implements AbsListView.OnScrollListener&#123;</span><br><span class="line">    private static final int DONE = 0;      //刷新完毕状态</span><br><span class="line">    private static final int PULL_TO_REFRESH = 1;   //下拉刷新状态</span><br><span class="line">    private static final int RELEASE_TO_REFRESH = 2;    //释放状态</span><br><span class="line">    private static final int REFRESHING = 3;    //正在刷新状态</span><br><span class="line">    private static final int RATIO = 3;</span><br><span class="line">    private RelativeLayout headView;    //下拉刷新头</span><br><span class="line">    private int headViewHeight; //头高度</span><br><span class="line">    private float startY;   //开始Y坐标</span><br><span class="line">    private float offsetY;  //Y轴偏移量</span><br><span class="line">    private OnBaiduRefreshListener mOnRefreshListener;  //刷新接口</span><br><span class="line">    private int state;  //状态值</span><br><span class="line">    private int mFirstVisibleItem;  //第一项可见item索引</span><br><span class="line">    private boolean isRecord;   //是否记录</span><br><span class="line">    private boolean isEnd;  //是否结束</span><br><span class="line">    private boolean isRefreable;    //是否刷新</span><br><span class="line"></span><br><span class="line">    private ImageView ivWheel1,ivWheel2;    //轮组图片组件</span><br><span class="line">    private ImageView ivRider;  //骑手图片组件</span><br><span class="line">    private ImageView ivSun,ivBack1,ivBack2;    //太阳、背景图片1、背景图片2</span><br><span class="line">    private Animation wheelAnimation,sunAnimation;  //轮子、太阳动画</span><br><span class="line">    private Animation backAnimation1,backAnimation2;    //两张背景图动画</span><br><span class="line"></span><br><span class="line">    public BaiDuRefreshListView(Context context) &#123;</span><br><span class="line">        super(context);</span><br><span class="line">        init(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public BaiDuRefreshListView(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        super(context, attrs);</span><br><span class="line">        init(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public BaiDuRefreshListView(Context context, AttributeSet attrs, int defStyleAttr) &#123;</span><br><span class="line">        super(context, attrs, defStyleAttr);</span><br><span class="line">        init(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public interface OnBaiduRefreshListener&#123;</span><br><span class="line">        void onRefresh();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 回调接口，想实现下拉刷新的listview实现此接口</span><br><span class="line">     * @param onRefreshListener</span><br><span class="line">     */</span><br><span class="line">    public void setOnBaiduRefreshListener(OnBaiduRefreshListener onRefreshListener)&#123;</span><br><span class="line">        mOnRefreshListener = onRefreshListener;</span><br><span class="line">        isRefreable = true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 刷新完毕，从主线程发送过来，并且改变headerView的状态和文字动画信息</span><br><span class="line">     */</span><br><span class="line">    public void setOnRefreshComplete()&#123;</span><br><span class="line">        //一定要将isEnd设置为true，以便于下次的下拉刷新</span><br><span class="line">        isEnd = true;</span><br><span class="line">        state = DONE;</span><br><span class="line"></span><br><span class="line">        changeHeaderByState(state);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void init(Context context) &#123;</span><br><span class="line">        //关闭view的OverScroll</span><br><span class="line">        setOverScrollMode(OVER_SCROLL_NEVER);</span><br><span class="line">        setOnScrollListener(this);</span><br><span class="line">        //加载头布局</span><br><span class="line">        headView = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.headview,this,false);</span><br><span class="line">        //测量头布局</span><br><span class="line">        measureView(headView);</span><br><span class="line">        //给ListView添加头布局</span><br><span class="line">        addHeaderView(headView);</span><br><span class="line">        //设置头文件隐藏在ListView的第一项</span><br><span class="line">        headViewHeight = headView.getMeasuredHeight();</span><br><span class="line">        headView.setPadding(0, -headViewHeight, 0, 0);</span><br><span class="line"></span><br><span class="line">        //获取头布局图片组件</span><br><span class="line">        ivRider = (ImageView) headView.findViewById(R.id.iv_rider);</span><br><span class="line">        ivSun = (ImageView) headView.findViewById(R.id.ivsun);</span><br><span class="line">        ivWheel1 = (ImageView) headView.findViewById(R.id.wheel1);</span><br><span class="line">        ivWheel2 = (ImageView) headView.findViewById(R.id.wheel2);</span><br><span class="line">        ivBack1 = (ImageView) headView.findViewById(R.id.iv_back1);</span><br><span class="line">        ivBack2 = (ImageView) headView.findViewById(R.id.iv_back2);</span><br><span class="line">        //获取动画</span><br><span class="line">        wheelAnimation = AnimationUtils.loadAnimation(context, R.anim.tip);</span><br><span class="line">        sunAnimation = AnimationUtils.loadAnimation(context, R.anim.tip1);</span><br><span class="line"></span><br><span class="line">        backAnimation1 = AnimationUtils.loadAnimation(context, R.anim.a);</span><br><span class="line">        backAnimation2 = AnimationUtils.loadAnimation(context, R.anim.b);</span><br><span class="line"></span><br><span class="line">        state = DONE;</span><br><span class="line">        isEnd = true;</span><br><span class="line">        isRefreable = false;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onScrollStateChanged(AbsListView absListView, int i) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) &#123;</span><br><span class="line">        mFirstVisibleItem = firstVisibleItem;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean onTouchEvent(MotionEvent ev) &#123;</span><br><span class="line">        if (isEnd) &#123;//如果现在时结束的状态，即刷新完毕了，可以再次刷新了，在onRefreshComplete中设置</span><br><span class="line">            if (isRefreable) &#123;//如果现在是可刷新状态   在setOnMeiTuanListener中设置为true</span><br><span class="line">                switch (ev.getAction())&#123;</span><br><span class="line">                    //用户按下</span><br><span class="line">                    case MotionEvent.ACTION_DOWN:</span><br><span class="line">                        //如果当前是在listview顶部并且没有记录y坐标</span><br><span class="line">                        if (mFirstVisibleItem == 0 &amp;&amp; !isRecord) &#123;</span><br><span class="line">                            //将isRecord置为true，说明现在已记录y坐标</span><br><span class="line">                            isRecord = true;</span><br><span class="line">                            //将当前y坐标赋值给startY起始y坐标</span><br><span class="line">                            startY = ev.getY();</span><br><span class="line">                        &#125;</span><br><span class="line">                        break;</span><br><span class="line">                    //用户滑动</span><br><span class="line">                    case MotionEvent.ACTION_MOVE:</span><br><span class="line">                        //再次得到y坐标，用来和startY相减来计算offsetY位移值</span><br><span class="line">                        float tempY = ev.getY();</span><br><span class="line">                        //再起判断一下是否为listview顶部并且没有记录y坐标</span><br><span class="line">                        if (mFirstVisibleItem == 0 &amp;&amp; !isRecord) &#123;</span><br><span class="line">                            isRecord = true;</span><br><span class="line">                            startY = tempY;</span><br><span class="line">                        &#125;</span><br><span class="line">                        //如果当前状态不是正在刷新的状态，并且已经记录了y坐标</span><br><span class="line">                        if (state!=REFRESHING &amp;&amp; isRecord ) &#123;</span><br><span class="line">                            //计算y的偏移量</span><br><span class="line">                            offsetY = tempY - startY;</span><br><span class="line">                            //计算当前滑动的高度</span><br><span class="line">                            float currentHeight = (-headViewHeight+offsetY/3);</span><br><span class="line">                            //用当前滑动的高度和头部headerView的总高度进行比 计算出当前滑动的百分比 0到1</span><br><span class="line">                            float currentProgress = 1+currentHeight/headViewHeight;</span><br><span class="line">                            //如果当前百分比大于1了，将其设置为1，目的是让第一个状态的椭圆不再继续变大</span><br><span class="line">                            if (currentProgress&gt;=1) &#123;</span><br><span class="line">                                currentProgress = 1;</span><br><span class="line">                            &#125;</span><br><span class="line">                            //如果当前的状态是放开刷新，并且已经记录y坐标</span><br><span class="line">                            if (state == RELEASE_TO_REFRESH &amp;&amp; isRecord) &#123;</span><br><span class="line"></span><br><span class="line">                                setSelection(0);</span><br><span class="line">                                //如果当前滑动的距离小于headerView的总高度</span><br><span class="line">                                if (-headViewHeight+offsetY/RATIO&lt;0) &#123;</span><br><span class="line">                                    //将状态置为下拉刷新状态</span><br><span class="line">                                    state = PULL_TO_REFRESH;</span><br><span class="line">                                    //根据状态改变headerView，主要是更新动画和文字等信息</span><br><span class="line">                                    changeHeaderByState(state);</span><br><span class="line">                                    //如果当前y的位移值小于0，即为headerView隐藏了</span><br><span class="line">                                &#125;else if (offsetY&lt;=0) &#123;</span><br><span class="line">                                    //将状态变为done</span><br><span class="line">                                    state = DONE;</span><br><span class="line">                                    stopAnim();</span><br><span class="line">                                    //根据状态改变headerView，主要是更新动画和文字等信息</span><br><span class="line">                                    changeHeaderByState(state);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                            //如果当前状态为下拉刷新并且已经记录y坐标</span><br><span class="line">                            if (state == PULL_TO_REFRESH &amp;&amp; isRecord) &#123;</span><br><span class="line">                                setSelection(0);</span><br><span class="line">                                //如果下拉距离大于等于headerView的总高度</span><br><span class="line">                                if (-headViewHeight+offsetY/RATIO&gt;=0) &#123;</span><br><span class="line">                                    //将状态变为放开刷新</span><br><span class="line">                                    state = RELEASE_TO_REFRESH;</span><br><span class="line">                                    //根据状态改变headerView，主要是更新动画和文字等信息</span><br><span class="line">                                    changeHeaderByState(state);</span><br><span class="line">                                    //如果当前y的位移值小于0，即为headerView隐藏了</span><br><span class="line">                                &#125;else if (offsetY&lt;=0) &#123;</span><br><span class="line">                                    //将状态变为done</span><br><span class="line">                                    state = DONE;</span><br><span class="line">                                    //根据状态改变headerView，主要是更新动画和文字等信息</span><br><span class="line">                                    changeHeaderByState(state);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                            //如果当前状态为done并且已经记录y坐标</span><br><span class="line">                            if (state == DONE &amp;&amp; isRecord) &#123;</span><br><span class="line">                                //如果位移值大于0</span><br><span class="line">                                if (offsetY&gt;=0) &#123;</span><br><span class="line">                                    //将状态改为下拉刷新状态</span><br><span class="line">                                    state = PULL_TO_REFRESH;</span><br><span class="line">                                    changeHeaderByState(state);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;</span><br><span class="line">                            //如果为下拉刷新状态</span><br><span class="line">                            if (state == PULL_TO_REFRESH) &#123;</span><br><span class="line">                                //则改变headerView的padding来实现下拉的效果</span><br><span class="line">                                headView.setPadding(0,(int)(-headViewHeight+offsetY/RATIO) ,0,0);</span><br><span class="line">                            &#125;</span><br><span class="line">                            //如果为放开刷新状态</span><br><span class="line">                            if (state == RELEASE_TO_REFRESH) &#123;</span><br><span class="line">                                //改变headerView的padding值</span><br><span class="line">                                headView.setPadding(0,(int)(-headViewHeight+offsetY/RATIO) ,0, 0);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        break;</span><br><span class="line">                    //当用户手指抬起时</span><br><span class="line">                    case MotionEvent.ACTION_UP:</span><br><span class="line">                        //如果当前状态为下拉刷新状态</span><br><span class="line">                        if (state == PULL_TO_REFRESH) &#123;</span><br><span class="line">                            //平滑的隐藏headerView</span><br><span class="line">                            this.smoothScrollBy((int)(-headViewHeight+offsetY/RATIO)+headViewHeight, 500);</span><br><span class="line">                            //根据状态改变headerView</span><br><span class="line">                            changeHeaderByState(state);</span><br><span class="line">                        &#125;</span><br><span class="line">                        //如果当前状态为放开刷新</span><br><span class="line">                        if (state == RELEASE_TO_REFRESH) &#123;</span><br><span class="line">                            //平滑的滑到正好显示headerView</span><br><span class="line">                            this.smoothScrollBy((int)(-headViewHeight+offsetY/RATIO), 500);</span><br><span class="line">                            //将当前状态设置为正在刷新</span><br><span class="line">                            state = REFRESHING;</span><br><span class="line">                            //回调接口的onRefresh方法</span><br><span class="line">                            mOnRefreshListener.onRefresh();</span><br><span class="line">                            //根据状态改变headerView</span><br><span class="line">                            changeHeaderByState(state);</span><br><span class="line">                        &#125;</span><br><span class="line">                        //这一套手势执行完，一定别忘了将记录y坐标的isRecord改为false，以便于下一次手势的执行</span><br><span class="line">                        isRecord = false;</span><br><span class="line">                        break;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return super.onTouchEvent(ev);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 根据状态改变headerView的动画和文字显示</span><br><span class="line">     * @param state</span><br><span class="line">     */</span><br><span class="line">    private void changeHeaderByState(int state)&#123;</span><br><span class="line">        switch (state) &#123;</span><br><span class="line">            case DONE://如果的隐藏的状态</span><br><span class="line">                //设置headerView的padding为隐藏</span><br><span class="line">                headView.setPadding(0, -headViewHeight, 0, 0);</span><br><span class="line">                startAnim();</span><br><span class="line">                break;</span><br><span class="line">            case RELEASE_TO_REFRESH://当前状态为放开刷新</span><br><span class="line">                break;</span><br><span class="line">            case PULL_TO_REFRESH://当前状态为下拉刷新</span><br><span class="line">                startAnim();</span><br><span class="line">                break;</span><br><span class="line">            case REFRESHING://当前状态为正在刷新</span><br><span class="line">                break;</span><br><span class="line">            default:</span><br><span class="line">                break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 测量View</span><br><span class="line">     * @param child</span><br><span class="line">     */</span><br><span class="line">    private void measureView(View child) &#123;</span><br><span class="line">        ViewGroup.LayoutParams p = child.getLayoutParams();</span><br><span class="line">        if (p == null) &#123;</span><br><span class="line">            p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,</span><br><span class="line">                    ViewGroup.LayoutParams.WRAP_CONTENT);</span><br><span class="line">        &#125;</span><br><span class="line">        int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);</span><br><span class="line">        int lpHeight = p.height;</span><br><span class="line">        int childHeightSpec;</span><br><span class="line">        if (lpHeight &gt; 0) &#123;</span><br><span class="line">            childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight,</span><br><span class="line">                    MeasureSpec.EXACTLY);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            childHeightSpec = MeasureSpec.makeMeasureSpec(0,</span><br><span class="line">                    MeasureSpec.UNSPECIFIED);</span><br><span class="line">        &#125;</span><br><span class="line">        child.measure(childWidthSpec, childHeightSpec);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 开启动画</span><br><span class="line">     */</span><br><span class="line">    public void startAnim()&#123;</span><br><span class="line">        ivBack1.startAnimation(backAnimation1);</span><br><span class="line">        ivBack2.startAnimation(backAnimation2);</span><br><span class="line">        ivSun.startAnimation(sunAnimation);</span><br><span class="line">        ivWheel1.startAnimation(wheelAnimation);</span><br><span class="line">        ivWheel2.startAnimation(wheelAnimation);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 关闭动画</span><br><span class="line">     */</span><br><span class="line">    public void stopAnim()&#123;</span><br><span class="line">        ivBack1.clearAnimation();</span><br><span class="line">        ivBack2.clearAnimation();</span><br><span class="line">        ivSun.clearAnimation();</span><br><span class="line">        ivWheel1.clearAnimation();</span><br><span class="line">        ivWheel2.clearAnimation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好了，自定义下拉刷新动画我们就实现了，其实很简单，所有的下拉刷新动画都类似这样实现的。源码我已经上传到Github上了：<br><a href="https://github.com/Hankkin/BaiduGoingRefreshLayout" target="_blank" rel="noopener">https://github.com/Hankkin/BaiduGoingRefreshLayout</a><br>求star啊。有不合理的地方还希望大家多多指正，共同进步哈。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/下拉刷新/" rel="tag"># 下拉刷新</a>
+          
+            <a href="/tags/自定义View/" rel="tag"># 自定义View</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/31/一个毕业生的年终总结/" rel="next" title="一个毕业生的年终总结">
+                <i class="fa fa-chevron-left"></i> 一个毕业生的年终总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/17/你真的会用Fragment了么？-Fragment解析/" rel="prev" title="你真的会用Fragment了么？-Fragment解析">
+                你真的会用Fragment了么？-Fragment解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDg1My83NDAy"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hankkin" />
+            
+              <p class="site-author-name" itemprop="name">Hankkin</p>
+              <p class="site-description motion-element" itemprop="description">淡泊明志，宁静致远</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hankkin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2179169605" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/1ff65e347973" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/lyhhj" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/55dea68160b291d79422c1bb" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hankkin</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">31.3k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("47sd2IfvIDsgCfG3HzCo3m5i-gzGzoHsz", "aT9mmWaSOHJjX8z5T8tbe8nb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
