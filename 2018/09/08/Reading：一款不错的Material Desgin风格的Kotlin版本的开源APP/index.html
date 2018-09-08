@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="架构,Library," />
+  <meta name="keywords" content="Kotlin,MVP,Material Desgin," />
 
 
 
@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="绪论之前分享了一篇 Base封装(一)–我的最简MVP架构简单的封装了自己的MVP架构，至于BaseActivity和BaseFragment之前的文章都已经分享过了，只不过做了一些优化。接下来继续分享我的封装之路，今天要分享的是常用的UI，同样大家看到不合适的地方多多指正啊.. 常用组件在写一个APP的时候我们通常都会用到一些常用的组件，慢慢的积累下来了就存到自己的库里面，以后写项目的时候就不用">
-<meta name="keywords" content="架构,Library">
+<meta name="description" content="Readinghttps://github.com/Hankkin/Reading 简介 很久不见，重新拾起博客吧，今天分享一个开源APP-Reading,项目的初衷是因为自己平时翻文章，但是公众号又经常忘记看，自己索性搞一个APP吧，顺便练一下Kotlin。借助着WanAndroid OpenApi搞起，同时里面加了一些小工具，具体功能向下看吧，然后也尝试了一下以前想实现但是没实现过的功能，废话">
+<meta name="keywords" content="Kotlin,MVP,Material Desgin">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Base封装(二)-- 封装属于自己的Library(UI篇)">
-<meta property="og:url" content="http://yoursite.com/2018/05/06/Base封装(二)-- 封装属于自己的Library(UI篇)/index.html">
+<meta property="og:title" content="Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP">
+<meta property="og:url" content="http://yoursite.com/2018/09/08/Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP/index.html">
 <meta property="og:site_name" content="Hankkin的博客">
-<meta property="og:description" content="绪论之前分享了一篇 Base封装(一)–我的最简MVP架构简单的封装了自己的MVP架构，至于BaseActivity和BaseFragment之前的文章都已经分享过了，只不过做了一些优化。接下来继续分享我的封装之路，今天要分享的是常用的UI，同样大家看到不合适的地方多多指正啊.. 常用组件在写一个APP的时候我们通常都会用到一些常用的组件，慢慢的积累下来了就存到自己的库里面，以后写项目的时候就不用">
+<meta property="og:description" content="Readinghttps://github.com/Hankkin/Reading 简介 很久不见，重新拾起博客吧，今天分享一个开源APP-Reading,项目的初衷是因为自己平时翻文章，但是公众号又经常忘记看，自己索性搞一个APP吧，顺便练一下Kotlin。借助着WanAndroid OpenApi搞起，同时里面加了一些小工具，具体功能向下看吧，然后也尝试了一下以前想实现但是没实现过的功能，废话">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ac-47sd2ifv.clouddn.com/3a100a0ff276d80ff2bd.png">
-<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/186157-6305296342271e13.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-05-05T16:33:46.495Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/22/16560b9d42a744c6?w=260&h=462&f=gif&s=247047">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/22/16560c6f7ba0fa1c?w=730&h=682&f=png&s=37622">
+<meta property="og:updated_time" content="2018-09-08T08:15:48.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Base封装(二)-- 封装属于自己的Library(UI篇)">
-<meta name="twitter:description" content="绪论之前分享了一篇 Base封装(一)–我的最简MVP架构简单的封装了自己的MVP架构，至于BaseActivity和BaseFragment之前的文章都已经分享过了，只不过做了一些优化。接下来继续分享我的封装之路，今天要分享的是常用的UI，同样大家看到不合适的地方多多指正啊.. 常用组件在写一个APP的时候我们通常都会用到一些常用的组件，慢慢的积累下来了就存到自己的库里面，以后写项目的时候就不用">
-<meta name="twitter:image" content="http://ac-47sd2ifv.clouddn.com/3a100a0ff276d80ff2bd.png">
+<meta name="twitter:title" content="Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP">
+<meta name="twitter:description" content="Readinghttps://github.com/Hankkin/Reading 简介 很久不见，重新拾起博客吧，今天分享一个开源APP-Reading,项目的初衷是因为自己平时翻文章，但是公众号又经常忘记看，自己索性搞一个APP吧，顺便练一下Kotlin。借助着WanAndroid OpenApi搞起，同时里面加了一些小工具，具体功能向下看吧，然后也尝试了一下以前想实现但是没实现过的功能，废话">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/8/22/16560b9d42a744c6?w=260&h=462&f=gif&s=247047">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/06/Base封装(二)-- 封装属于自己的Library(UI篇)/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/08/Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP/"/>
 
 
 
 
 
-  <title>Base封装(二)-- 封装属于自己的Library(UI篇) | Hankkin的博客</title>
+  <title>Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP | Hankkin的博客</title>
   
 
 
@@ -270,7 +270,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/06/Base封装(二)-- 封装属于自己的Library(UI篇)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/08/Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hankkin">
@@ -287,7 +287,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Base封装(二)-- 封装属于自己的Library(UI篇)</h1>
+          <h1 class="post-title" itemprop="name headline">Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP</h1>
         
 
         <div class="post-meta">
@@ -299,8 +299,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T00:33:46+08:00">
-                2018-05-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-08T16:14:55+08:00">
+                2018-09-08
               </time>
             
 
@@ -322,8 +322,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/架构/" itemprop="url" rel="index">
-                    <span itemprop="name">架构</span>
+                  <a href="/categories/开源项目/" itemprop="url" rel="index">
+                    <span itemprop="name">开源项目</span>
                   </a>
                 </span>
 
@@ -339,7 +339,7 @@
 
           
           
-             <span id="/2018/05/06/Base封装(二)-- 封装属于自己的Library(UI篇)/" class="leancloud_visitors" data-flag-title="Base封装(二)-- 封装属于自己的Library(UI篇)">
+             <span id="/2018/09/08/Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP/" class="leancloud_visitors" data-flag-title="Reading：一款不错的Material Desgin风格的Kotlin版本的开源APP">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -364,7 +364,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,241
+                  1,038
                 </span>
               
 
@@ -401,42 +401,85 @@
       
 
       
-        <h3 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h3><p>之前分享了一篇 <a href="http://hankkin.cn/2017/06/19/Base:MVP/" target="_blank" rel="noopener">Base封装(一)–我的最简MVP架构</a>简单的封装了自己的MVP架构，至于BaseActivity和BaseFragment之前的文章都已经分享过了，只不过做了一些优化。接下来继续分享我的封装之路，今天要分享的是常用的UI，同样大家看到不合适的地方多多指正啊..</p>
-<h3 id="常用组件"><a href="#常用组件" class="headerlink" title="常用组件"></a>常用组件</h3><p>在写一个APP的时候我们通常都会用到一些常用的组件，慢慢的积累下来了就存到自己的库里面，以后写项目的时候就不用再去到处找了，下面看看我收藏了哪些常用的组件吧</p>
-<h4 id="1-NoScrollListView、NoScrollGridView、NoScrollViewPager控制不可滑动的组件"><a href="#1-NoScrollListView、NoScrollGridView、NoScrollViewPager控制不可滑动的组件" class="headerlink" title="1.NoScrollListView、NoScrollGridView、NoScrollViewPager控制不可滑动的组件"></a>1.NoScrollListView、NoScrollGridView、NoScrollViewPager控制不可滑动的组件</h4><p>我们在某种嵌套下我们可能需要去处理滑动冲突，这三个是我经常会用到的，当然已经改用RecycleView很久了，所以前两个不会再用了，至于NoScrollViewPager我经常会用到的场景就是在ViewPager里嵌套ViewPager可能会用到，代码我就不贴了，在项目里面都会有的。实现思路也很简单：</p>
-<p>NoScrollListView和NoScrollGridView的实现思路就是继承ListView和GridView重写OnMeasure()方法,但是估计很多人都说不出来原理吧。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span>   </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;   </span><br><span class="line">        <span class="keyword">int</span> expandSpec = MeasureSpec.makeMeasureSpec(   </span><br><span class="line">                Integer.MAX_VALUE &gt;&gt; <span class="number">2</span>, MeasureSpec.AT_MOST);   </span><br><span class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, expandSpec);   </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>如上所示，makeMeasureSpec(Integer.MAX_VALUE &gt;&gt; 2, MeasureSpec.AT_MOST)<br>这两个参数分别代表着</p>
-<p>size:表示福布局提供给你的大小参考</p>
-<p>model:表示测量规则，共有EXACTLY、AT_MOST、UNSPECIFIED三种</p>
-<ol>
-<li>EXACTLY<br>表示父视图希望子视图的大小应该是由specSize的值来决定的，系统默认会按照这个规则来设置子视图的大小，开发人员当然也可以按照自己的意愿设置成任意的大小。</li>
-<li>AT_MOST<br>表示子视图最多只能是specSize中指定的大小，开发人员应该尽可能小得去设置这个视图，并且保证不会超过specSize。系统默认会按照这个规则来设置子视图的大小，开发人员当然也可以按照自己的意愿设置成任意的大小。</li>
-<li>UNSPECIFIED<br>表示开发人员可以将视图按照自己的意愿设置成任意的大小，没有任何限制。这种情况比较少见，不太会用到。</li>
-</ol>
-<p>具体解析大家可以看看这篇文章<a href="http://blog.csdn.net/xuefu_78/article/details/51760585" target="_blank" rel="noopener">http://blog.csdn.net/xuefu_78/article/details/51760585</a><br>从源码角度进行分析的</p>
-<p>至于NoScrollViewPager就是拦截OnTouch事件就行了。</p>
-<h4 id="2-CircleImageView"><a href="#2-CircleImageView" class="headerlink" title="2. CircleImageView"></a>2. CircleImageView</h4><p>圆形的头像ImageView我一直都用的是这个<br><a href="https://github.com/hdodenhof/CircleImageView" target="_blank" rel="noopener">https://github.com/hdodenhof/CircleImageView</a></p>
-<h4 id="3-ProgressBar"><a href="#3-ProgressBar" class="headerlink" title="3.ProgressBar"></a>3.ProgressBar</h4><p>对于loading加载框这个网上已经有很多了，各式各样的，如果UI需要你定制的话那就自己自定义一个，如果不需要我一直用的都是之前找到的一个感觉挺好的，仿简书的样子</p>
-<p><img src="http://ac-47sd2ifv.clouddn.com/3a100a0ff276d80ff2bd.png" alt=""></p>
-<h4 id="4-统一的Dialog"><a href="#4-统一的Dialog" class="headerlink" title="4.统一的Dialog"></a>4.统一的Dialog</h4><p>Dialog的样式也有很多，一般常用的提示类的个人还是喜欢Android原生态的那种MD风格的Dialog，一直以来用的都是<br><a href="https://github.com/afollestad/material-dialogs" target="_blank" rel="noopener">com.github.afollestad.material-dialogs</a></p>
-<h4 id="5-下拉刷新、上拉加载"><a href="#5-下拉刷新、上拉加载" class="headerlink" title="5.下拉刷新、上拉加载"></a>5.下拉刷新、上拉加载</h4><p>说到这个真的是有很多很多了，以前的PullToRefresh到现在的SwipeRefresgLayout，网上的资源很多，看个人喜好，分享一个下拉刷新集合，需要的拿去吧</p>
-<p><a href="https://github.com/android-cjj/BeautifulRefreshLayout" target="_blank" rel="noopener">众多优秀的下拉刷新（除了我写的之外T_T）</a></p>
-<h4 id="6-Picker组件"><a href="#6-Picker组件" class="headerlink" title="6.Picker组件"></a>6.Picker组件</h4><h4 id="7……"><a href="#7……" class="headerlink" title="7……."></a>7…….</h4><p>还有一些就不具体介绍了，我会把我的库上传到Github<br>好了下面介绍一下相关资源的东西</p>
-<h3 id="资源篇"><a href="#资源篇" class="headerlink" title="资源篇"></a>资源篇</h3><h4 id="1-命名规范"><a href="#1-命名规范" class="headerlink" title="1.命名规范"></a>1.命名规范</h4><p>对于命名规范这个东西一直来说都是一个头疼的东西，随着项目的更新迭代，各式各样的命名都出来了，有时候为了进度，命名就随意来了，写的时候想着先把功能搞完回来再改，但是当你真的一点一点累加起来之后你才会发现天呐，这该怎么改，资源在哪里使用了，即使你的IDE功能再强大，当你去找那些资源文件的时候也会很头疼，所以下面介绍一下一直以来我用的命名规范：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/186157-6305296342271e13.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>就是这个原理图</p>
-<h5 id="WHAT-是什么"><a href="#WHAT-是什么" class="headerlink" title="WHAT(是什么)"></a>WHAT(是什么)</h5><p>表明资源实际代表什么，通常是一个标准的android view,资源类型选项有限。</p>
-<p>(例如:MainActivity-&gt;activity)</p>
-<h5 id="WHERE-在何处"><a href="#WHERE-在何处" class="headerlink" title="WHERE(在何处)"></a>WHERE(在何处)</h5><p>描述它在app的逻辑模块，如果在多个页面用到使用all,其他的就用 使用该资源的页面所处的逻辑模块</p>
-<p>(例如:MainActiviy-&gt;main，ArticleDetailFragment-&gt;articledetail)</p>
-<h5 id="DESCRIPTION-描述"><a href="#DESCRIPTION-描述" class="headerlink" title="DESCRIPTION(描述)"></a>DESCRIPTION(描述)</h5><p>用来区分一个页面中多个相同元素</p>
-<p>(例如：title)</p>
-<h5 id="SIZE-大小-可选"><a href="#SIZE-大小-可选" class="headerlink" title="SIZE(大小)可选"></a>SIZE(大小)可选</h5><p>一个精确的大小或尺寸，可用于drawables和dimensions</p>
-<p>(例如:24dp,small)</p>
-<p>详情请参考<br><a href="http://www.jianshu.com/p/e3c7fa7d837b" target="_blank" rel="noopener">一种成功的xml资源命名规范</a></p>
-<p>代码已经上传到我的Github</p>
-<p><a href="https://github.com/Hankkin/HBase" target="_blank" rel="noopener">https://github.com/Hankkin/HBase</a></p>
+        <h1 id="Reading"><a href="#Reading" class="headerlink" title="Reading"></a>Reading</h1><p><a href="https://github.com/Hankkin/Reading" target="_blank" rel="noopener">https://github.com/Hankkin/Reading</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p>很久不见，重新拾起博客吧，今天分享一个开源APP-<a href="https://github.com/Hankkin/Reading" target="_blank" rel="noopener"><strong>Reading</strong></a>,项目的初衷是因为自己平时翻文章，但是公众号又经常忘记看，自己索性搞一个APP吧，顺便练一下Kotlin。借助着WanAndroid OpenApi搞起，同时里面加了一些小工具，具体功能向下看吧，然后也尝试了一下以前想实现但是没实现过的功能，废话不多说，先来一波图。各位如果有什么意见可以在Issues上提，或者联系我。</p>
+</blockquote>
+<p> Reading: Reading是一款基于WanAndroid OpenApi开发的阅读类工具，如果你是一个热衷于Android开发者，那么这款软件能帮助你阅读精品Android文章。同时Reading中还包含”英文单词”、”账号本子”、”天气”、”查单词”、”快递查询”等小工具。项目基于”Kotlin+MVP”架构开发，风格大概也许属于Material Desgin原质化风格，包含主题颜色切换、百变Logo、等功能。在此感谢WanAndroid的OpenApi,以及其它开源项目的贡献。</p>
+<h2 id="ScreenShot"><a href="#ScreenShot" class="headerlink" title="ScreenShot"></a>ScreenShot</h2><p><img src="https://user-gold-cdn.xitu.io/2018/8/22/16560b9d42a744c6?w=260&amp;h=462&amp;f=gif&amp;s=247047" alt=""></p>
+<h2 id="DownLoad"><a href="#DownLoad" class="headerlink" title="DownLoad"></a>DownLoad</h2><p><a href="https://fir.im/Reading" target="_blank" rel="noopener">https://fir.im/Reading</a></p>
+<p><img width="300" height="300" src="https://user-gold-cdn.xitu.io/2018/8/22/16560c6f7ba0fa1c?w=730&h=682&f=png&s=37622"></p>
+<h2 id="Function-Tips"><a href="#Function-Tips" class="headerlink" title="Function Tips"></a>Function Tips</h2><h4 id="1-首页"><a href="#1-首页" class="headerlink" title="1.首页"></a>1.首页</h4><ul>
+<li>WanAndroid API实现<strong>Android文章列表</strong>、<strong>热门搜索文章</strong>、<strong>项目列表</strong></li>
+<li><strong>刷新、置顶、分享文章</strong>、<strong>搜索文章</strong>、<strong>搜索历史</strong></li>
+<li><strong>收藏列表</strong></li>
+</ul>
+<h4 id="2-工作台"><a href="#2-工作台" class="headerlink" title="2.工作台"></a>2.工作台</h4><ul>
+<li><strong>快递查询</strong> 使用快递100免费API进行快递查询</li>
+<li><strong>扫一扫</strong> 快速扫一扫、从相册选择扫一扫</li>
+<li><strong>查询单词</strong> 使用有道SDK查询单词 加入单词本</li>
+<li><strong>单词本</strong> 单词本记录功能 标记重点</li>
+<li><strong>账号本子</strong> 新建账号 保存本地 记录你的常用账号密码</li>
+<li><strong>每日推荐</strong> 标记重点的单词推荐在首页</li>
+</ul>
+<h4 id="3-我的"><a href="#3-我的" class="headerlink" title="3.我的"></a>3.我的</h4><ul>
+<li><strong>登录注册</strong> 使用WanAndroid Api进行账号注册登录</li>
+<li><strong>TODO List</strong> WanAndroid API 待办事项 （待开发）</li>
+<li><strong>设置</strong> 个性换肤、账号锁功能、本地数据备份、百变Logo、清除缓存</li>
+</ul>
+<h2 id="Skill-Tips"><a href="#Skill-Tips" class="headerlink" title="Skill Tips"></a>Skill Tips</h2><ul>
+<li><p><strong>项目架构</strong> 使用MVP架构模式搭建，封装MvpActivity、MvpFragment、BasePresenter、BaseView。P层绑定V层生命周期 。具体可见<a href="https://github.com/Hankkin/Reading/tree/develop-1.0.0/app/src/main/java/com/hankkin/reading/mvp" target="_blank" rel="noopener"><strong>MVP包</strong></a></p>
+</li>
+<li><p><strong>网络层</strong> 使用Retrofit+RxJava进行网络请求，封装公共Rerofit的HttpClientUtils(创建RetrofitBuilder、OkHttpClient、addHeader、拦截器、Cookie、https等)、工厂模式创建不同BaseUrl的网络对象。具体可见<a href="https://github.com/Hankkin/Reading/tree/develop-1.0.0/app/src/main/java/com/hankkin/reading/http" target="_blank" rel="noopener"><strong>http包</strong></a></p>
+</li>
+<li><p><strong>缓存</strong> 使用GreenDao数据库缓存本地数据，并提供数据备份、还原功能。同时结合MVP架构，将数据库操作作为Dao层，Dao层封装Protocol，利用工厂模式包装GreenDao产生的xxxBeanDao</p>
+</li>
+<li><p><strong>RecycleAdapter</strong> 封装RecycleView Adapter 配合SwipeRefreshLayout支持下拉刷新、上拉加载功能，不满足一屏数据</p>
+</li>
+<li><p><strong>RxBusTools</strong> 封装RxBusTools事件分发 封装BaseActivity、BaseFragment统一处理注册监听事件</p>
+</li>
+<li><p><strong>StatuBarUtils沉浸式</strong> 使用<strong>写代码的猴子</strong>的<a href="https://jaeger.itscoder.com/android/2016/03/27/statusbar-util.html" target="_blank" rel="noopener">StatusBarUtil 状态栏工具类（实现沉浸式状态栏/变色状态栏）</a>适配沉浸式通知栏</p>
+</li>
+<li><p><strong>主题切换</strong> B站开源框架<a href="https://github.com/Bilibili/MagicaSakura" target="_blank" rel="noopener">MagicaSakura</a></p>
+</li>
+<li><p><strong>百变Logo</strong> <em>Android群英传</em>中利用<activity-alias>根据主题颜色动态切换Icon，部分机型可能会出现crash，目前还没找到更好的解决方案，所以提供了开启关闭的开关。如果有大神可以在Issues提供。</activity-alias></p>
+</li>
+<li><p><strong>本地数据备份还原</strong> 通过读取数据库数据写入txt文件，读取txt文件数据还原实现，记录备份还原的时间戳作为版本号</p>
+</li>
+<li><p><strong>单词翻译</strong> 使用有道SDK翻译单词</p>
+</li>
+<li><p><strong>FloatActionButton</strong> 实现首页悬浮按钮 点击展开</p>
+</li>
+<li><p><strong>HorizontalScrollView+ViewPager</strong> 首页仿网易云音乐滑动</p>
+</li>
+<li><p><strong>BottomSheet</strong> 主题切换底部弹出框</p>
+</li>
+<li><p><strong>手势解锁</strong> 参考<a href="https://github.com/ihsg/PatternLocker" target="_blank" rel="noopener">Github-ihsg/PatternLocker</a></p>
+</li>
+</ul>
+<h2 id="Version"><a href="#Version" class="headerlink" title="Version"></a>Version</h2><h3 id="V1-0-1"><a href="#V1-0-1" class="headerlink" title="V1.0.1"></a>V1.0.1</h3><ul>
+<li><p>完善数据备份还原清空数据功能</p>
+</li>
+<li><p>完善账号锁功能</p>
+</li>
+<li><p>新增版本号</p>
+</li>
+</ul>
+<h3 id="V1-0-0"><a href="#V1-0-0" class="headerlink" title="V1.0.0"></a>V1.0.0</h3><ul>
+<li>首次提交 部分功能不完善</li>
+</ul>
+<h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><blockquote>
+<p>Copyright (C) 2018 Hankkin</p>
+</blockquote>
+<blockquote>
+<p>Licensed under the Apache License, Version 2.0 (the “License”);<br>you may not use this file except in compliance with the License.<br>You may obtain a copy of the License at</p>
+</blockquote>
+<blockquote>
+<p><a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">http://www.apache.org/licenses/LICENSE-2.0</a></p>
+</blockquote>
+<blockquote>
+<p>Unless required by applicable law or agreed to in writing, software<br>distributed under the License is distributed on an “AS IS” BASIS,<br>WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.<br>See the License for the specific language governing permissions and<br>limitations under the License.</p>
+</blockquote>
 
       
     </div>
@@ -460,9 +503,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/架构/" rel="tag"># 架构</a>
-          
-            <a href="/tags/Library/" rel="tag"># Library</a>
+            <a href="/tags/Kotlin-MVP-Material-Desgin/" rel="tag"># Kotlin,MVP,Material Desgin</a>
           
         </div>
       
@@ -475,8 +516,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/19/Base封装(一)--我的最简MVP架构/" rel="next" title="Base封装(一)--我的最简MVP架构">
-                <i class="fa fa-chevron-left"></i> Base封装(一)--我的最简MVP架构
+              <a href="/2018/05/10/Android中你可能忽略的知识点(1)-分辨率那些事/" rel="next" title="Android中你可能忽略的知识点(1)-分辨率那些事">
+                <i class="fa fa-chevron-left"></i> Android中你可能忽略的知识点(1)-分辨率那些事
               </a>
             
           </div>
@@ -484,10 +525,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/10/Android中你可能忽略的知识点(1)-分辨率那些事/" rel="prev" title="Android中你可能忽略的知识点(1)-分辨率那些事">
-                Android中你可能忽略的知识点(1)-分辨率那些事 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -662,7 +699,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#绪论"><span class="nav-number">1.</span> <span class="nav-text">绪论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用组件"><span class="nav-number">2.</span> <span class="nav-text">常用组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-NoScrollListView、NoScrollGridView、NoScrollViewPager控制不可滑动的组件"><span class="nav-number">2.1.</span> <span class="nav-text">1.NoScrollListView、NoScrollGridView、NoScrollViewPager控制不可滑动的组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-CircleImageView"><span class="nav-number">2.2.</span> <span class="nav-text">2. CircleImageView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-ProgressBar"><span class="nav-number">2.3.</span> <span class="nav-text">3.ProgressBar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-统一的Dialog"><span class="nav-number">2.4.</span> <span class="nav-text">4.统一的Dialog</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-下拉刷新、上拉加载"><span class="nav-number">2.5.</span> <span class="nav-text">5.下拉刷新、上拉加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Picker组件"><span class="nav-number">2.6.</span> <span class="nav-text">6.Picker组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7……"><span class="nav-number">2.7.</span> <span class="nav-text">7…….</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源篇"><span class="nav-number">3.</span> <span class="nav-text">资源篇</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-命名规范"><span class="nav-number">3.1.</span> <span class="nav-text">1.命名规范</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#WHAT-是什么"><span class="nav-number">3.1.1.</span> <span class="nav-text">WHAT(是什么)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#WHERE-在何处"><span class="nav-number">3.1.2.</span> <span class="nav-text">WHERE(在何处)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DESCRIPTION-描述"><span class="nav-number">3.1.3.</span> <span class="nav-text">DESCRIPTION(描述)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SIZE-大小-可选"><span class="nav-number">3.1.4.</span> <span class="nav-text">SIZE(大小)可选</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Reading"><span class="nav-number">1.</span> <span class="nav-text">Reading</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ScreenShot"><span class="nav-number">1.2.</span> <span class="nav-text">ScreenShot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DownLoad"><span class="nav-number">1.3.</span> <span class="nav-text">DownLoad</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Tips"><span class="nav-number">1.4.</span> <span class="nav-text">Function Tips</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-首页"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">1.首页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-工作台"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">2.工作台</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-我的"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">3.我的</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Skill-Tips"><span class="nav-number">1.5.</span> <span class="nav-text">Skill Tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Version"><span class="nav-number">1.6.</span> <span class="nav-text">Version</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#V1-0-1"><span class="nav-number">1.6.1.</span> <span class="nav-text">V1.0.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V1-0-0"><span class="nav-number">1.6.2.</span> <span class="nav-text">V1.0.0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#License"><span class="nav-number">1.7.</span> <span class="nav-text">License</span></a></li></ol></li></ol></div>
             
 
           </div>
