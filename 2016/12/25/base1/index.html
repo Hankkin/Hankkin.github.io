@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="架构,BaseActivity,BaseFragment," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="绪论圣诞节怎么过？我不过圣诞节，被票圈的晒幸福虐惨了，还是在家里面总结总结自己吧。上篇文章Android自定义View–自己撸一个柱状图也没那么难我说过会封装一套属于自己的库，争取在元旦之前发出来，作为新年礼物给自己，给大家。好了，今天我们先来聊聊自己在项目中以及参考大神们的代码怎么来封装自己的BaseActivity和BaseFragment。 怎么封装？说到封装我们首先想到的就是面向对象，以前">
+<meta name="keywords" content="架构,BaseActivity,BaseFragment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android谈谈封装那些事--BaseActivity和BaseFragment(一)">
+<meta property="og:url" content="http://yoursite.com/2016/12/25/base1/index.html">
+<meta property="og:site_name" content="Hankkin的博客">
+<meta property="og:description" content="绪论圣诞节怎么过？我不过圣诞节，被票圈的晒幸福虐惨了，还是在家里面总结总结自己吧。上篇文章Android自定义View–自己撸一个柱状图也没那么难我说过会封装一套属于自己的库，争取在元旦之前发出来，作为新年礼物给自己，给大家。好了，今天我们先来聊聊自己在项目中以及参考大神们的代码怎么来封装自己的BaseActivity和BaseFragment。 怎么封装？说到封装我们首先想到的就是面向对象，以前">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-05T16:23:27.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android谈谈封装那些事--BaseActivity和BaseFragment(一)">
+<meta name="twitter:description" content="绪论圣诞节怎么过？我不过圣诞节，被票圈的晒幸福虐惨了，还是在家里面总结总结自己吧。上篇文章Android自定义View–自己撸一个柱状图也没那么难我说过会封装一套属于自己的库，争取在元旦之前发出来，作为新年礼物给自己，给大家。好了，今天我们先来聊聊自己在项目中以及参考大神们的代码怎么来封装自己的BaseActivity和BaseFragment。 怎么封装？说到封装我们首先想到的就是面向对象，以前">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/25/base1/"/>
+
+
+
+
+
+  <title>Android谈谈封装那些事--BaseActivity和BaseFragment(一) | Hankkin的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+
+<a href="https://github.com/Hankkin" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hankkin的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡泊明志，宁静致远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/25/base1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hankkin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hankkin的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android谈谈封装那些事--BaseActivity和BaseFragment(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-25T20:43:22+08:00">
+                2016-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/25/base1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2016/12/25/base1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2016/12/25/base1/" class="leancloud_visitors" data-flag-title="Android谈谈封装那些事--BaseActivity和BaseFragment(一)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,880
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><p>圣诞节怎么过？我不过圣诞节，被票圈的晒幸福虐惨了，还是在家里面总结总结自己吧。上篇文章<br><a href="http://blog.csdn.net/lyhhj/article/details/53771477" target="_blank" rel="noopener">Android自定义View–自己撸一个柱状图也没那么难</a><br>我说过会封装一套属于自己的库，争取在元旦之前发出来，作为新年礼物给自己，给大家。好了，今天我们先来聊聊自己在项目中以及参考大神们的代码怎么来封装自己的BaseActivity和BaseFragment。</p>
+<h2 id="怎么封装？"><a href="#怎么封装？" class="headerlink" title="怎么封装？"></a>怎么封装？</h2><p>说到<strong>封装</strong>我们首先想到的就是<strong>面向对象</strong>，以前脑子里对于<strong>面向对象</strong>的认识就是<strong>封装、继承、多态</strong>，随着自己真正进入开发工作之后，慢慢的才有了更深的认识；其实最深的一次是在和朋友交流的过程中他给了我很大的启发，所以技术交流其实还是很重要的。那么什么是封装呢？那就不得不提到<strong>面向对象</strong>了，下面谈谈我自己的理解，不一定对，所以还请大家多多包涵指正：</p>
+<p>首先：面向对象的根本本质是什么？简单的一句话，其实就是<strong>把属性和方法绑定到了一起</strong>，这句话该怎么理解呢？举一个最简单的例子：我们在写一个activity的时候，我们可以把属性宏观理解为各种组件以及一些我们用的参数，然后把我们的处理业务逻辑的代码写到自己的方法中，基本上所有的类都是这样，属性-方法搞到一起，同时封还装隐藏了类的内部实现机制，从而可以在不影响使用者的前提下改变类的内部结构，同时保护了数据。。</p>
+<p>紧接着：封装的概念就出来了，当我们觉得一个activity过于臃肿，代码过于冗余的时候，我们就会考虑到<strong>封装</strong>了，将某个复杂的业务逻辑封装成一个工具类，单独提出来供其他使用，再举个例子：下载文件。。。想必大家都会封装一个下载文件的工具类吧。具体不做过多介绍了啊。</p>
+<p>当我们的这个类不能满足我们某些特定的需求时，我们还有<strong>继承</strong>，通俗的说：<strong>继承</strong>就是儿子遗传了老子的基因，同时也派生出了新的基因；继承是从已有的类中派生出新的类，新的类能吸收已有类的数据属性和行为，并能扩展新的能力。（可以从下面我的BaseEventActivity和BaseParentActivity中看）</p>
+<p>当然继承是为了重用父类代码，同时为实现多态性作准备。<strong>多态</strong>这个多态我一直都觉得它的出现其实就是为了将接口和实现分离开，改善代码的组织结构，增强代码的可读性。在某些很简单的情况下，或许我们不使用多态也能开发出满足我们需要的程序，但大多数情况，如果没有多态，就会觉得代码极其难以维护。同时也补缺了<strong>Java</strong>中单继承的不足。当然这里不得不提到的还有<strong>抽象</strong>，<strong>抽象</strong>就是把现实世界中的某一类东西，提取出来，用程序代码表示，抽象出来一般叫做类或者接口。</p>
+<p>好了，这个<strong>面向对象</strong>我可能理解的还是比较浅，也有不对的地方，勿喷啊，多多指正。本着这个原则所以才有了下面的BaseActivity和BaseFragment。</p>
+<h2 id="BaseActivity封装"><a href="#BaseActivity封装" class="headerlink" title="BaseActivity封装"></a>BaseActivity封装</h2><ul>
+<li>BaseEventActivity     事件总线基类</li>
+<li>BaseParentActivity    注解绑定基类</li>
+<li>BaseStatusBarActivity 通知栏沉浸基类</li>
+</ul>
+<h4 id="1-BaseEventActivity"><a href="#1-BaseEventActivity" class="headerlink" title="1. BaseEventActivity"></a>1. BaseEventActivity</h4><p>我之前的项目中都用到了EventBus订阅/发布事件总线，代替了Intent,Handler,BroadCast在Fragment，Activity，Service，线程之间传递消息。但是用着用着发现每个activity里面都要注册、解注册事件.在OnCreate()里面注册：<br><code>EventBus.getDefault().register(this);</code><br>在OnDestroy()里面解注册：<br><code>EventBus.getDefault().unregister(this);</code><br>感觉有些麻烦，所以就封装了BaseEventActivity作为根Activity，同时将所有的Event放到BaseEventMap中，需要讨论的问题是就是这样的话就导致了所有的activity都订阅了事件总线，一个post发布之后，所有activity都会监听到，然后通过Event的类型进行判断，不知道这样的话有没有什么不妥当的地方。</p>
+<p>先看一下<strong>BaseEventMap</strong>：</p>
+<p>所有的event都继承于BaseEvent，里面有两个参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static class BaseEvent&#123;</span><br><span class="line">        public String code;        //错误码</span><br><span class="line"></span><br><span class="line">        public String message;     //错误信息</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>还有异常错误Event，我们可以将一些错误信息方法里面，通过错误码获取错误信息进行提示，当然类型可以自己定义。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">package com.hankkin.hlibrary.event;</span><br><span class="line"></span><br><span class="line">import android.text.TextUtils;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Hankkin on 16/12/23.</span><br><span class="line"> * 注释:时间总线类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class EventMap &#123;</span><br><span class="line"></span><br><span class="line">    //事件总线基类</span><br><span class="line">    public static class BaseEvent&#123;</span><br><span class="line">        public String code;        //错误码</span><br><span class="line"></span><br><span class="line">        public String message;     //错误信息</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //错误类存储器</span><br><span class="line">    public static HashMap&lt;String,String&gt; ERROR_MAPS = new HashMap&lt;&gt;();</span><br><span class="line">    //本地存储各种错误信息</span><br><span class="line">    static &#123;</span><br><span class="line">        ERROR_MAPS.put(&quot;-1&quot;, &quot;上传失败&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;0&quot;, &quot;连接超时，请检查网络后重试&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;1&quot;, &quot;服务器内部错误,请重试&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;119&quot;, &quot;客户端没有权限执行该项操作&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;127&quot;, &quot;手机号无效，尚未发送验证码&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;206&quot;, &quot;操作失败&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;210&quot;, &quot;密码不正确，请重新输入&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;211&quot;, &quot;用户不存在，请重新输入&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;213&quot;, &quot;该手机号尚未注册&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;214&quot;, &quot;该手机号已经被注册，请更换手机号重新注册&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;215&quot;, &quot;该手机号尚未验证，无法修改密码&quot;);</span><br><span class="line">        ERROR_MAPS.put(&quot;601&quot;, &quot;发送短信验证码过快，请稍后重试&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 根据错误码返回错误信息</span><br><span class="line">     * @param code  错误码</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static String pickMessage(String code)&#123;</span><br><span class="line">        if (TextUtils.isEmpty(code))&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        if (ERROR_MAPS.containsKey(code))</span><br><span class="line">            return ERROR_MAPS.get(code);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 错误异常事件</span><br><span class="line">     */</span><br><span class="line">    public static class HExceptionEvent extends BaseEvent&#123;</span><br><span class="line">        public boolean isPickedMessage = false;</span><br><span class="line"></span><br><span class="line">        public HExceptionEvent(String message)&#123;</span><br><span class="line">            this.message = message;</span><br><span class="line">            this.isPickedMessage = true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public HExceptionEvent(int code,String message)&#123;</span><br><span class="line">            this.code = String.valueOf(code);</span><br><span class="line">            this.isPickedMessage = ERROR_MAPS.containsKey(this.code);</span><br><span class="line">            String pick = pickMessage(this.code);</span><br><span class="line">            this.message = TextUtils.isEmpty(pick) ? message : pick;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**-----------华丽的分割线,你可以在下面定义你的事件继承BaseEvent----------------*/</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们在BaseEventActivity里面定义时间观察者,统一处理异常Event进行Toast提示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">    * 事件观察者</span><br><span class="line">    * @param event</span><br><span class="line">    */</span><br><span class="line">   @Subscribe(threadMode = ThreadMode.MAIN)</span><br><span class="line">   public void onEventMainThread(EventMap.BaseEvent event)&#123;</span><br><span class="line">       if (event != null &amp;&amp; event instanceof EventMap.HExceptionEvent)&#123;</span><br><span class="line">           if (!TextUtils.isEmpty(event.message))&#123;</span><br><span class="line">               ToastUtils.showToast(mActivity,event.message);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-BaseParentActivity"><a href="#2-BaseParentActivity" class="headerlink" title="2. BaseParentActivity"></a>2. BaseParentActivity</h4><p>同样的道理，我们在BaseParentActivity里面主要做了一下操作：</p>
+<ul>
+<li>统一进行注解绑定  initBind()</li>
+<li>布局加载           setContentView(getContentId());</li>
+<li>统一Titlebar初始化 initToolBar()</li>
+<li>组件初始化等方法   initViews()</li>
+<li>Activity跳转       gotoActivity</li>
+</ul>
+<p>其中<strong>布局加载initBind()</strong>和<strong>组件初始化initViews()</strong>我觉得是每个activity都会写到的方法，所以这里实现了一个接口<strong>BaseViewInterface</strong>，里面有两个方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.hankkin.hlibrary.base;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * </span><br><span class="line"> * @author Hankkin</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public interface BaseViewInterface &#123;</span><br><span class="line"></span><br><span class="line">	public int getLayoutId();</span><br><span class="line"></span><br><span class="line">	public void initView();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所有的activity都重写这两个方法，看一下具体代码（里面还有activity跳转、拍照相册等方法）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line">package com.hankkin.hlibrary.base;</span><br><span class="line"></span><br><span class="line">import android.app.Activity;</span><br><span class="line">import android.content.Intent;</span><br><span class="line">import android.net.Uri;</span><br><span class="line">import android.os.Bundle;</span><br><span class="line">import android.provider.MediaStore;</span><br><span class="line">import android.support.v7.widget.Toolbar;</span><br><span class="line">import android.view.LayoutInflater;</span><br><span class="line">import android.view.View;</span><br><span class="line">import android.widget.ImageView;</span><br><span class="line">import android.widget.TextView;</span><br><span class="line">import butterknife.ButterKnife;</span><br><span class="line">import com.hankkin.hlibrary.AppManager;</span><br><span class="line">import com.hankkin.hlibrary.R;</span><br><span class="line">import java.io.File;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Hankkin on 16/8/7.</span><br><span class="line"> */</span><br><span class="line">public abstract class BaseParentActivity extends BaseEventActivity implements BaseViewInterface &#123;</span><br><span class="line"></span><br><span class="line">    public static final int REQUEST_CAMERA = 100;</span><br><span class="line">    public static final int REQUEST_GALLERY = 101;</span><br><span class="line">    public static final int PHOTO_REQUEST_CUT = 102;</span><br><span class="line"></span><br><span class="line">    protected LayoutInflater mInflater;</span><br><span class="line">    protected String TAG;</span><br><span class="line">    protected Activity activity;</span><br><span class="line"></span><br><span class="line">    public interface OnRightClickListener &#123;</span><br><span class="line">        void rightClick();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        TAG = this.getClass().getSimpleName();</span><br><span class="line">        AppManager.getAppManager().addActivity(this);</span><br><span class="line">        if (getContentId() != 0) &#123;</span><br><span class="line">            setContentView(getContentId());</span><br><span class="line">        &#125;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        mInflater = getLayoutInflater();</span><br><span class="line">        activity = this;</span><br><span class="line">        initBind();</span><br><span class="line">        initView(savedInstanceState);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 打开一个Activity 默认 不关闭当前activity</span><br><span class="line">     */</span><br><span class="line">    public void gotoActivity(Class&lt;?&gt; clz) &#123;</span><br><span class="line">        gotoActivity(clz, false, null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void gotoActivity(Class&lt;?&gt; clz, boolean isCloseCurrentActivity) &#123;</span><br><span class="line">        gotoActivity(clz, isCloseCurrentActivity, null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void gotoActivity(Class&lt;?&gt; clz, boolean isCloseCurrentActivity, Bundle ex) &#123;</span><br><span class="line">        Intent intent = new Intent(this, clz);</span><br><span class="line">        if (ex != null) intent.putExtras(ex);</span><br><span class="line">        startActivity(intent);</span><br><span class="line">        if (isCloseCurrentActivity) &#123;</span><br><span class="line">            finish();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 统一初始化titlebar</span><br><span class="line">     */</span><br><span class="line">    protected Toolbar initToolBar(String title) &#123;</span><br><span class="line">        ImageView ivBack = (ImageView) findViewById(R.id.tool_bar_back);</span><br><span class="line">        TextView tvTitle = (TextView) findViewById(R.id.tv_toolbar_title);</span><br><span class="line">        tvTitle.setText(title);</span><br><span class="line">        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);</span><br><span class="line">        toolbar.setTitle(&quot;&quot;);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line">        toolbar.setContentInsetsRelative(10, 0);</span><br><span class="line">        ivBack.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        return toolbar;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 统一初始化titlebar右侧图片</span><br><span class="line">     */</span><br><span class="line">    protected Toolbar initToolBarRightImg(String title, int rightId, final OnRightClickListener listener) &#123;</span><br><span class="line">        ImageView ivBack = (ImageView) findViewById(R.id.tool_bar_back);</span><br><span class="line">        TextView tvTitle = (TextView) findViewById(R.id.tv_toolbar_title);</span><br><span class="line">        tvTitle.setText(title);</span><br><span class="line">        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);</span><br><span class="line">        toolbar.setTitle(&quot;&quot;);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line">        toolbar.setContentInsetsRelative(10, 0);</span><br><span class="line">        ivBack.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        ImageView ivRight = (ImageView) findViewById(R.id.iv_tool_bar_right);</span><br><span class="line">        ivRight.setImageResource(rightId);</span><br><span class="line">        ivRight.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                listener.rightClick();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        return toolbar;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 统一初始化titlebar右侧文字</span><br><span class="line">     */</span><br><span class="line">    protected Toolbar initToolBarRightTxt(String title, String right, final OnRightClickListener listener) &#123;</span><br><span class="line">        ImageView ivBack = (ImageView) findViewById(R.id.tool_bar_back);</span><br><span class="line">        TextView tvTitle = (TextView) findViewById(R.id.tv_toolbar_title);</span><br><span class="line">        tvTitle.setText(title);</span><br><span class="line">        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);</span><br><span class="line">        toolbar.setTitle(&quot;&quot;);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line">        toolbar.setContentInsetsRelative(10, 0);</span><br><span class="line">        ivBack.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        TextView tvRight = (TextView) findViewById(R.id.tv_tool_bar_right);</span><br><span class="line">        tvRight.setText(right);</span><br><span class="line">        tvRight.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                listener.rightClick();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        return toolbar;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected void back() &#123;</span><br><span class="line">        if (activity != null) &#123;</span><br><span class="line">            activity.finish();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onDestroy() &#123;</span><br><span class="line">        super.onDestroy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected int getContentId() &#123;</span><br><span class="line">        return getLayoutId();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected void initBind() &#123;</span><br><span class="line">        ButterKnife.bind(activity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-BaseStatusActivity"><a href="#3-BaseStatusActivity" class="headerlink" title="3. BaseStatusActivity"></a>3. BaseStatusActivity</h4><p>随着Android系统版本的提高，绝大多数的APP都已经适配了沉浸式状态栏，不然觉得黑乎乎的状态栏太别扭，沉浸通知栏的文章也有很多，但是我觉得最好的一篇还是猴哥的那篇，封装的很好，基本适配了所有情况，连Fragment里面图片、透明通知栏都已经适配好了，我的库里面也有，这里面就不多说了，还没太完善：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package com.hankkin.hlibrary.base;</span><br><span class="line"></span><br><span class="line">import android.app.Activity;</span><br><span class="line">import android.os.Bundle;</span><br><span class="line">import butterknife.ButterKnife;</span><br><span class="line">import com.hankkin.hlibrary.R;</span><br><span class="line">import com.hankkin.hlibrary.utils.statusbar.StatusBarUtil;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Hankkin on 16/12/23.</span><br><span class="line"> * 注释:设置状态栏base基类</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public abstract class BaseStatusActivity extends BaseParentActivity&#123;</span><br><span class="line">    protected String TAG;</span><br><span class="line">    protected Activity activity;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        TAG = this.getClass().getSimpleName();</span><br><span class="line">        activity = this;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setStatusBar();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void setStatusBar() &#123;</span><br><span class="line">        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary), 0);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到此为止我们的BaseActivity就封装完了，至于那个BaseEventActivity的问题，涛哥说”Eventbus2是反射取Class，EventBus3是注解apt，感觉子类应该不会被加入的”,这个或许研究完源码可能会了解到，目前使用没什么问题。好了，BaseFragment懒加载我会在下一篇文章中介绍的，同时还要感谢大神的文章：</p>
+<p><a href="http://jaeger.itscoder.com/android/2016/03/27/statusbar-util.html" target="_blank" rel="noopener">StatusBarUtil 状态栏工具类（实现沉浸式状态栏/变色状态栏）</a></p>
+<p><a href="https://github.com/stay4it/Community" target="_blank" rel="noopener">李哥的文章</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/架构/" rel="tag"># 架构</a>
+          
+            <a href="/tags/BaseActivity/" rel="tag"># BaseActivity</a>
+          
+            <a href="/tags/BaseFragment/" rel="tag"># BaseFragment</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/20/histogram/" rel="next" title="Android自定义View--自己撸一个柱状图也没那么难">
+                <i class="fa fa-chevron-left"></i> Android自定义View--自己撸一个柱状图也没那么难
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/26/base2/" rel="prev" title="Android谈谈封装那些事--BaseActivity和BaseFragment(二)">
+                Android谈谈封装那些事--BaseActivity和BaseFragment(二) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMDg1My83NDAy"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hankkin" />
+            
+              <p class="site-author-name" itemprop="name">Hankkin</p>
+              <p class="site-description motion-element" itemprop="description">淡泊明志，宁静致远</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hankkin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2179169605" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/1ff65e347973" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/lyhhj" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/55dea68160b291d79422c1bb" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#绪论"><span class="nav-number">1.</span> <span class="nav-text">绪论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么封装？"><span class="nav-number">2.</span> <span class="nav-text">怎么封装？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BaseActivity封装"><span class="nav-number">3.</span> <span class="nav-text">BaseActivity封装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-BaseEventActivity"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. BaseEventActivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-BaseParentActivity"><span class="nav-number">3.0.2.</span> <span class="nav-text">2. BaseParentActivity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-BaseStatusActivity"><span class="nav-number">3.0.3.</span> <span class="nav-text">3. BaseStatusActivity</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hankkin</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">38.0k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '47sd2IfvIDsgCfG3HzCo3m5i-gzGzoHsz',
+        appKey: 'aT9mmWaSOHJjX8z5T8tbe8nb',
+        placeholder: '亲，留个言吧？O(∩_∩)O~',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("47sd2IfvIDsgCfG3HzCo3m5i-gzGzoHsz", "aT9mmWaSOHJjX8z5T8tbe8nb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
