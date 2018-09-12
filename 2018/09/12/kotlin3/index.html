@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Kotlin,函数," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="不知不觉2015即将过去了，还有几个小时我们就迎来了2016，一个毕业生也即将工作了一年，记录一下这一年所做的工作，也展望一下新的一年要计划做的事情。   还记得我的第一份工作是一个系统管理员的身份，这份工作大致的内容就是一个很复杂很low的管理系统，给这个系统录制说明的视频然后再去给别人讲怎么用，当时我每天的心情真的无法表达啊，干了将近两个礼拜之后我果断辞职了。接下来我进入了一个刚起步的公">
+<meta name="description" content="函数的声明和使用 Kotlin中函数的声明使用关键字 fun格式为：可见性修饰符 fun 函数名(参数名 ：类型)：返回值{}  例如： 123fun main()&amp;#123;    &amp;#125;  上面的例子没有==可见性修饰符==，因为Kotlin中默认为public 函数没有返回值时可以省略  函数的作用范围1.成员函数 成员函数是指在类或对象中的内部函数例如：123class Demo&amp;#">
+<meta name="keywords" content="Kotlin,函数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一个毕业生的年终总结">
-<meta property="og:url" content="http://yoursite.com/2015/12/31/2015yearend/index.html">
+<meta property="og:title" content="Kotlin初级（三）- - -  基础函数">
+<meta property="og:url" content="http://yoursite.com/2018/09/12/kotlin3/index.html">
 <meta property="og:site_name" content="Hankkin的博客">
-<meta property="og:description" content="不知不觉2015即将过去了，还有几个小时我们就迎来了2016，一个毕业生也即将工作了一年，记录一下这一年所做的工作，也展望一下新的一年要计划做的事情。   还记得我的第一份工作是一个系统管理员的身份，这份工作大致的内容就是一个很复杂很low的管理系统，给这个系统录制说明的视频然后再去给别人讲怎么用，当时我每天的心情真的无法表达啊，干了将近两个礼拜之后我果断辞职了。接下来我进入了一个刚起步的公">
+<meta property="og:description" content="函数的声明和使用 Kotlin中函数的声明使用关键字 fun格式为：可见性修饰符 fun 函数名(参数名 ：类型)：返回值{}  例如： 123fun main()&amp;#123;    &amp;#125;  上面的例子没有==可见性修饰符==，因为Kotlin中默认为public 函数没有返回值时可以省略  函数的作用范围1.成员函数 成员函数是指在类或对象中的内部函数例如：123class Demo&amp;#">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-05T16:39:14.306Z">
+<meta property="og:updated_time" content="2018-09-12T15:41:20.791Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一个毕业生的年终总结">
-<meta name="twitter:description" content="不知不觉2015即将过去了，还有几个小时我们就迎来了2016，一个毕业生也即将工作了一年，记录一下这一年所做的工作，也展望一下新的一年要计划做的事情。   还记得我的第一份工作是一个系统管理员的身份，这份工作大致的内容就是一个很复杂很low的管理系统，给这个系统录制说明的视频然后再去给别人讲怎么用，当时我每天的心情真的无法表达啊，干了将近两个礼拜之后我果断辞职了。接下来我进入了一个刚起步的公">
+<meta name="twitter:title" content="Kotlin初级（三）- - -  基础函数">
+<meta name="twitter:description" content="函数的声明和使用 Kotlin中函数的声明使用关键字 fun格式为：可见性修饰符 fun 函数名(参数名 ：类型)：返回值{}  例如： 123fun main()&amp;#123;    &amp;#125;  上面的例子没有==可见性修饰符==，因为Kotlin中默认为public 函数没有返回值时可以省略  函数的作用范围1.成员函数 成员函数是指在类或对象中的内部函数例如：123class Demo&amp;#">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2015/12/31/2015yearend/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/12/kotlin3/"/>
 
 
 
 
 
-  <title>一个毕业生的年终总结 | Hankkin的博客</title>
+  <title>Kotlin初级（三）- - -  基础函数 | Hankkin的博客</title>
   
 
 
@@ -266,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/12/31/2015yearend/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/12/kotlin3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hankkin">
@@ -283,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一个毕业生的年终总结</h1>
+          <h1 class="post-title" itemprop="name headline">Kotlin初级（三）- - -  基础函数</h1>
         
 
         <div class="post-meta">
@@ -295,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-31T22:08:23+08:00">
-                2015-12-31
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-12T23:34:55+08:00">
+                2018-09-12
               </time>
             
 
@@ -318,8 +319,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/年终总结/" itemprop="url" rel="index">
-                    <span itemprop="name">年终总结</span>
+                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
+                    <span itemprop="name">Kotlin</span>
                   </a>
                 </span>
 
@@ -336,8 +337,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2015/12/31/2015yearend/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2015/12/31/2015yearend/" itemprop="commentCount"></span>
+                <a href="/2018/09/12/kotlin3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/09/12/kotlin3/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -345,7 +346,7 @@
 
           
           
-             <span id="/2015/12/31/2015yearend/" class="leancloud_visitors" data-flag-title="一个毕业生的年终总结">
+             <span id="/2018/09/12/kotlin3/" class="leancloud_visitors" data-flag-title="Kotlin初级（三）- - -  基础函数">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -370,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  847
+                  988
                 </span>
               
 
@@ -386,7 +387,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  4
                 </span>
               
             </div>
@@ -407,15 +408,92 @@
       
 
       
-        <p>   不知不觉2015即将过去了，还有几个小时我们就迎来了2016，一个毕业生也即将工作了一年，记录一下这一年所做的工作，也展望一下新的一年要计划做的事情。</p>
-<p>  还记得我的第一份工作是一个系统管理员的身份，这份工作大致的内容就是一个很复杂很low的管理系统，给这个系统录制说明的视频然后再去给别人讲怎么用，当时我每天的心情真的无法表达啊，干了将近两个礼拜之后我果断辞职了。接下来我进入了一个刚起步的公司，当时公司里就一个搞C++的，也差不多是个小牛吧，然后又来了一个搞了8年的项目经理，我从他身上学到了好多，接着又来了一个搞iOS的，这个是我现在比较钦佩的一个，他的思维逻辑真的超强，有时候我想到3步，他就想到了7步8步…让我着实头疼。好了下面说说我的技术发展吧。</p>
-<p><a href="http://blog.csdn.net/lyhhj/article/details/49387481" target="_blank" rel="noopener">Android自定义View之TitleBar，通用标题栏</a>、</p>
-<p><a href="http://blog.csdn.net/lyhhj/article/details/49935345" target="_blank" rel="noopener">Android 高仿微信群聊头像</a>…</p>
-<p>  自定义了一些组件然后尝试着去实现一些比较流行的效果，</p>
-<p>  <a href="http://blog.csdn.net/lyhhj/article/details/49046109" target="_blank" rel="noopener">Android高仿微信照片选择器+预览+显示照片</a><br>  <a href="http://blog.csdn.net/lyhhj/article/details/50002005" target="_blank" rel="noopener">Android 高仿微信发朋友圈浏览图片效果</a>…</p>
-<p>  当然这些也都是我在项目中遇到的一些技术，记下来分享一下。加了几个Android的技术讨论群，在群里结识了一些小伙伴共同探讨交流技术感觉很不错，然后小伙伴给我推荐了《Android群英传》，开始好好研究这本书，一本Android进阶的书，里面有view的绘制原理、滑动机制、动画机制的讲解等等。看完这本书我觉得我又进步了许多，虽然还不能自己实现一些比较复杂的动画和View，但是也基本了解了一些。</p>
-<p>  在这期间也在坚持写博客，就这样晃晃了两个多月，然后开始投入到Material Desgin中，发现这个”原质化设计”真是从用户使用的角度涉及出来的，感觉让用户使用的很舒服，这也是我比较喜欢的原因，研究了一部分之后我忍不住自己想设计一个作品，自己编出来的APP只能算一个”产品”，而自己设计出来的APP才能算一个”产品”，两个礼拜我简单的用MD设计了一个APP，当然也参考了别人的APP，后台服务器用的是Bmob，有兴趣的小伙伴可以看一下<a href="http://hankkin.bmob.cn/" target="_blank" rel="noopener">淘School</a>，元旦回来我完善之后会把源码分享出来的。</p>
-<p>  今年就这么简简单单的过来了，在学习的过程中也发现了许多问题，比如我发现我写的代码冗余、整体设计模式杂乱…所以在2016年里我会开始研究设计模式；自定义View动画的掌握；坚持写博客；尽可能的学习一些其他的技术；研究一些大神的源码，比如KJFrame框架…希望新的一年里我能完美的实现我的这些计划甚至更多</p>
+        <h2 id="函数的声明和使用"><a href="#函数的声明和使用" class="headerlink" title="函数的声明和使用"></a>函数的声明和使用</h2><blockquote>
+<p>Kotlin中函数的声明使用关键字 <strong>fun</strong><br>格式为：可见性修饰符 fun 函数名(参数名 ：类型)：返回值{}</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面的例子没有==可见性修饰符==，因为Kotlin中默认为public</li>
+<li>函数没有返回值时可以省略</li>
+</ul>
+<h2 id="函数的作用范围"><a href="#函数的作用范围" class="headerlink" title="函数的作用范围"></a>函数的作用范围</h2><h3 id="1-成员函数"><a href="#1-成员函数" class="headerlink" title="1.成员函数"></a>1.成员函数</h3><blockquote>
+<p>成员函数是指在类或对象中的内部函数<br>例如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="2-本地函数"><a href="#2-本地函数" class="headerlink" title="2.本地函数"></a>2.本地函数</h3><blockquote>
+<p>本地函数允许把小函数声明在其他函数内部，甚至可以多层嵌套</p>
+</blockquote>
+<p>例如<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">printArea</span><span class="params">(w: <span class="type">Int</span>,h: <span class="type">Int</span>)</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">area</span><span class="params">(w: <span class="type">Int</span>,h: <span class="type">Int</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> w * h</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> area = area(w,h)</span><br><span class="line">    print(area)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>area函数在printArea外部无效，它只服务于printArea。这在实现一个大函数时隐藏实现的细节是非常有用的。除此之外，本地函数还有一个好处就是可以访问嵌套住函数中的变量，例如：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">printArea</span><span class="params">(w: <span class="type">Int</span>,h: <span class="type">Int</span>)</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">area</span><span class="params">()</span></span> = w * h</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">val</span> area = area(w,h)</span><br><span class="line">    print(area) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-顶层函数"><a href="#3-顶层函数" class="headerlink" title="3.顶层函数"></a>3.顶层函数</h3><blockquote>
+<p>所谓顶层函数，即这些函数不属于任何源码文件的小集团（class，对象，interface），而是直接定义在源码文件中的。他们在所有小集团的层级之上。<br>在定义通用性的工具栏和帮助类函数时非常有用，源码的各个部分可能都需要用它。</p>
+</blockquote>
+<h2 id="命名参数和默认参数"><a href="#命名参数和默认参数" class="headerlink" title="命名参数和默认参数"></a>命名参数和默认参数</h2><h3 id="1-命名参数"><a href="#1-命名参数" class="headerlink" title="1.命名参数"></a>1.命名参数</h3><blockquote>
+<p>可以在调用函数时把参数的名字写出来。好处是一旦参数众多，调用时会看的比较清楚，代码可读性高。</p>
+</blockquote>
+<p>例如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(p: <span class="type">Person</span>)</span></span>&#123;</span><br><span class="line">    print(p.match(age = <span class="number">20</span>,</span><br><span class="line">    name = <span class="string">"hankkin"</span>,</span><br><span class="line">    nickname = <span class="string">"xxx"</span>,</span><br><span class="line">    sex = <span class="string">"男"</span>,</span><br><span class="line">    weight = <span class="string">"120"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当然在AS中，默认会显示参数的hint，很方便了，所以一般很少用。</p>
+<h3 id="2-默认参数"><a href="#2-默认参数" class="headerlink" title="2.默认参数"></a>2.默认参数</h3><blockquote>
+<p>在Kotlin中可以定义一个或者多个默认参数，在被调用时如果不指定，则使用默认值。</p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">valueOf</span><span class="params">(unscaledVal: <span class="type">Int</span> = <span class="number">0</span>,scale: <span class="type">Int</span>,prec: <span class="type">Int</span> = <span class="number">1</span>)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="函数操作符"><a href="#函数操作符" class="headerlink" title="函数操作符"></a>函数操作符</h2><blockquote>
+<p>函数操作符用了一个符号来表示。Kotlin中的函数有很多内置的操作符。例如array[1],[1]就相当于数组的.get(1)方法</p>
+</blockquote>
+<h3 id="1-操作符重载"><a href="#1-操作符重载" class="headerlink" title="1.操作符重载"></a>1.操作符重载</h3><blockquote>
+<p>Kotlin允许为预定义操作符提供自定义的实现。这些操作符具有固定符号表示(如+ - * /),固定的优先级precedence。有相应的成员函数member function或扩展函数extension function，重载操作符的函数必需要用operator修饰符标记</p>
+</blockquote>
+<h3 id="2-基础操作符"><a href="#2-基础操作符" class="headerlink" title="2.基础操作符"></a>2.基础操作符</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>函数名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>!x</td>
+<td>x.not()</td>
+</tr>
+<tr>
+<td>-y</td>
+<td>y.unaryMinus()</td>
+</tr>
+<tr>
+<td>+z</td>
+<td>z.unaryPlus()</td>
+</tr>
+<tr>
+<td>a..b</td>
+<td>a..rangeTo(b)</td>
+</tr>
+<tr>
+<td>c + d</td>
+<td>c.plus(d)</td>
+</tr>
+<tr>
+<td>e - f</td>
+<td>e.minus(f)</td>
+</tr>
+<tr>
+<td>g * h</td>
+<td>g.times(h)</td>
+</tr>
+<tr>
+<td>m % n</td>
+<td>m.mod(n)</td>
+</tr>
+<tr>
+<td>i/j</td>
+<td>i.div(j)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="函数扩展"><a href="#函数扩展" class="headerlink" title="函数扩展"></a>函数扩展</h2><h3 id="1-扩展函数的优先级"><a href="#1-扩展函数的优先级" class="headerlink" title="1.扩展函数的优先级"></a>1.扩展函数的优先级</h3><p>扩展函数不能重载类或者接口中已经定义的函数。如果你定义了一个与既有函数一摸一样的扩展函数，名字一样，参数一样，这个扩展时无效的。</p>
+<h3 id="2-扩展函数的作用范围"><a href="#2-扩展函数的作用范围" class="headerlink" title="2.扩展函数的作用范围"></a>2.扩展函数的作用范围</h3><p>通常我们用顶层函数做扩展，但也可以在类中做扩展</p>
+<h3 id="3-扩展函数在子类中的重载"><a href="#3-扩展函数在子类中的重载" class="headerlink" title="3.扩展函数在子类中的重载"></a>3.扩展函数在子类中的重载</h3><p>子类中可以重载成员扩展函数，前提是这个类是open，即可重载的。在这种情况下，子类的函数接受者类型是由运行时的实例决定的，而扩展的接受者类型始终时编译时就确定的，也就是静态的</p>
+<h3 id="4-infix中缀函数"><a href="#4-infix中缀函数" class="headerlink" title="4.infix中缀函数"></a>4.infix中缀函数</h3><p>中缀函数跟赋值操作符有点像，不同的是名称可以是任意的。例如Kotlin自带的to函数，可以把两个变量凑成一个二元祖。Kotlin中可以把成员函数定义成中缀。因为中缀函数是二元的，必须有2个参数，第一个很显然是实例，第二个是函数的参数</p>
 
       
     </div>
@@ -437,6 +515,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Kotlin-函数/" rel="tag"># Kotlin,函数</a>
+          
+        </div>
+      
 
       
       
@@ -446,15 +530,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/09/10/kotlin2/" rel="next" title="Kotlin初级（二）- - -  空安全">
+                <i class="fa fa-chevron-left"></i> Kotlin初级（二）- - -  空安全
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/11/baidugoing/" rel="prev" title="Android自定义下拉刷新动画--仿百度外卖下拉刷新">
-                Android自定义下拉刷新动画--仿百度外卖下拉刷新 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -511,8 +595,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -610,6 +703,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的声明和使用"><span class="nav-number">1.</span> <span class="nav-text">函数的声明和使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的作用范围"><span class="nav-number">2.</span> <span class="nav-text">函数的作用范围</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-成员函数"><span class="nav-number">2.1.</span> <span class="nav-text">1.成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-本地函数"><span class="nav-number">2.2.</span> <span class="nav-text">2.本地函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-顶层函数"><span class="nav-number">2.3.</span> <span class="nav-text">3.顶层函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名参数和默认参数"><span class="nav-number">3.</span> <span class="nav-text">命名参数和默认参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-命名参数"><span class="nav-number">3.1.</span> <span class="nav-text">1.命名参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-默认参数"><span class="nav-number">3.2.</span> <span class="nav-text">2.默认参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数操作符"><span class="nav-number">4.</span> <span class="nav-text">函数操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-操作符重载"><span class="nav-number">4.1.</span> <span class="nav-text">1.操作符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-基础操作符"><span class="nav-number">4.2.</span> <span class="nav-text">2.基础操作符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数扩展"><span class="nav-number">5.</span> <span class="nav-text">函数扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-扩展函数的优先级"><span class="nav-number">5.1.</span> <span class="nav-text">1.扩展函数的优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-扩展函数的作用范围"><span class="nav-number">5.2.</span> <span class="nav-text">2.扩展函数的作用范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-扩展函数在子类中的重载"><span class="nav-number">5.3.</span> <span class="nav-text">3.扩展函数在子类中的重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-infix中缀函数"><span class="nav-number">5.4.</span> <span class="nav-text">4.infix中缀函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
