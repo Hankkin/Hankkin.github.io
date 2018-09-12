@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Retrofit," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,21 +79,17 @@
 
 
 
-<meta name="description" content="本文已授权微信公众号：鸿洋（hongyangAndroid）在微信公众号平台原创首发。  ###绪论前面我们讨论了使用Retrofit时怎样去设置OKHttp，包括持久化管理Cookie、设置网络超时、设置打印拦截器、设置缓存、Header等等，详细可查看Retrofit–使用Retrofit时怎样去设置OKHttpRetrofit+OKHttp 教你怎么持久化管理Cookie今天我们讨论的主题">
-<meta name="keywords" content="Retrofit">
+<meta name="description" content="title: Kotlin初级（三）- - -  基础函数 date: 2018-09-12 23:34:55 categories:   Kotlin  tags:   Kotlin,函数  函数的声明和使用 Kotlin中函数的声明使用关键字 fun格式为：可见性修饰符 fun 函数名(参数名 ：类型)：返回值{}  例如： 123fun main()&amp;#123;    &amp;#125;  上面的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Retrofit--合理封装回调能让你的项目高逼格">
-<meta property="og:url" content="http://yoursite.com/2016/06/20/Retrofit3/index.html">
+<meta property="og:title" content="Hankkin的博客">
+<meta property="og:url" content="http://yoursite.com/2018/09/11/kotlin3/index.html">
 <meta property="og:site_name" content="Hankkin的博客">
-<meta property="og:description" content="本文已授权微信公众号：鸿洋（hongyangAndroid）在微信公众号平台原创首发。  ###绪论前面我们讨论了使用Retrofit时怎样去设置OKHttp，包括持久化管理Cookie、设置网络超时、设置打印拦截器、设置缓存、Header等等，详细可查看Retrofit–使用Retrofit时怎样去设置OKHttpRetrofit+OKHttp 教你怎么持久化管理Cookie今天我们讨论的主题">
+<meta property="og:description" content="title: Kotlin初级（三）- - -  基础函数 date: 2018-09-12 23:34:55 categories:   Kotlin  tags:   Kotlin,函数  函数的声明和使用 Kotlin中函数的声明使用关键字 fun格式为：可见性修饰符 fun 函数名(参数名 ：类型)：返回值{}  例如： 123fun main()&amp;#123;    &amp;#125;  上面的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20160620113140003">
-<meta property="og:image" content="http://img.blog.csdn.net/20160620120640461">
-<meta property="og:updated_time" content="2018-05-05T16:27:49.052Z">
+<meta property="og:updated_time" content="2018-09-12T15:35:01.766Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Retrofit--合理封装回调能让你的项目高逼格">
-<meta name="twitter:description" content="本文已授权微信公众号：鸿洋（hongyangAndroid）在微信公众号平台原创首发。  ###绪论前面我们讨论了使用Retrofit时怎样去设置OKHttp，包括持久化管理Cookie、设置网络超时、设置打印拦截器、设置缓存、Header等等，详细可查看Retrofit–使用Retrofit时怎样去设置OKHttpRetrofit+OKHttp 教你怎么持久化管理Cookie今天我们讨论的主题">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160620113140003">
+<meta name="twitter:title" content="Hankkin的博客">
+<meta name="twitter:description" content="title: Kotlin初级（三）- - -  基础函数 date: 2018-09-12 23:34:55 categories:   Kotlin  tags:   Kotlin,函数  函数的声明和使用 Kotlin中函数的声明使用关键字 fun格式为：可见性修饰符 fun 函数名(参数名 ：类型)：返回值{}  例如： 123fun main()&amp;#123;    &amp;#125;  上面的">
 
 
 
@@ -123,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/06/20/Retrofit3/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/11/kotlin3/"/>
 
 
 
 
 
-  <title>Retrofit--合理封装回调能让你的项目高逼格 | Hankkin的博客</title>
+  <title> | Hankkin的博客</title>
   
 
 
@@ -270,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/20/Retrofit3/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/11/kotlin3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hankkin">
@@ -287,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Retrofit--合理封装回调能让你的项目高逼格</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -299,8 +295,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-20T14:05:12+08:00">
-                2016-06-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T22:46:45+08:00">
+                2018-09-11
               </time>
             
 
@@ -310,28 +306,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Retrofit/" itemprop="url" rel="index">
-                    <span itemprop="name">Retrofit</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -340,8 +314,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/06/20/Retrofit3/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2016/06/20/Retrofit3/" itemprop="commentCount"></span>
+                <a href="/2018/09/11/kotlin3/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/09/11/kotlin3/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -349,7 +323,7 @@
 
           
           
-             <span id="/2016/06/20/Retrofit3/" class="leancloud_visitors" data-flag-title="Retrofit--合理封装回调能让你的项目高逼格">
+             <span id="/2018/09/11/kotlin3/" class="leancloud_visitors" data-flag-title="">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -374,7 +348,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,473
+                  1,010
                 </span>
               
 
@@ -390,7 +364,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  4
                 </span>
               
             </div>
@@ -411,40 +385,102 @@
       
 
       
-        <blockquote>
-<p>本文已授权微信公众号：鸿洋（hongyangAndroid）在微信公众号平台原创首发。</p>
-</blockquote>
-<p>###绪论<br>前面我们讨论了使用Retrofit时怎样去设置OKHttp，包括<em>持久化管理Cookie</em>、<em>设置网络超时</em>、<em>设置打印拦截器</em>、<em>设置缓存</em>、<em>Header</em>等等，详细可查看<br><a href="http://blog.csdn.net/lyhhj/article/details/51388147" target="_blank" rel="noopener">Retrofit–使用Retrofit时怎样去设置OKHttp</a><br><a href="http://blog.csdn.net/lyhhj/article/details/51345386" target="_blank" rel="noopener">Retrofit+OKHttp 教你怎么持久化管理Cookie</a><br>今天我们讨论的主题是<strong>怎么封装回调才能完美的适应自己的需求</strong>。我们都知道代码风格是每个人都有自己的风格，不可能完全一样，那么我们写出来的代码怎样能够尽可能的去满足需求呢？换句话说怎样才能设计出高可用、高解耦、高可维护的代码架构呢？其实本人也是渣渣一个，看了一些别人的代码再加上自己的理解，今天把自己在用Retrofit时的一些想法分享给大家。</p>
-<p><img src="http://img.blog.csdn.net/20160620113140003" alt="这里写图片描述"></p>
-<p>###封装背景：<br>在开始用Retrofit的时候在网上一搜，搜出来好多教程，而且口碑很好，所以我打算新的项目由原来的Xutils框架转战Retrofit。</p>
-<blockquote>
-<p>Retrofit和Java领域的ORM概念类似， ORM把结构化数据转换为Java对象，而Retrofit 把REST API返回的数据转化为Java对象方便操作。同时还封装了网络代码的调用。</p>
-</blockquote>
-<p>看了一些资料后大致了解到，Retrofit 2.0利用注解的形式将我们访问服务器的URL以及参数封装成了java对象，而OKHttp依旧去执行网络请求。现在网上的教程一般都告诉我们了怎样去使用Retrofit（随意找了一个教程）：<br>1.首先定义一个接口：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface APIService &#123;</span><br><span class="line">  @GET(&quot;/users/&#123;user&#125;/repos&quot;)</span><br><span class="line">  List&lt;Repo&gt; listRepos(@Path(&quot;user&quot;) String user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>2.接着通过Retrofit.Builder()去创建这个url以及参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = new Retrofit.Builder()</span><br><span class="line">            .baseUrl(&quot;xxx&quot;)</span><br><span class="line">            .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">            .build();</span><br><span class="line">  </span><br><span class="line">    APIService service = retrofit.create(APIService.class);</span><br></pre></td></tr></table></figure>
-<p>3.最后通过定义<em>Call<xxx></xxx></em>去执行网络请求</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Call&lt;User&gt; call = apiService.getUser(username);</span><br><span class="line">call.enqueue(new Callback&lt;User&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onResponse(Response&lt;User&gt; response) &#123;</span><br><span class="line">        int statusCode = response.code();</span><br><span class="line">        User user = response.body();  </span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public void onFailure(Throwable t) &#123;</span><br><span class="line">        // Log error here since request failed</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>然后我们就能在网络请求成功失败的回调出去更新UI了。</p>
-<p>###自定义响应体CallModel<br>很简单的实现了一个网络请求，当然我在刚开始的时候一直也都是这么使用的，因为Retrofit自己封装了JSON解析的过程，我们只需在建造Retrofit的时候加入<code>addConverterFactory(GsonConverterFactory.create())</code>就可以了，但是得保证我们定义的API接口的时候Call<xx>里面的bean要和服务器返回的接口一一对应，否则这个字段就会为null，甚至网络请求失败报错json转化异常。</xx></p>
-<p>我们都知道服务器返回的结果一般都是下面这种格式的：</p>
-<p><img src="http://img.blog.csdn.net/20160620120640461" alt="这里写图片描述"><br>一定是有code状态码和返回信息的，我之前的用法和教程一样，说将服务器返回的结果复制下来直接在AS上面利用GsonFormat转化就OK了，确实很方便，但是这样下来每个bean里面都会有重复的erroe_code和message或者服务器返回其他，所以我是这样做的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class BaseCallModel&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">    public int errno;</span><br><span class="line">    public String msg;</span><br><span class="line">    public T data;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>定义一个BaseCallModel，利用泛型去适合服务器返回的所有的bean，而你在定义一个API接口的时候就可以这样定义：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@GET(&quot;user/login&quot;)</span><br><span class="line">Call&lt;BaseCallModel&lt;User&gt;&gt; doLogin(@Query(&quot;email&quot;) String email, @Query(&quot;password&quot;) String pwd);</span><br></pre></td></tr></table></figure>
-<p>###自定义CallBack<br>自定义完响应体之后，那么问题又来了，error_code会有不同的值，而不同的值需要我们所做的操作不同，举个例子，我们的需求是</p>
+        <p>title: Kotlin初级（三）- - -  基础函数</p>
+<p>date: 2018-09-12 23:34:55</p>
+<p>categories: </p>
 <ul>
-<li>0-请求成功</li>
-<li>1-请求失败，登录过期</li>
-<li>2-请求失败，无权限</li>
-<li>3-请求失败-余额不足</li>
-<li>….<br>假如登录过期需要我们重新登录，跳转到登录界面的话，我们不可能在每个网络请求的回调里面都去判断error_code吧？那样岂不是很….,所以就有了它：</li>
+<li>Kotlin</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import java.net.ConnectException;</span><br><span class="line">import java.net.SocketTimeoutException;</span><br><span class="line"></span><br><span class="line">import retrofit2.Call;</span><br><span class="line">import retrofit2.Callback;</span><br><span class="line">import retrofit2.Response;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Created by Hankkin on 2016/6/4.</span><br><span class="line"> */</span><br><span class="line">public abstract class MyCallback&lt;T extends BaseCallModel&gt; implements Callback&lt;T&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void onResponse(Call&lt;T&gt; call, Response&lt;T&gt; response) &#123;</span><br><span class="line">        if (response.raw().code() == 200) &#123;//200是服务器有合理响应</span><br><span class="line">            if(response.body().errno == 0)&#123;</span><br><span class="line">                onSuc(response);</span><br><span class="line">            &#125;</span><br><span class="line">            else if (response.body().errno == 1)&#123;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            else if (response.body().errno == 2)&#123;</span><br><span class="line">                onAutoLogin();</span><br><span class="line">            &#125;</span><br><span class="line">            else if ()&#123;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            .</span><br><span class="line">            .</span><br><span class="line">            .</span><br><span class="line">            else &#123;</span><br><span class="line">                onFail(response.body().msg);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; else &#123;//失败响应</span><br><span class="line">            onFailure(call, new RuntimeException(&quot;response error,detail = &quot; + response.raw().toString()));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onFailure(Call&lt;T&gt; call, Throwable t) &#123;//网络问题会走该回调</span><br><span class="line">        if(t instanceof SocketTimeoutException)&#123;</span><br><span class="line">            //</span><br><span class="line">        &#125;else if(t instanceof ConnectException)&#123;</span><br><span class="line">          //</span><br><span class="line">        &#125;else if(t instanceof RuntimeException)&#123;</span><br><span class="line">            //</span><br><span class="line">        &#125;</span><br><span class="line">        onFail(t.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public abstract void onSuc(Response&lt;T&gt; response);</span><br><span class="line"></span><br><span class="line">    public abstract void onFail(String message);</span><br><span class="line"></span><br><span class="line">    public abstract void onAutoLogin();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我自定义了一个抽象类实现了Retrofit的CallBack&lt;&gt;,OnResponse()方法里面去判断网络请求正常的各种情况，onFailure()方法里面则是网络有问题会走该回调。而OnResponse()回调中也有可能网络请求失败，根据response.raw().code()去判断；然后你也可以根据异常出现的状况去执行不同的UI，例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if(t instanceof SocketTimeoutException)&#123;</span><br><span class="line">            //</span><br><span class="line">        &#125;else if(t instanceof ConnectException)&#123;</span><br><span class="line">            //</span><br><span class="line">        &#125;else if(t instanceof RuntimeException)&#123;</span><br><span class="line">           //</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-<p>好了这样用起来就很爽了，如果有不合适不妥当的地方，还希望大家多多指教，共同进步。<br>最后分享几个不错的Retrofit博客吧：<br><a href="http://www.jianshu.com/p/308f3c54abdd?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="noopener">你真的会用Retrofit2吗?Retrofit2完全教程</a><br><a href="http://bugly.qq.com/bbs/forum.php?mod=viewthread&amp;tid=1117#rd" target="_blank" rel="noopener">深入浅出 Retrofit，这么牛逼的框架你们还不来看看？</a><br><a href="http://wuxiaolong.me/2016/06/18/retrofits/" target="_blank" rel="noopener">Android Retrofit 2.0 使用-补充篇</a></p>
+<p>tags: </p>
+<ul>
+<li>Kotlin,函数</li>
+</ul>
+<h2 id="函数的声明和使用"><a href="#函数的声明和使用" class="headerlink" title="函数的声明和使用"></a>函数的声明和使用</h2><blockquote>
+<p>Kotlin中函数的声明使用关键字 <strong>fun</strong><br>格式为：可见性修饰符 fun 函数名(参数名 ：类型)：返回值{}</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面的例子没有==可见性修饰符==，因为Kotlin中默认为public</li>
+<li>函数没有返回值时可以省略</li>
+</ul>
+<h2 id="函数的作用范围"><a href="#函数的作用范围" class="headerlink" title="函数的作用范围"></a>函数的作用范围</h2><h3 id="1-成员函数"><a href="#1-成员函数" class="headerlink" title="1.成员函数"></a>1.成员函数</h3><blockquote>
+<p>成员函数是指在类或对象中的内部函数<br>例如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Demo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="2-本地函数"><a href="#2-本地函数" class="headerlink" title="2.本地函数"></a>2.本地函数</h3><blockquote>
+<p>本地函数允许把小函数声明在其他函数内部，甚至可以多层嵌套</p>
+</blockquote>
+<p>例如<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">printArea</span><span class="params">(w: <span class="type">Int</span>,h: <span class="type">Int</span>)</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">area</span><span class="params">(w: <span class="type">Int</span>,h: <span class="type">Int</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> w * h</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> area = area(w,h)</span><br><span class="line">    print(area)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>area函数在printArea外部无效，它只服务于printArea。这在实现一个大函数时隐藏实现的细节是非常有用的。除此之外，本地函数还有一个好处就是可以访问嵌套住函数中的变量，例如：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">printArea</span><span class="params">(w: <span class="type">Int</span>,h: <span class="type">Int</span>)</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">area</span><span class="params">()</span></span> = w * h</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">val</span> area = area(w,h)</span><br><span class="line">    print(area) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-顶层函数"><a href="#3-顶层函数" class="headerlink" title="3.顶层函数"></a>3.顶层函数</h3><blockquote>
+<p>所谓顶层函数，即这些函数不属于任何源码文件的小集团（class，对象，interface），而是直接定义在源码文件中的。他们在所有小集团的层级之上。<br>在定义通用性的工具栏和帮助类函数时非常有用，源码的各个部分可能都需要用它。</p>
+</blockquote>
+<h2 id="命名参数和默认参数"><a href="#命名参数和默认参数" class="headerlink" title="命名参数和默认参数"></a>命名参数和默认参数</h2><h3 id="1-命名参数"><a href="#1-命名参数" class="headerlink" title="1.命名参数"></a>1.命名参数</h3><blockquote>
+<p>可以在调用函数时把参数的名字写出来。好处是一旦参数众多，调用时会看的比较清楚，代码可读性高。</p>
+</blockquote>
+<p>例如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">printPerson</span><span class="params">(p: <span class="type">Person</span>)</span></span>&#123;</span><br><span class="line">    print(p.match(age = <span class="number">20</span>,</span><br><span class="line">    name = <span class="string">"hankkin"</span>,</span><br><span class="line">    nickname = <span class="string">"xxx"</span>,</span><br><span class="line">    sex = <span class="string">"男"</span>,</span><br><span class="line">    weight = <span class="string">"120"</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当然在AS中，默认会显示参数的hint，很方便了，所以一般很少用。</p>
+<h3 id="2-默认参数"><a href="#2-默认参数" class="headerlink" title="2.默认参数"></a>2.默认参数</h3><blockquote>
+<p>在Kotlin中可以定义一个或者多个默认参数，在被调用时如果不指定，则使用默认值。</p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">valueOf</span><span class="params">(unscaledVal: <span class="type">Int</span> = <span class="number">0</span>,scale: <span class="type">Int</span>,prec: <span class="type">Int</span> = <span class="number">1</span>)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="函数操作符"><a href="#函数操作符" class="headerlink" title="函数操作符"></a>函数操作符</h2><blockquote>
+<p>函数操作符用了一个符号来表示。Kotlin中的函数有很多内置的操作符。例如array[1],[1]就相当于数组的.get(1)方法</p>
+</blockquote>
+<h3 id="1-操作符重载"><a href="#1-操作符重载" class="headerlink" title="1.操作符重载"></a>1.操作符重载</h3><blockquote>
+<p>Kotlin允许为预定义操作符提供自定义的实现。这些操作符具有固定符号表示(如+ - * /),固定的优先级precedence。有相应的成员函数member function或扩展函数extension function，重载操作符的函数必需要用operator修饰符标记</p>
+</blockquote>
+<h3 id="2-基础操作符"><a href="#2-基础操作符" class="headerlink" title="2.基础操作符"></a>2.基础操作符</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>函数名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>!x</td>
+<td>x.not()</td>
+</tr>
+<tr>
+<td>-y</td>
+<td>y.unaryMinus()</td>
+</tr>
+<tr>
+<td>+z</td>
+<td>z.unaryPlus()</td>
+</tr>
+<tr>
+<td>a..b</td>
+<td>a..rangeTo(b)</td>
+</tr>
+<tr>
+<td>c + d</td>
+<td>c.plus(d)</td>
+</tr>
+<tr>
+<td>e - f</td>
+<td>e.minus(f)</td>
+</tr>
+<tr>
+<td>g * h</td>
+<td>g.times(h)</td>
+</tr>
+<tr>
+<td>m % n</td>
+<td>m.mod(n)</td>
+</tr>
+<tr>
+<td>i/j</td>
+<td>i.div(j)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="函数扩展"><a href="#函数扩展" class="headerlink" title="函数扩展"></a>函数扩展</h2><h3 id="1-扩展函数的优先级"><a href="#1-扩展函数的优先级" class="headerlink" title="1.扩展函数的优先级"></a>1.扩展函数的优先级</h3><p>扩展函数不能重载类或者接口中已经定义的函数。如果你定义了一个与既有函数一摸一样的扩展函数，名字一样，参数一样，这个扩展时无效的。</p>
+<h3 id="2-扩展函数的作用范围"><a href="#2-扩展函数的作用范围" class="headerlink" title="2.扩展函数的作用范围"></a>2.扩展函数的作用范围</h3><p>通常我们用顶层函数做扩展，但也可以在类中做扩展</p>
+<h3 id="3-扩展函数在子类中的重载"><a href="#3-扩展函数在子类中的重载" class="headerlink" title="3.扩展函数在子类中的重载"></a>3.扩展函数在子类中的重载</h3><p>子类中可以重载成员扩展函数，前提是这个类是open，即可重载的。在这种情况下，子类的函数接受者类型是由运行时的实例决定的，而扩展的接受者类型始终时编译时就确定的，也就是静态的</p>
+<h3 id="4-infix中缀函数"><a href="#4-infix中缀函数" class="headerlink" title="4.infix中缀函数"></a>4.infix中缀函数</h3><p>中缀函数跟赋值操作符有点像，不同的是名称可以是任意的。例如Kotlin自带的to函数，可以把两个变量凑成一个二元祖。Kotlin中可以把成员函数定义成中缀。因为中缀函数是二元的，必须有2个参数，第一个很显然是实例，第二个是函数的参数</p>
 
       
     </div>
@@ -466,12 +502,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Retrofit/" rel="tag"># Retrofit</a>
-          
-        </div>
-      
 
       
       
@@ -481,8 +511,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/12/Retrofit2/" rel="next" title="Retrofit--使用Retrofit时怎样去设置OKHttp">
-                <i class="fa fa-chevron-left"></i> Retrofit--使用Retrofit时怎样去设置OKHttp
+              <a href="/2018/09/11/kotlin2/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -490,10 +520,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/03/scrollview/" rel="prev" title="Android带你解析ScrollView--仿QQ空间标题栏渐变">
-                Android带你解析ScrollView--仿QQ空间标题栏渐变 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -550,8 +576,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -649,6 +684,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的声明和使用"><span class="nav-number">1.</span> <span class="nav-text">函数的声明和使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数的作用范围"><span class="nav-number">2.</span> <span class="nav-text">函数的作用范围</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-成员函数"><span class="nav-number">2.1.</span> <span class="nav-text">1.成员函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-本地函数"><span class="nav-number">2.2.</span> <span class="nav-text">2.本地函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-顶层函数"><span class="nav-number">2.3.</span> <span class="nav-text">3.顶层函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命名参数和默认参数"><span class="nav-number">3.</span> <span class="nav-text">命名参数和默认参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-命名参数"><span class="nav-number">3.1.</span> <span class="nav-text">1.命名参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-默认参数"><span class="nav-number">3.2.</span> <span class="nav-text">2.默认参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数操作符"><span class="nav-number">4.</span> <span class="nav-text">函数操作符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-操作符重载"><span class="nav-number">4.1.</span> <span class="nav-text">1.操作符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-基础操作符"><span class="nav-number">4.2.</span> <span class="nav-text">2.基础操作符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数扩展"><span class="nav-number">5.</span> <span class="nav-text">函数扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-扩展函数的优先级"><span class="nav-number">5.1.</span> <span class="nav-text">1.扩展函数的优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-扩展函数的作用范围"><span class="nav-number">5.2.</span> <span class="nav-text">2.扩展函数的作用范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-扩展函数在子类中的重载"><span class="nav-number">5.3.</span> <span class="nav-text">3.扩展函数在子类中的重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-infix中缀函数"><span class="nav-number">5.4.</span> <span class="nav-text">4.infix中缀函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
