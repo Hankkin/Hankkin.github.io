@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="Hankkin的博客">
 <meta property="og:description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  Jetpack组件之Navigation—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?w=448&h=960&f=gif&s=846100">
-<meta property="og:updated_time" content="2019-07-03T15:38:27.751Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?imageslim">
+<meta property="og:updated_time" content="2019-07-03T15:42:53.476Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2. Jetpack源码解析---Navigation为什么切换Fragment会重绘？">
 <meta name="twitter:description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  Jetpack组件之Navigation—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?w=448&h=960&f=gif&s=846100">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?imageslim">
 
 
 
@@ -451,7 +451,7 @@
 <blockquote>
 <p>我还发现一个问题，就是Play商店，现在就是这样的情况，抽屉栏中的<code>Item</code>每个基本都是重新绘制，而且第一个<code>Item</code><strong>我的应用和游戏</strong>切换的时候就会有很明显的卡顿和闪屏，猜测Google play 商店具体是不是使用的<code>Navigation</code>组件不敢确定，但是它很大几率是通过<code>replace</code>方式来做的切换。感兴趣的话可以看一下，我这贴一个GIF图，不一定能看清楚，不过确实是这个效果。</p>
 </blockquote>
-<p><img src="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?w=448&amp;h=960&amp;f=gif&amp;s=846100" alt=""></p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?imageslim" alt=""></p>
 <p>最后，如果有不对的地方或者更好的解决办法，可以一起讨论一下哈！</p>
 
       
