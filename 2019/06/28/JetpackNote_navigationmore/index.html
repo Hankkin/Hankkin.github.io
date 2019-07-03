@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Navigation,源码解析," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  Jetpack组件之Navigation—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天">
+<meta name="keywords" content="Navigation,源码解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2. Jetpack源码解析---Navigation为什么切换Fragment会重绘？">
+<meta property="og:url" content="http://yoursite.com/2019/06/28/JetpackNote_navigationmore/index.html">
+<meta property="og:site_name" content="Hankkin的博客">
+<meta property="og:description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  Jetpack组件之Navigation—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?w=448&h=960&f=gif&s=846100">
+<meta property="og:updated_time" content="2019-07-03T15:12:48.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2. Jetpack源码解析---Navigation为什么切换Fragment会重绘？">
+<meta name="twitter:description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  Jetpack组件之Navigation—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?w=448&h=960&f=gif&s=846100">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/28/JetpackNote_navigationmore/"/>
+
+
+
+
+
+  <title>2. Jetpack源码解析---Navigation为什么切换Fragment会重绘？ | Hankkin的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+
+<a href="https://github.com/Hankkin" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hankkin的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡泊明志，宁静致远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/JetpackNote_navigationmore/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hankkin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hankkin的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">2. Jetpack源码解析---Navigation为什么切换Fragment会重绘？</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T23:40:51+08:00">
+                2019-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jetpack/" itemprop="url" rel="index">
+                    <span itemprop="name">Jetpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/28/JetpackNote_navigationmore/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/28/JetpackNote_navigationmore/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/06/28/JetpackNote_navigationmore/" class="leancloud_visitors" data-flag-title="2. Jetpack源码解析---Navigation为什么切换Fragment会重绘？">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,350
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>上篇文章我们简单的介绍了<strong>Navigation组件</strong>的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于<strong>Navigation</strong>实现的一些探讨。还没有看过上篇文章的可以查看一下：</p>
+</blockquote>
+<p><a href="https://juejin.im/post/5d1202fc6fb9a07ef90ca7a1" target="_blank" rel="noopener">Jetpack组件之Navigation—看完你就知道Navigation是什么了？</a></p>
+<h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>先来看一下<code>Navigation</code>组件在官方文档上的介绍：</p>
+<blockquote>
+<p>今天，我们宣布推出Navigation组件，作为构建您的应用内界面的框架，重点是让单 Activity 应用成为首选架构。利用Navigation组件对 Fragment 的原生支持，您可以获得架构组件的所有好处（例如生命周期和 ViewModel），同时让此组件为您处理 FragmentTransaction 的复杂性。此外，Navigation组件还可以让您声明我们为您处理的转场。它可以自动构建正确的“向上”和“返回”行为，包含对深层链接的完整支持，并提供了帮助程序，用于将导航关联到合适的 UI 小部件，例如抽屉式导航栏和底部导航。</p>
+</blockquote>
+<p>确实经过源码分析我们就可以发现，<code>Navigation</code>组件封装了<code>Menu</code>菜单栏、<code>Fragment</code>的切换、<code>NavigationView</code>、<code>Drawerlayout</code>等一系列涉及到的组件，为了更方便的让我们使用单Activity多Fragment的架构。</p>
+<p>但是我在使用的时候发现，当一个<code>Fragment</code>中的布局稍微复杂一些，切换<code>Fragment</code>的时候会顿卡，而且如果再配合<code>DrawrLayout</code>使用的话，还会闪一下屏，效果体验不是很好，本着这个问题，我又再次对<code>Navigation</code>组件进行了分析。</p>
+<h1 id="2-Fragment切换"><a href="#2-Fragment切换" class="headerlink" title="2.Fragment切换"></a>2.Fragment切换</h1><p>通过现象分析，发现当切换<code>NavigationView</code>中的menu菜单来切换<code>Fragment</code>时，<code>DrawerLayout</code>抽屉关闭有一个短暂的动画(具体的这里就不分析了,感兴趣的可以自行查看，但是这不是根本原因)，同时<code>Fragment</code>切换，发生顿卡和闪屏的现象。所以….还是看源码吧：</p>
+<h2 id="2-1-NavController"><a href="#2-1-NavController" class="headerlink" title="2.1 NavController"></a>2.1 NavController</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">navigate</span><span class="params">(@NonNull NavDestination node, @Nullable Bundle args,</span></span></span><br><span class="line"><span class="function"><span class="params">            @Nullable NavOptions navOptions, @Nullable Navigator.Extras navigatorExtras)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> popped = <span class="keyword">false</span>;</span><br><span class="line">        ....</span><br><span class="line">        Navigator&lt;NavDestination&gt; navigator = mNavigatorProvider.getNavigator(</span><br><span class="line">                node.getNavigatorName());</span><br><span class="line">        Bundle finalArgs = node.addInDefaultArgs(args);</span><br><span class="line">        NavDestination newDest = navigator.navigate(node, finalArgs,</span><br><span class="line">                navOptions, navigatorExtras);</span><br><span class="line">       ....</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-FragmentNavigator"><a href="#2-2-FragmentNavigator" class="headerlink" title="2.2 FragmentNavigator"></a>2.2 FragmentNavigator</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> NavDestination <span class="title">navigate</span><span class="params">(@NonNull Destination destination, @Nullable Bundle args,</span></span></span><br><span class="line"><span class="function"><span class="params">            @Nullable NavOptions navOptions, @Nullable Navigator.Extras navigatorExtras)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">//根据classname反射获取Fragmnent</span></span><br><span class="line">        <span class="keyword">final</span> Fragment frag = instantiateFragment(mContext, mFragmentManager,</span><br><span class="line">                className, args);</span><br><span class="line">        frag.setArguments(args);</span><br><span class="line">        <span class="comment">//获取Fragment事务</span></span><br><span class="line">        <span class="keyword">final</span> FragmentTransaction ft = mFragmentManager.beginTransaction();</span><br><span class="line">        <span class="comment">//切换动画设置</span></span><br><span class="line">        <span class="keyword">int</span> enterAnim = navOptions != <span class="keyword">null</span> ? navOptions.getEnterAnim() : -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> exitAnim = navOptions != <span class="keyword">null</span> ? navOptions.getExitAnim() : -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> popEnterAnim = navOptions != <span class="keyword">null</span> ? navOptions.getPopEnterAnim() : -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> popExitAnim = navOptions != <span class="keyword">null</span> ? navOptions.getPopExitAnim() : -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (enterAnim != -<span class="number">1</span> || exitAnim != -<span class="number">1</span> || popEnterAnim != -<span class="number">1</span> || popExitAnim != -<span class="number">1</span>) &#123;</span><br><span class="line">            enterAnim = enterAnim != -<span class="number">1</span> ? enterAnim : <span class="number">0</span>;</span><br><span class="line">            exitAnim = exitAnim != -<span class="number">1</span> ? exitAnim : <span class="number">0</span>;</span><br><span class="line">            popEnterAnim = popEnterAnim != -<span class="number">1</span> ? popEnterAnim : <span class="number">0</span>;</span><br><span class="line">            popExitAnim = popExitAnim != -<span class="number">1</span> ? popExitAnim : <span class="number">0</span>;</span><br><span class="line">            ft.setCustomAnimations(enterAnim, exitAnim, popEnterAnim, popExitAnim);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//切换Fragment</span></span><br><span class="line">        ft.replace(mContainerId, frag);</span><br><span class="line">        ft.setPrimaryNavigationFragment(frag);</span><br><span class="line">        ......</span><br><span class="line">        </span><br><span class="line">        ft.addToBackStack(generateBackStackName(mBackStack.size(), destId));</span><br><span class="line">        ........</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>看到这里就很清楚了吧，<code>Fragment</code>的切换是通过<code>replace</code>方式来切换的，并且加入回退栈，也就是说每次切换<code>Fragment</code>,都会销毁视图和重新创建视图。至于为什么用这种方式我是真的想不到，也没搞清楚初衷是什么？按照我们目前的开发来说，<code>Fragment</code>的切换通常都会使用<code>hide()</code>、<code>show()</code>，而<code>replcae()</code>的方式很少用，替换会把容器中的所有内容全都替换掉，有一些app会使用这样的做法，保持只有一个fragment在显示，减少了界面的层级关系。</p>
+<blockquote>
+<p>不仅仅是这样，上篇文章有小伙伴问切换了<code>Fragment</code>之后，点击返回按钮，发现之前的<code>Fragment</code>重走了<code>onCreateView</code>流程，这就意味着之前的状态没了。对于这个问题其实根据上面的分析，也能大概想到是因为什么，但是返回按钮的操作我之前还真没有看过源码，所以这次顺便了解一下：</p>
+</blockquote>
+<h1 id="3-返回都做了什么"><a href="#3-返回都做了什么" class="headerlink" title="3. 返回都做了什么"></a>3. 返回都做了什么</h1><h2 id="3-1-onBackPressed"><a href="#3-1-onBackPressed" class="headerlink" title="3.1 onBackPressed"></a>3.1 onBackPressed</h2><p>我们同样从首页的<code>onBackPressed</code>入手：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">override fun <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (drawerLayout.isDrawerOpen(GravityCompat.START)) &#123;</span><br><span class="line">            drawerLayout.closeDrawer(GravityCompat.START)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">super</span>.onBackPressed()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        mOnBackPressedDispatcher.onBackPressed();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>最终调用了<code>mOnBackPressedDispatcher</code>的<code>onBackPressed()</code>方法。我们查看这个类，通过<strong>Debug</strong>调试，我们跟到了<code>FragmentManagerImpl</code>类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> OnBackPressedCallback mOnBackPressedCallback =</span><br><span class="line">            <span class="keyword">new</span> OnBackPressedCallback(<span class="keyword">false</span>) &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleOnBackPressed</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            FragmentManagerImpl.<span class="keyword">this</span>.handleOnBackPressed();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br></pre></td></tr></table></figure>
+<p>发现点击返回按钮之后就走到这个，执行<code>handleOnBackPressed()</code>方法。</p>
+<h2 id="3-2-FragmentManagerImpl"><a href="#3-2-FragmentManagerImpl" class="headerlink" title="3.2 FragmentManagerImpl"></a>3.2 FragmentManagerImpl</h2><p>继续跟踪源码，中间的一些过程我这里就忽略掉了，大部分都是一些<code>popBackStack</code>的操作，这里我们直接跟踪到关键点：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在BackStackRecords中进行入栈出栈操作。</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">executeOps</span><span class="params">(ArrayList&lt;BackStackRecord&gt; records,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   ArrayList&lt;Boolean&gt; isRecordPop, <span class="keyword">int</span> startIndex, <span class="keyword">int</span> endIndex)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = startIndex; i &lt; endIndex; i++) &#123;</span><br><span class="line">            <span class="keyword">final</span> BackStackRecord record = records.get(i);</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">boolean</span> isPop = isRecordPop.get(i);</span><br><span class="line">            <span class="keyword">if</span> (isPop) &#123;</span><br><span class="line">                record.bumpBackStackNesting(-<span class="number">1</span>);</span><br><span class="line">                <span class="comment">// Only execute the add operations at the end of</span></span><br><span class="line">                <span class="comment">// all transactions.</span></span><br><span class="line">                <span class="keyword">boolean</span> moveToState = i == (endIndex - <span class="number">1</span>);</span><br><span class="line">                record.executePopOps(moveToState);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                record.bumpBackStackNesting(<span class="number">1</span>);</span><br><span class="line">                record.executeOps();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到通过遍历栈数组，对<code>record</code>做<code>executePopOps()</code>操作，通过cmd来让<code>FragmentManager</code>做相关操作。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">executePopOps</span><span class="params">(<span class="keyword">boolean</span> moveToState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> opNum = mOps.size() - <span class="number">1</span>; opNum &gt;= <span class="number">0</span>; opNum--) &#123;</span><br><span class="line">            <span class="keyword">final</span> Op op = mOps.get(opNum);</span><br><span class="line">            Fragment f = op.mFragment;</span><br><span class="line">            <span class="keyword">if</span> (f != <span class="keyword">null</span>) &#123;</span><br><span class="line">                f.setNextTransition(FragmentManagerImpl.reverseTransit(mTransition),</span><br><span class="line">                        mTransitionStyle);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">switch</span> (op.mCmd) &#123;</span><br><span class="line">                <span class="keyword">case</span> OP_ADD:</span><br><span class="line">                    f.setNextAnim(op.mPopExitAnim);</span><br><span class="line">                    mManager.removeFragment(f);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> OP_REMOVE:</span><br><span class="line">                    f.setNextAnim(op.mPopEnterAnim);</span><br><span class="line">                    mManager.addFragment(f, <span class="keyword">false</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> OP_HIDE:</span><br><span class="line">                    f.setNextAnim(op.mPopEnterAnim);</span><br><span class="line">                    mManager.showFragment(f);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> OP_SHOW:</span><br><span class="line">                    f.setNextAnim(op.mPopExitAnim);</span><br><span class="line">                    mManager.hideFragment(f);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> OP_DETACH:</span><br><span class="line">                    f.setNextAnim(op.mPopEnterAnim);</span><br><span class="line">                    mManager.attachFragment(f);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> OP_ATTACH:</span><br><span class="line">                    f.setNextAnim(op.mPopExitAnim);</span><br><span class="line">                    mManager.detachFragment(f);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> OP_SET_PRIMARY_NAV:</span><br><span class="line">                    mManager.setPrimaryNavigationFragment(<span class="keyword">null</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> OP_UNSET_PRIMARY_NAV:</span><br><span class="line">                    mManager.setPrimaryNavigationFragment(f);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">case</span> OP_SET_MAX_LIFECYCLE:</span><br><span class="line">                    mManager.setMaxLifecycle(f, op.mOldMaxState);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Unknown cmd: "</span> + op.mCmd);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (!mReorderingAllowed &amp;&amp; op.mCmd != OP_REMOVE &amp;&amp; f != <span class="keyword">null</span>) &#123;</span><br><span class="line">                mManager.moveFragmentToExpectedState(f);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!mReorderingAllowed &amp;&amp; moveToState) &#123;</span><br><span class="line">            mManager.moveToState(mManager.mCurState, <span class="keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>同时重新设置<code>PrimaryNavigationFragment</code>，add我们的首页<code>Fragment</code>，最后执行<code>moveToState</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFragment</span><span class="params">(Fragment fragment, <span class="keyword">boolean</span> moveToStateNow)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"add: "</span> + fragment);</span><br><span class="line">        makeActive(fragment);</span><br><span class="line">        <span class="keyword">if</span> (!fragment.mDetached) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mAdded.contains(fragment)) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Fragment already added: "</span> + fragment);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">synchronized</span> (mAdded) &#123;</span><br><span class="line">                mAdded.add(fragment);</span><br><span class="line">            &#125;</span><br><span class="line">            fragment.mAdded = <span class="keyword">true</span>;</span><br><span class="line">            fragment.mRemoving = <span class="keyword">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (fragment.mView == <span class="keyword">null</span>) &#123;</span><br><span class="line">                fragment.mHiddenChanged = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (isMenuAvailable(fragment)) &#123;</span><br><span class="line">                mNeedMenuInvalidate = <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (moveToStateNow) &#123;</span><br><span class="line">                moveToState(fragment);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>当我们继续跟踪的时候就会发现，在<code>moveToState</code>方法中，<code>Fragment</code>的state是<code>Fragment.CREATED</code>，并且会执行<code>performCreateView()</code>中的<code>onCreateView()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f.mContainer = container;</span><br><span class="line">f.performCreateView(f.performGetLayoutInflater(f.mSavedFragmentState), container, f.mSavedFragmentState);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">performCreateView</span><span class="params">(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,</span></span></span><br><span class="line"><span class="function"><span class="params">            @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        mChildFragmentManager.noteStateNotSaved();</span><br><span class="line">        mPerformedCreateView = <span class="keyword">true</span>;</span><br><span class="line">        mViewLifecycleOwner = <span class="keyword">new</span> FragmentViewLifecycleOwner();</span><br><span class="line">        mView = onCreateView(inflater, container, savedInstanceState);</span><br><span class="line">        ....</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>到这里就基本结束了，我只分析了一个大概，可以了解到点击返回按钮，同样也会重新创建视图，也就是<code>onCreateView</code>会重新走一遍。</p>
+<h1 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h1><p>对于<code>Navigation</code>组件的这种切换方式，我也很无奈，而且也并没有暴露出来API供我们使用其他切换方式，我也询问了很多大佬，他们也不是很清楚，也有的发现这也是<code>Navigation</code>的一个很大的诟病。那么有没有解决办法呢？很遗憾我目前还没有想到比较好的办法。</p>
+<blockquote>
+<p>基于<code>Navigation</code>用来承载<code>Fragment</code>的容器是<code>NavHostFragment</code>，所以我们并不能使用<code>ViewPager+Fragment</code>的通过<code>setUserVisibleHint</code>实现懒加载的方式；同样我们也没办法使用<code>onHiddenChanged</code>的方式来实现复杂逻辑的加载；但是你可以在进入<code>Fragment</code>的时候先显示一个Loading框，加载完数据之后再渲染布局，这样的话可以减少一些尴尬。</p>
+</blockquote>
+<h2 id="4-1-建议"><a href="#4-1-建议" class="headerlink" title="4.1 建议"></a>4.1 建议</h2><p>这里我的建议是：如果你的每个<code>Fragment</code>真的每次都需要重新绘制的话，你可以考虑使用<code>Navigation</code>组件来实现，毕竟通过<code>Navgation</code>组件真的很方便帮助我们切换导航，而且虽然布局会重新绘制，但是Google的官方Demo–<a href="https://github.com/googlesamples/android-sunflower" target="_blank" rel="noopener">SunFlower</a>还是使用了这种方式，所以这里面我觉得：官方推荐我们使用Jetpack组件中的<strong>ViewModel</strong>、<strong>LiveData</strong>…..等，可以发现<strong>SunFlower</strong>demo中，即便是切换Fragmengt也不会有很明显的卡顿现象，因为每个Fragment即便重新绘制，但是View所对应的<strong>ViewModel</strong>还在，数据并不需要重新加载或者请求，当然这仅仅是我自己的看法啊.</p>
+<p>但是如果你没有这种场景的话，建议还是用普通的方式我们自己来控制切换吧，这样无论是基于<code>Drawerlayout</code>还是<code>BottomNaivgationView</code>的话，我们可以自己实现切换。这块我也不是很确定哈，也希望听取大家的意见和建议。</p>
+<blockquote>
+<p>我还发现一个问题，就是Play商店，现在就是这样的情况，抽屉栏中的<code>Item</code>每个基本都是重新绘制，而且第一个<code>Item</code><strong>我的应用和游戏</strong>切换的时候就会有很明显的卡顿和闪屏，猜测Google play 商店具体是不是使用的<code>Navigation</code>组件不敢确定，但是它很大几率是通过<code>replace</code>方式来做的切换。感兴趣的话可以看一下，我这贴一个GIF图，不一定能看清楚，不过确实是这个效果。</p>
+</blockquote>
+<p><img src="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?w=448&amp;h=960&amp;f=gif&amp;s=846100" alt=""></p>
+<p>最后，如果有不对的地方或者更好的解决办法，可以一起讨论一下哈！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Navigation/" rel="tag"># Navigation</a>
+          
+            <a href="/tags/源码解析/" rel="tag"># 源码解析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/21/JetpackNote_navigation/" rel="next" title="1. Jetpack源码解析---看完你就知道Navigation是什么了？">
+                <i class="fa fa-chevron-left"></i> 1. Jetpack源码解析---看完你就知道Navigation是什么了？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/02/JetpackNote_lifecycles/" rel="prev" title="3. Jetpack源码解析---用Lifecycles管理生命周期">
+                3. Jetpack源码解析---用Lifecycles管理生命周期 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hankkin" />
+            
+              <p class="site-author-name" itemprop="name">Hankkin</p>
+              <p class="site-description motion-element" itemprop="description">淡泊明志，宁静致远</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hankkin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2179169605" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/1ff65e347973" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/lyhhj" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/55dea68160b291d79422c1bb" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Fragment切换"><span class="nav-number">2.</span> <span class="nav-text">2.Fragment切换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-NavController"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 NavController</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-FragmentNavigator"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 FragmentNavigator</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-返回都做了什么"><span class="nav-number">3.</span> <span class="nav-text">3. 返回都做了什么</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-onBackPressed"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 onBackPressed</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-FragmentManagerImpl"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 FragmentManagerImpl</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-总结"><span class="nav-number">4.</span> <span class="nav-text">4. 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-建议"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 建议</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hankkin</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">49.8k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '47sd2IfvIDsgCfG3HzCo3m5i-gzGzoHsz',
+        appKey: 'aT9mmWaSOHJjX8z5T8tbe8nb',
+        placeholder: '亲，留个言吧？O(∩_∩)O~',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("47sd2IfvIDsgCfG3HzCo3m5i-gzGzoHsz", "aT9mmWaSOHJjX8z5T8tbe8nb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
