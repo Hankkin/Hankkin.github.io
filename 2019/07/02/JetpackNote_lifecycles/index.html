@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/6/28/16b9ce712f4ecb55?w=700&h=381&f=png&s=75690">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/6/28/16b9ce71349ff98d?w=1112&h=648&f=png&s=196106">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/6/28/16b9ce712f7a4174?w=703&h=185&f=png&s=20749">
-<meta property="og:updated_time" content="2019-07-03T15:30:34.687Z">
+<meta property="og:updated_time" content="2019-07-12T15:56:51.467Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3. Jetpack源码解析---用Lifecycles管理生命周期">
 <meta name="twitter:description" content="1. 背景 上一篇我门对Jetpack组件中的Navigation做了介绍，并且对其做了源码分析，相信看过之后已经对此有了一定的了解，本篇文章我们会对Lifecycles进行使用及源码的介绍，还没看上篇的可以看一下：  系列文章： 1. Jetpack源码解析—看完你就知道Navigation是什么了？ 2. Jetpack源码解析—Navigation为什么切换Fragment会重绘？ 2. 基">
@@ -416,8 +416,8 @@
 <p>上一篇我门对Jetpack组件中的<code>Navigation</code>做了介绍，并且对其做了源码分析，相信看过之后已经对此有了一定的了解，本篇文章我们会对<code>Lifecycles</code>进行使用及源码的介绍，还没看上篇的可以看一下：</p>
 </blockquote>
 <p><strong>系列文章</strong>：</p>
-<p><a href="https://juejin.im/post/5d1202fc6fb9a07ef90ca7a1" target="_blank" rel="noopener">1. Jetpack源码解析—看完你就知道Navigation是什么了？</a></p>
-<p><a href="https://juejin.im/post/5d12cfea6fb9a07ed4411040" target="_blank" rel="noopener">2. Jetpack源码解析—Navigation为什么切换Fragment会重绘？</a></p>
+<p><a href="http://hankkin.club/2019/06/21/JetpackNote_navigation/" target="_blank" rel="noopener">1. Jetpack源码解析—看完你就知道Navigation是什么了？</a></p>
+<p><a href="http://hankkin.club/2019/06/28/JetpackNote_navigationmore/" target="_blank" rel="noopener">2. Jetpack源码解析—Navigation为什么切换Fragment会重绘？</a></p>
 <h1 id="2-基础"><a href="#2-基础" class="headerlink" title="2. 基础"></a>2. 基础</h1><h2 id="2-1-简介"><a href="#2-1-简介" class="headerlink" title="2.1 简介"></a>2.1 简介</h2><p><code>Lifecycles</code>是一个持有组件生命周期状态（如Activity、Fragment）信息的类，并允许其他对象观察此状态。可以帮助我们方便的管理<code>Activity</code>和<code>Fragment</code>的生命周期。</p>
 <p><code>Lifecycle组件</code>中通过两个枚举类来跟踪其关联组件的生命周期：<br><br><img src="https://user-gold-cdn.xitu.io/2019/6/28/16b9ce712f4ecb55?w=700&amp;h=381&amp;f=png&amp;s=75690" alt=""></p>
 <h2 id="2-2-基本使用"><a href="#2-2-基本使用" class="headerlink" title="2.2 基本使用"></a>2.2 基本使用</h2><blockquote>

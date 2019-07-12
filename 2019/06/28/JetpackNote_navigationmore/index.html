@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Navigation,源码解析," />
+  <meta name="keywords" content="源码解析,Navigation," />
 
 
 
@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  Jetpack组件之Navigation—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天">
-<meta name="keywords" content="Navigation,源码解析">
+<meta name="description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  1. Jetpack源码解析—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天，我们宣布推">
+<meta name="keywords" content="源码解析,Navigation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2. Jetpack源码解析---Navigation为什么切换Fragment会重绘？">
 <meta property="og:url" content="http://yoursite.com/2019/06/28/JetpackNote_navigationmore/index.html">
 <meta property="og:site_name" content="Hankkin的博客">
-<meta property="og:description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  Jetpack组件之Navigation—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天">
+<meta property="og:description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  1. Jetpack源码解析—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天，我们宣布推">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?imageslim">
-<meta property="og:updated_time" content="2019-07-03T15:42:53.476Z">
+<meta property="og:updated_time" content="2019-07-12T15:57:02.765Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2. Jetpack源码解析---Navigation为什么切换Fragment会重绘？">
-<meta name="twitter:description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  Jetpack组件之Navigation—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天">
+<meta name="twitter:description" content="上篇文章我们简单的介绍了Navigation组件的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于Navigation实现的一些探讨。还没有看过上篇文章的可以查看一下：  1. Jetpack源码解析—看完你就知道Navigation是什么了？ 1. 背景先来看一下Navigation组件在官方文档上的介绍：  今天，我们宣布推">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/6/26/16b9312326ec4fd6?imageslim">
 
 
@@ -373,7 +373,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,350
+                  2,352
                 </span>
               
 
@@ -413,7 +413,7 @@
         <blockquote>
 <p>上篇文章我们简单的介绍了<strong>Navigation组件</strong>的使用，以及深入分析了源码中的具体实现，基本原理我们已经很清晰了。本篇文章主要介绍下我在项目中遇到的问题，以及目前关于<strong>Navigation</strong>实现的一些探讨。还没有看过上篇文章的可以查看一下：</p>
 </blockquote>
-<p><a href="https://juejin.im/post/5d1202fc6fb9a07ef90ca7a1" target="_blank" rel="noopener">Jetpack组件之Navigation—看完你就知道Navigation是什么了？</a></p>
+<p><a href="http://hankkin.club/2019/06/21/JetpackNote_navigation/" target="_blank" rel="noopener">1. Jetpack源码解析—看完你就知道Navigation是什么了？</a></p>
 <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>先来看一下<code>Navigation</code>组件在官方文档上的介绍：</p>
 <blockquote>
 <p>今天，我们宣布推出Navigation组件，作为构建您的应用内界面的框架，重点是让单 Activity 应用成为首选架构。利用Navigation组件对 Fragment 的原生支持，您可以获得架构组件的所有好处（例如生命周期和 ViewModel），同时让此组件为您处理 FragmentTransaction 的复杂性。此外，Navigation组件还可以让您声明我们为您处理的转场。它可以自动构建正确的“向上”和“返回”行为，包含对深层链接的完整支持，并提供了帮助程序，用于将导航关联到合适的 UI 小部件，例如抽屉式导航栏和底部导航。</p>
@@ -476,9 +476,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Navigation/" rel="tag"># Navigation</a>
-          
             <a href="/tags/源码解析/" rel="tag"># 源码解析</a>
+          
+            <a href="/tags/Navigation/" rel="tag"># Navigation</a>
           
         </div>
       
