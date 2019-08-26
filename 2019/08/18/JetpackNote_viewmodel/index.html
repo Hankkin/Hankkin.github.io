@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="源码解析,ViewModel," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="截止到目前为止，JetpackNote源码分析的文章已经有四篇文章了，这一系列的文章我的初衷是想仔细研究一下Jetpack，最终使用Jetpack组件写一个Demo，上一篇已经分析了LiveData,本篇文章将分析ViewModel.  1.背景Jetpack源码解析系列文章： 1. Jetpack源码解析—看完你就知道Navigation是什么了？ 2. Jetpack源码解析—Navigat">
+<meta name="keywords" content="源码解析,ViewModel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5. Jetpack源码解析---ViewModel基本使用及源码解析">
+<meta property="og:url" content="http://yoursite.com/2019/08/18/JetpackNote_viewmodel/index.html">
+<meta property="og:site_name" content="Hankkin的博客">
+<meta property="og:description" content="截止到目前为止，JetpackNote源码分析的文章已经有四篇文章了，这一系列的文章我的初衷是想仔细研究一下Jetpack，最终使用Jetpack组件写一个Demo，上一篇已经分析了LiveData,本篇文章将分析ViewModel.  1.背景Jetpack源码解析系列文章： 1. Jetpack源码解析—看完你就知道Navigation是什么了？ 2. Jetpack源码解析—Navigat">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006tNc79ly1g4x4ekhyy6j30ei0f33z7.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g50mvqgev4j312k0eygoc.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79ly1g50n1njqa5j30ak04w0ti.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g50n3x00lzj30lx04yabg.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79ly1g50ngu885mj30ng063q6j.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g51g50jublj30vr07bn2w.jpg">
+<meta property="og:updated_time" content="2019-08-26T14:44:04.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="5. Jetpack源码解析---ViewModel基本使用及源码解析">
+<meta name="twitter:description" content="截止到目前为止，JetpackNote源码分析的文章已经有四篇文章了，这一系列的文章我的初衷是想仔细研究一下Jetpack，最终使用Jetpack组件写一个Demo，上一篇已经分析了LiveData,本篇文章将分析ViewModel.  1.背景Jetpack源码解析系列文章： 1. Jetpack源码解析—看完你就知道Navigation是什么了？ 2. Jetpack源码解析—Navigat">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/006tNc79ly1g4x4ekhyy6j30ei0f33z7.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/18/JetpackNote_viewmodel/"/>
+
+
+
+
+
+  <title>5. Jetpack源码解析---ViewModel基本使用及源码解析 | Hankkin的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+
+<a href="https://github.com/Hankkin" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hankkin的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡泊明志，宁静致远</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/18/JetpackNote_viewmodel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hankkin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hankkin的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">5. Jetpack源码解析---ViewModel基本使用及源码解析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-18T22:46:51+08:00">
+                2019-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jetpack/" itemprop="url" rel="index">
+                    <span itemprop="name">Jetpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/18/JetpackNote_viewmodel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/18/JetpackNote_viewmodel/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/08/18/JetpackNote_viewmodel/" class="leancloud_visitors" data-flag-title="5. Jetpack源码解析---ViewModel基本使用及源码解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,472
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>截止到目前为止，<strong>JetpackNote</strong>源码分析的文章已经有四篇文章了，这一系列的文章我的初衷是想仔细研究一下<strong>Jetpack</strong>，最终使用<strong>Jetpack</strong>组件写一个Demo，上一篇已经分析了<code>LiveData</code>,本篇文章将分析<strong>ViewModel</strong>.</p>
+</blockquote>
+<h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h1><p>Jetpack源码解析系列文章：</p>
+<p><a href="https://www.yuque.com/hankkin/jetpack/navigation_code" target="_blank" rel="noopener">1. Jetpack源码解析—看完你就知道Navigation是什么了？</a></p>
+<p><a href="https://juejin.im/post/5d12cfea6fb9a07ed4411040" target="_blank" rel="noopener">2. Jetpack源码解析—Navigation为什么切换Fragment会重绘？</a></p>
+<p><a href="https://www.yuque.com/hankkin/jetpack/lifecycle_code" target="_blank" rel="noopener">3. Jetpack源码解析—用Lifecycles管理生命周期</a></p>
+<p><a href="https://juejin.im/post/5d247b036fb9a07eee5ef3df" target="_blank" rel="noopener">4. Jetpack源码解析—LiveData的使用及工作原理</a></p>
+<p>上篇我们对<code>LiveData</code>进行了分析，已清楚了它的主要作用，我们再来温习一下：</p>
+<blockquote>
+<p><strong>LiveData</strong>是一个可以感知Activity、Fragment生命周期的数据容器。其本身是基于观察者模式设计的，当<code>LiveData</code>所持有的数据发生改变时，它会通知对应的界面所持有该数据的UI进行更新，并且<code>LiveData</code>中持有<code>Lifecycle</code>的引用，所以只会在<code>LifecycleOwner</code>处于<code>Active</code>的状态下通知数据改变，果数据改变发生在非 active 状态，数据会变化，但是不发送通知，等 <code>owner</code> 回到 active 的状态下，再发送通知.</p>
+<p>而<code>LiveData</code>配合今天所讲的<code>ViewModel</code>使用起来真的是非常方便，接下来我们开始分析：</p>
+</blockquote>
+<h1 id="2-简介"><a href="#2-简介" class="headerlink" title="2.简介"></a>2.简介</h1><h2 id="2-1-是什么？"><a href="#2-1-是什么？" class="headerlink" title="2.1 是什么？"></a>2.1 是什么？</h2><p>简单来说：<code>ViewModel</code>是以关联生命周期的方式来存储和管理UI相关数据的类，即使<code>configuration</code>发生改变(例如屏幕旋转),数据仍然可以存在不会销毁.</p>
+<p>举个例子来说：我们在开发中经常会遇到这种场景，当我们的Activity和Fragment被销毁重建之后，它们中的数据将会丢失，而我们一般的解决方案就是通过<code>onSaveInstanceState()</code>中保存数据，然后在<code>onCreate()</code>中恢复过来，但是当这些数据较大时或者数据可能又需要重新请求接口，这时候ViewModel就派上用场了，也就是说当我们把数据保存在ViewModel中，不管Activity和Fragment被销毁了还是屏幕旋转导致configuration发生了变化，保存在其中的数据依然存在。</p>
+<p>不仅如此，ViewModel还可以帮助我们轻易的实现Fragment及Activity之间的数据共享和通信，下面会详细介绍。</p>
+<h2 id="2-2-ViewModel生命周期"><a href="#2-2-ViewModel生命周期" class="headerlink" title="2.2 ViewModel生命周期"></a>2.2 ViewModel生命周期</h2><p>先来看一下官方给出的图：</p>
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g4x4ekhyy6j30ei0f33z7.jpg" alt=""></p>
+<p>图中展示了当一个Activity经过屏幕旋转后的生命周期状态改变，右侧则是ViewModel的生命周期状态。我们可以看到ViewModel的生命周期并不会跟随着Activity的生命周期变化而变化，虽然ViewModel是由该Activity创建的。我们会在源码分析部分再去看ViewModel的生命周期具体是怎样的。下面我们看下ViewModel该怎样使用？</p>
+<h1 id="3-基本使用"><a href="#3-基本使用" class="headerlink" title="3. 基本使用"></a>3. 基本使用</h1><h2 id="3-1-数据存储"><a href="#3-1-数据存储" class="headerlink" title="3.1 数据存储"></a>3.1 数据存储</h2><p>我们参考官方Demo实现一个计时器的功能，并且演示当屏幕发生旋转时，计时器会不会重新启动：</p>
+<p><strong>DemoViewModel</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DemoViewModel</span> : <span class="type">ViewModel</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> time: <span class="built_in">Long</span>? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> seekbarValue = MutableLiveData&lt;<span class="built_in">Int</span>&gt;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>ViewModelFragment</strong></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewModelFragment</span> : <span class="type">Fragment</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateView</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        inflater: <span class="type">LayoutInflater</span>, container: <span class="type">ViewGroup</span>?,</span></span></span><br><span class="line"><span class="function"><span class="params">        savedInstanceState: <span class="type">Bundle</span>?</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span></span>: View? &#123;</span><br><span class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.fragment_view_model, container, <span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityCreated</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState)</span><br><span class="line">        <span class="keyword">val</span> vm = ViewModelProviders.of(<span class="keyword">this</span>).<span class="keyword">get</span>(DemoViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">        <span class="keyword">if</span> (vm.time == <span class="literal">null</span>) &#123;</span><br><span class="line">            vm.time = SystemClock.elapsedRealtime()</span><br><span class="line">        &#125;</span><br><span class="line">        chronometer.base = vm.time!!</span><br><span class="line">        chronometer.start()</span><br><span class="line"></span><br><span class="line">        btn_fragment_share.setOnClickListener &#123;</span><br><span class="line">            findNavController().navigate(R.id.viewModelShareActivity)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码很简单，只是在ViewModel中存储了一个<code>time</code>值，在fragment中启动计时器，当我们旋转屏幕的时候你会发现，计时器的值并没有变化，仍然按照旋转之前的数值进行计数。</p>
+<h2 id="3-2-Fragment数据共享"><a href="#3-2-Fragment数据共享" class="headerlink" title="3.2 Fragment数据共享"></a>3.2 Fragment数据共享</h2><p>在<a href="https://github.com/Hankkin/JetPack_Note/blob/master/app/src/main/java/com/hankkin/jetpack_note/ui/viewmodel/ViewModelShareActivity.kt" target="_blank" rel="noopener">ViewModelShareActivity</a>中展示了ViewModel中的数据进行Fragment数据共享的功能。</p>
+<p>在之前的<strong>DemoViewModel</strong>中我们存储了<code>seekbar</code>的值，然后我们看Fragment中是怎么实现的？</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataShareFragment</span> : <span class="type">Fragment</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">lateinit</span> <span class="keyword">var</span> mViewModel: DemoViewModel</span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreateView</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        inflater: <span class="type">LayoutInflater</span>, container: <span class="type">ViewGroup</span>?,</span></span></span><br><span class="line"><span class="function"><span class="params">        savedInstanceState: <span class="type">Bundle</span>?</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span></span>: View? &#123;</span><br><span class="line">        mViewModel = ViewModelProviders.of(activity!!).<span class="keyword">get</span>(DemoViewModel::<span class="class"><span class="keyword">class</span>.<span class="title">java</span>)</span></span><br><span class="line">        <span class="keyword">return</span> inflater.inflate(R.layout.fragment_data_share, container, <span class="literal">false</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onActivityCreated</span><span class="params">(savedInstanceState: <span class="type">Bundle</span>?)</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.onActivityCreated(savedInstanceState)</span><br><span class="line">        subscribeSeekBar()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">subscribeSeekBar</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="comment">// 监听SeekBar改变ViewModel的中的值</span></span><br><span class="line">        seekBar.setOnSeekBarChangeListener(<span class="keyword">object</span> : SeekBar.OnSeekBarChangeListener &#123;</span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onProgressChanged</span><span class="params">(seekBar: <span class="type">SeekBar</span>, progress: <span class="type">Int</span>, fromUser: <span class="type">Boolean</span>)</span></span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (fromUser) &#123;</span><br><span class="line">                    mViewModel.seekbarValue.value = progress</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onStartTrackingTouch</span><span class="params">(seekBar: <span class="type">SeekBar</span>)</span></span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onStopTrackingTouch</span><span class="params">(seekBar: <span class="type">SeekBar</span>)</span></span> &#123;&#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="comment">// 当ViewModel中的值发生变化时，更新SeekBar</span></span><br><span class="line">        activity?.let &#123;</span><br><span class="line">            mViewModel.seekbarValue.observe(it, Observer&lt;<span class="built_in">Int</span>&gt; &#123; value -&gt;</span><br><span class="line">                <span class="keyword">if</span> (value != <span class="literal">null</span>) &#123;</span><br><span class="line">                    seekBar.progress = value</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看代码其实挺简单的，只做了两个操作：</p>
+<ol>
+<li>监听SeekBar改变ViewModel的中的值</li>
+<li>当ViewModel中的值发生变化时，更新SeekBar</li>
+</ol>
+<p>同样，当旋转屏幕之后，SeekBar的值也不会改变。到这里<strong>ViewModel</strong>的基本使用方式我们已经了解了，接下来我们来分析一下它具体是怎么实现的？</p>
+<blockquote>
+<p>没错，又到了源码分析的部分了，相信很多童鞋也都比较不喜欢源码的部分，包括我也是，之前很不愿意去看源码，但是当你尝试看了一些源码之后，你会发现很有意思的，因为有些东西你是有必要去分析源码实现的，这是作为一个开发者必备的基本的素质，而且当你使用一个组件的时候，一步一步的跟着代码走，慢慢的分析了整个的组件设计方式，最后站在开发这个组件的角度，去看他的设计思想和一些模式的时候，对自己本身也是一个很大的提高，所以我真的建议有兴趣的可以跟着自己的思路一步一步的看下源码。好了废话不多说。</p>
+</blockquote>
+<h1 id="4-源码分析"><a href="#4-源码分析" class="headerlink" title="4. 源码分析"></a>4. 源码分析</h1><p><strong>ViewModelProviders</strong></p>
+<p>在使用VM的时候一般都通过<code>val vm = ViewModelProviders.of(this).get(DemoViewModel::class.java)</code>去创建，具体来看一下<strong>of</strong>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@MainThread</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ViewModelProvider <span class="title">of</span><span class="params">(@NonNull Fragment fragment, @Nullable Factory factory)</span> </span>&#123;</span><br><span class="line">        Application application = checkApplication(checkActivity(fragment));</span><br><span class="line">        <span class="keyword">if</span> (factory == <span class="keyword">null</span>) &#123;</span><br><span class="line">            factory = ViewModelProvider.AndroidViewModelFactory.getInstance(application);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ViewModelProvider(fragment.getViewModelStore(), factory);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>of</strong>方法通过<strong>ViewModelProvider</strong>中的一个单例<strong>AndroidViewModelFactory</strong>创建了Factory帮助我们去创建VM，并且返回了一个<strong>ViewModelProvider</strong>。大家注意一下第一个参数<code>fragment.getViewModelStore()</code>，这个<strong>ViewModelStore</strong>是什么呢？接着看</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewModelStore</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;String, ViewModel&gt; mMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">//存储VM</span></span><br><span class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(String key, ViewModel viewModel)</span> </span>&#123;</span><br><span class="line">        ViewModel oldViewModel = mMap.put(key, viewModel);</span><br><span class="line">        <span class="keyword">if</span> (oldViewModel != <span class="keyword">null</span>) &#123;</span><br><span class="line">            oldViewModel.onCleared();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">final</span> ViewModel <span class="title">get</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mMap.get(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">Set&lt;String&gt; <span class="title">keys</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HashSet&lt;&gt;(mMap.keySet());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  Clears internal storage and notifies ViewModels that they are no longer used.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (ViewModel vm : mMap.values()) &#123;</span><br><span class="line">            vm.clear();</span><br><span class="line">        &#125;</span><br><span class="line">        mMap.clear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实就是一个存储VM的容器，里面通过HashMap进行存和取。</p>
+<p>下面我们看创建VM时的<code>get()</code>方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@MainThread</span></span><br><span class="line">    <span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">get</span><span class="params">(@NonNull String key, @NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">            <span class="comment">//在ViewModelStore中拿到VM实例</span></span><br><span class="line">        ViewModel viewModel = mViewModelStore.get(key);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (modelClass.isInstance(viewModel)) &#123;</span><br><span class="line">            <span class="comment">//noinspection unchecked</span></span><br><span class="line">            <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//noinspection StatementWithEmptyBody</span></span><br><span class="line">            <span class="keyword">if</span> (viewModel != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="comment">// <span class="doctag">TODO:</span> log a warning.</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//工厂创建VM，并保存VM</span></span><br><span class="line">        <span class="keyword">if</span> (mFactory <span class="keyword">instanceof</span> KeyedFactory) &#123;</span><br><span class="line">            viewModel = ((KeyedFactory) (mFactory)).create(key, modelClass);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            viewModel = (mFactory).create(modelClass);</span><br><span class="line">        &#125;</span><br><span class="line">        mViewModelStore.put(key, viewModel);</span><br><span class="line">        <span class="comment">//noinspection unchecked</span></span><br><span class="line">        <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>get()</code>方法就是获取VM实例的过程，如果VM不存在，则通过工厂去创建实例。具体工厂创建实现：</p>
+<p></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">AndroidViewModelFactory</span> <span class="keyword">extends</span> <span class="title">ViewModelProvider</span>.<span class="title">NewInstanceFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> AndroidViewModelFactory sInstance;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Retrieve a singleton instance of AndroidViewModelFactory.</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> application an application to pass in &#123;<span class="doctag">@link</span> AndroidViewModel&#125;</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> A valid &#123;<span class="doctag">@link</span> AndroidViewModelFactory&#125;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@NonNull</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AndroidViewModelFactory <span class="title">getInstance</span><span class="params">(@NonNull Application application)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">                sInstance = <span class="keyword">new</span> AndroidViewModelFactory(application);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> sInstance;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Application mApplication;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Creates a &#123;<span class="doctag">@code</span> AndroidViewModelFactory&#125;</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> application an application to pass in &#123;<span class="doctag">@link</span> AndroidViewModel&#125;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">AndroidViewModelFactory</span><span class="params">(@NonNull Application application)</span> </span>&#123;</span><br><span class="line">            mApplication = application;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@NonNull</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">create</span><span class="params">(@NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (AndroidViewModel.class.isAssignableFrom(modelClass)) &#123;</span><br><span class="line">                <span class="comment">//noinspection TryWithIdenticalCatches</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> modelClass.getConstructor(Application.class).newInstance(mApplication);</span><br><span class="line">                &#125; </span><br><span class="line">              .......</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.create(modelClass);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>这个工厂就很简单了，就是通过反射来创建VM实例。</p>
+<p>到这里VM的创建过程就差不多了，而我们发现他并没有和生命周期有什么相关的东西，或者说VM是怎样保证的的数据不被销毁的呢？看了网上的一些文章，很多都说在<code>of</code>方法的时候传入了<strong>Fragment</strong>,并且通过<strong>HolderFragment</strong>持有<strong>ViewModelStore</strong>对象等等……比如：</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g50mvqgev4j312k0eygoc.jpg" alt=""></p>
+<p>但是在我这里发现跟他们的都不一样，我搜了一下<strong>ViewModelStores</strong>，发现它已经‘退役’了。</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g50n1njqa5j30ak04w0ti.jpg" alt=""></p>
+<p>并且它的注释也告诉了我们它的继承者：</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g50n3x00lzj30lx04yabg.jpg" alt=""></p>
+<p>也就是我们在<code>of()</code>方法中的:</p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g50ngu885mj30ng063q6j.jpg" alt=""></p>
+<p>也就是说谷歌已经将<strong>ViewModelStore</strong>集成到了<strong>Fragment</strong>中，一起去看一下吧：</p>
+<p><strong>Fragment.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">        <span class="meta">@NonNull</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ViewModelStore <span class="title">getViewModelStore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mFragmentManager == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Can't access ViewModels from detached fragment"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> mFragmentManager.getViewModelStore(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">FragmentManagerImpl.java</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> FragmentManagerViewModel mNonConfig;</span><br><span class="line">        ......</span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function">ViewModelStore <span class="title">getViewModelStore</span><span class="params">(@NonNull Fragment f)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mNonConfig.getViewModelStore(f);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以看到代码到了我们熟悉的<strong>FragmentManagerImpl</strong>，它的里面持有了一个<strong>FragmentManagerViewModel</strong>实例，进去看看这个是个什么东西：</p>
+<p><strong>FragmentManagerViewModel.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FragmentManagerViewModel</span> <span class="keyword">extends</span> <span class="title">ViewModel</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建FragmentVM的工厂</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ViewModelProvider.Factory FACTORY = <span class="keyword">new</span> ViewModelProvider.Factory() &#123;</span><br><span class="line">        <span class="meta">@NonNull</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">        <span class="keyword">public</span> &lt;T extends ViewModel&gt; <span class="function">T <span class="title">create</span><span class="params">(@NonNull Class&lt;T&gt; modelClass)</span> </span>&#123;</span><br><span class="line">            FragmentManagerViewModel viewModel = <span class="keyword">new</span> FragmentManagerViewModel(<span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">return</span> (T) viewModel;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//从viewModelProvider中获取FragmentVM实例</span></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> FragmentManagerViewModel <span class="title">getInstance</span><span class="params">(ViewModelStore viewModelStore)</span> </span>&#123;</span><br><span class="line">        ViewModelProvider viewModelProvider = <span class="keyword">new</span> ViewModelProvider(viewModelStore,</span><br><span class="line">                FACTORY);</span><br><span class="line">        <span class="keyword">return</span> viewModelProvider.get(FragmentManagerViewModel.class);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//非中断的Fragment集合</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashSet&lt;Fragment&gt; mRetainedFragments = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;String, FragmentManagerViewModel&gt; mChildNonConfigs = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;String, ViewModelStore&gt; mViewModelStores = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> mStateAutomaticallySaved;</span><br><span class="line">    <span class="comment">// Only used when mStateAutomaticallySaved is true</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> mHasBeenCleared = <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">// Only used when mStateAutomaticallySaved is false</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> mHasSavedSnapshot = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    FragmentManagerViewModel(<span class="keyword">boolean</span> stateAutomaticallySaved) &#123;</span><br><span class="line">        mStateAutomaticallySaved = stateAutomaticallySaved;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//添加非中断Fragment</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">addRetainedFragment</span><span class="params">(@NonNull Fragment fragment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mRetainedFragments.add(fragment);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function">Collection&lt;Fragment&gt; <span class="title">getRetainedFragments</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mRetainedFragments;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//是否改销毁</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">shouldDestroy</span><span class="params">(@NonNull Fragment fragment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!mRetainedFragments.contains(fragment)) &#123;</span><br><span class="line">            <span class="comment">// Always destroy non-retained Fragments</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (mStateAutomaticallySaved) &#123;</span><br><span class="line">            <span class="comment">// If we automatically save our state, then only</span></span><br><span class="line">            <span class="comment">// destroy a retained Fragment when we've been cleared</span></span><br><span class="line">            <span class="keyword">return</span> mHasBeenCleared;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// Else, only destroy retained Fragments if they've</span></span><br><span class="line">            <span class="comment">// been reaped before the state has been saved</span></span><br><span class="line">            <span class="keyword">return</span> !mHasSavedSnapshot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">removeRetainedFragment</span><span class="params">(@NonNull Fragment fragment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mRetainedFragments.remove(fragment);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//获取VMStore</span></span><br><span class="line">    <span class="meta">@NonNull</span></span><br><span class="line">    <span class="function">ViewModelStore <span class="title">getViewModelStore</span><span class="params">(@NonNull Fragment f)</span> </span>&#123;</span><br><span class="line">        ViewModelStore viewModelStore = mViewModelStores.get(f.mWho);</span><br><span class="line">        <span class="keyword">if</span> (viewModelStore == <span class="keyword">null</span>) &#123;</span><br><span class="line">            viewModelStore = <span class="keyword">new</span> ViewModelStore();</span><br><span class="line">            mViewModelStores.put(f.mWho, viewModelStore);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> viewModelStore;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//销毁并清空VM</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clearNonConfigState</span><span class="params">(@NonNull Fragment f)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (FragmentManagerImpl.DEBUG) &#123;</span><br><span class="line">            Log.d(FragmentManagerImpl.TAG, <span class="string">"Clearing non-config state for "</span> + f);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Clear and remove the Fragment's child non config state</span></span><br><span class="line">        FragmentManagerViewModel childNonConfig = mChildNonConfigs.get(f.mWho);</span><br><span class="line">        <span class="keyword">if</span> (childNonConfig != <span class="keyword">null</span>) &#123;</span><br><span class="line">            childNonConfig.onCleared();</span><br><span class="line">            mChildNonConfigs.remove(f.mWho);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Clear and remove the Fragment's ViewModelStore</span></span><br><span class="line">        ViewModelStore viewModelStore = mViewModelStores.get(f.mWho);</span><br><span class="line">        <span class="keyword">if</span> (viewModelStore != <span class="keyword">null</span>) &#123;</span><br><span class="line">            viewModelStore.clear();</span><br><span class="line">            mViewModelStores.remove(f.mWho);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>看代码我们发现它继承了VM，并且里面保存了VMStore,也就是说保存了VM，同时清空的操作也在这里面：<code>clearNonConfigState()</code></p>
+<p><strong>ViewModelStore.java</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     *  Clears internal storage and notifies ViewModels that they are no longer used.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (ViewModel vm : mMap.values()) &#123;</span><br><span class="line">            vm.clear();</span><br><span class="line">        &#125;</span><br><span class="line">        mMap.clear();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>那么到底是什么时候来清空VM的呢？也就是说<code>clear()</code>是什么时候调用的呢？查看源码我们发现有两处：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g51g50jublj30vr07bn2w.jpg" alt=""></p>
+<ol>
+<li>也就是上面提到的<strong>FragmentViewModel.java</strong>里面的<code>clearNonConfigState()</code>方法，而这个方法只在一个地方被调用了：</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"movefrom CREATED: "</span> + f);</span><br><span class="line"><span class="keyword">boolean</span> beingRemoved = f.mRemoving &amp;&amp; !f.isInBackStack();</span><br><span class="line"><span class="keyword">if</span> (beingRemoved || mNonConfig.shouldDestroy(f)) &#123;</span><br><span class="line">    <span class="keyword">boolean</span> shouldClear;</span><br><span class="line">    <span class="keyword">if</span> (mHost <span class="keyword">instanceof</span> ViewModelStoreOwner) &#123;</span><br><span class="line">        shouldClear = mNonConfig.isCleared();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (mHost.getContext() <span class="keyword">instanceof</span> Activity) &#123;</span><br><span class="line">        Activity activity = (Activity) mHost.getContext();</span><br><span class="line">        shouldClear = !activity.isChangingConfigurations();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        shouldClear = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//Fragment正在被移除或者应该清空的状态下</span></span><br><span class="line">    <span class="keyword">if</span> (beingRemoved || shouldClear) &#123;</span><br><span class="line">        mNonConfig.clearNonConfigState(f);</span><br><span class="line">    &#125;</span><br><span class="line">    f.performDestroy();</span><br><span class="line">    dispatchOnFragmentDestroyed(f, <span class="keyword">false</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    f.mState = Fragment.INITIALIZING;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个方法是在FragmentManagerImpl.java中的<code>moveToState</code>方法里面的，这个方法是跟随着Fragment的生命周期的，当这个方法被调用时，判断两个状态<code>beingRemoved</code>和<code>shoudClear</code>然后调用<code>clear()</code>方法。关于<code>moveToState()</code>可以查看这篇文章：<a href="https://blog.csdn.net/xude1985/article/details/50831288?utm_source=blogxgwz9" target="_blank" rel="noopener">Fragment之底层关键操作函数moveToState</a></p>
+</blockquote>
+<ol start="2">
+<li>第二个调用的地方就是<strong>ComponentActivity.java</strong></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">getLifecycle().addObserver(<span class="keyword">new</span> GenericLifecycleObserver() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStateChanged</span><span class="params">(@NonNull LifecycleOwner source,</span></span></span><br><span class="line"><span class="function"><span class="params">            @NonNull Lifecycle.Event event)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (event == Lifecycle.Event.ON_DESTROY) &#123;</span><br><span class="line">                <span class="keyword">if</span> (!isChangingConfigurations()) &#123;<span class="comment">//不是改变状态配置的</span></span><br><span class="line">                    getViewModelStore().clear();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关于<strong>ComponentActivity</strong>，如果有看过之前我分析过的关于<strong>Lifecycles</strong>的应该对它有所了解<a href="https://juejin.im/post/5d15bbb86fb9a07f03574e56" target="_blank" rel="noopener">3. Jetpack源码解析—用Lifecycles管理生命周期</a>。<strong>FragmentActivity</strong>继承了它，而<strong>ComponentActivity</strong>里面通过Lifecycles观察生命周期，当接受到ON_DESTROY的事件时，清空VM。</p>
+</blockquote>
+<h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h1><p>分析完源码之后，我们来总结一下整个流程：</p>
+<ol>
+<li>通过<code>ViewModelProviders.of(this).get(DemoViewModel::class.java)</code>创建VM</li>
+<li><code>of()</code>方法中传入 <code>fragment.getViewModelStore()</code>并且返回VMProviders</li>
+<li>查看<strong>FragmentManagerImpl</strong>中<code>getViewModelStore()</code>，持有<strong>FragmentManagerViewModel</strong>对象</li>
+<li>在<strong>FragmentManagerViewModel</strong>中清空VM操作 <code>clearNonConfigState()</code>，同时在<strong>ViewModelStore</strong>中<code>clear()</code>了ViewModel的value值</li>
+<li>最后我们发现只有在<strong>ComponentActivity</strong>中观察到接收到<code>ON_DESTROY</code>的事件时同时并不是由于<code>configuration</code>发生变化时才会执行<code>clear()</code>操作；另外一处是在<code>moveToState()</code>方法中，满足<code>beingRemoved</code>和<code>shouldClear</code>状态也会清空VM</li>
+</ol>
+<p>好了 整个流程就是这样了，并没有特别深入的去分析，但是基本的原理我们已经清楚了，Demo中也只是简单的使用了VM。</p>
+<p>JetPack源码分析系列文章到这里应该就结束了，后面还有Paging、WorkManager、Room，以及Camera2和ViewPager2，这些目前暂时不分析了，但是也会出基本的使用和简单的分析，一共5篇源码分析，文章中的Demo我写了一个APP—JetpackNote，里面有基本的Demo例子，和文章的分析；一直也没有提到是因为功能还不完善，我会尽快完善它的，也希望有什么意见的小伙伴可以和我沟通交流。</p>
+<p>Github源码地址在：</p>
+<p><a href="https://github.com/Hankkin/JetPack_Note" target="_blank" rel="noopener">JetpackNote</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/源码解析/" rel="tag"># 源码解析</a>
+          
+            <a href="/tags/ViewModel/" rel="tag"># ViewModel</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/11/JetpackNote_livedata/" rel="next" title="4. Jetpack源码解析—LiveData的使用及工作原理">
+                <i class="fa fa-chevron-left"></i> 4. Jetpack源码解析—LiveData的使用及工作原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/25/JetpackNote_paging/" rel="prev" title="6. Jetpack---Paging你知道怎样上拉加载吗？">
+                6. Jetpack---Paging你知道怎样上拉加载吗？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="Hankkin" />
+            
+              <p class="site-author-name" itemprop="name">Hankkin</p>
+              <p class="site-description motion-element" itemprop="description">淡泊明志，宁静致远</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Hankkin" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://weibo.com/u/2179169605" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-weibo"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/1ff65e347973" target="_blank" title="简书">
+                      
+                        <i class="fa fa-fw fa-heartbeat"></i>简书</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://blog.csdn.net/lyhhj" target="_blank" title="CSDN">
+                      
+                        <i class="fa fa-fw fa-crosshairs"></i>CSDN</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/55dea68160b291d79422c1bb" target="_blank" title="掘金">
+                      
+                        <i class="fa fa-fw fa-spinner"></i>掘金</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1.背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-简介"><span class="nav-number">2.</span> <span class="nav-text">2.简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-是什么？"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-ViewModel生命周期"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 ViewModel生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-基本使用"><span class="nav-number">3.</span> <span class="nav-text">3. 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-数据存储"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 数据存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-Fragment数据共享"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Fragment数据共享</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-源码分析"><span class="nav-number">4.</span> <span class="nav-text">4. 源码分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-总结"><span class="nav-number">5.</span> <span class="nav-text">5. 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hankkin</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">61.1k</span>
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: '47sd2IfvIDsgCfG3HzCo3m5i-gzGzoHsz',
+        appKey: 'aT9mmWaSOHJjX8z5T8tbe8nb',
+        placeholder: '亲，留个言吧？O(∩_∩)O~',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("47sd2IfvIDsgCfG3HzCo3m5i-gzGzoHsz", "aT9mmWaSOHJjX8z5T8tbe8nb");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
