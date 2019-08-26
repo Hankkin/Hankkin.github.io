@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="Hankkin的博客">
 <meta property="og:description" content="之前的几篇源码分析我们分别对Navigation、Lifecycles、ViewModel、LiveData、进行了分析，也对JetPack有了更深入的了解。但是Jetpack远不止这些组件，今天的主角—Paging，Jetpack中的分页组件，官方是这么形容它的：‘’逐步从您的数据源按需加载信息‘’  如果你对Jetpack组件有了解或者想对源码有更深入的了解，请看我之前的几篇文章： 1. J">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g5ufhiua2dg308w0j9tlt.gif">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL3d3Mi5zaW5haW1nLmNuL2xhcmdlLzAwNnROYzc5bHkxZzV1ZmhpdWEyZGczMDh3MGo5dGx0LmdpZg">
 <meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g6dgk91vocg30vn0dcapt.gif">
 <meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/WEBd1ac1c87130f18afd376a4f7fb273bb0?method=download&shareKey=460a039c8e8695464d321519258a104b">
-<meta property="og:updated_time" content="2019-08-26T14:45:28.310Z">
+<meta property="og:updated_time" content="2019-08-26T14:53:16.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="6. Jetpack---Paging你知道怎样上拉加载吗？">
 <meta name="twitter:description" content="之前的几篇源码分析我们分别对Navigation、Lifecycles、ViewModel、LiveData、进行了分析，也对JetPack有了更深入的了解。但是Jetpack远不止这些组件，今天的主角—Paging，Jetpack中的分页组件，官方是这么形容它的：‘’逐步从您的数据源按需加载信息‘’  如果你对Jetpack组件有了解或者想对源码有更深入的了解，请看我之前的几篇文章： 1. J">
-<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006tNc79ly1g5ufhiua2dg308w0j9tlt.gif">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL3d3Mi5zaW5haW1nLmNuL2xhcmdlLzAwNnROYzc5bHkxZzV1ZmhpdWEyZGczMDh3MGo5dGx0LmdpZg">
 
 
 
@@ -424,7 +424,7 @@
 <h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>在我的<strong>Jetpack_Note</strong>系列中，对每一篇的分析都有相对应的代码片段及使用，我把它做成了一个APP，目前功能还不完善，代码我也上传到了GitHub上，参考了官方的Demo以及目前网上的一些文章，有兴趣的小伙伴可以看一下，别忘了给个Star。</p>
 <p><a href="https://github.com/Hankkin/JetPack_Note" target="_blank" rel="noopener">https://github.com/Hankkin/JetPack_Note</a></p>
 <p>今天我们的主角是<strong>Paging</strong>，介绍之前我们先看一下效果：</p>
-<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g5ufhiua2dg308w0j9tlt.gif" alt="19-08-10-11-18-59.2019-08-10 11_33_51"></p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3d3Mi5zaW5haW1nLmNuL2xhcmdlLzAwNnROYzc5bHkxZzV1ZmhpdWEyZGczMDh3MGo5dGx0LmdpZg" alt="19-08-10-11-18-59.2019-08-10 11_33_51"></p>
 <h1 id="2-简介"><a href="#2-简介" class="headerlink" title="2. 简介"></a>2. 简介</h1><h2 id="2-1-基本介绍"><a href="#2-1-基本介绍" class="headerlink" title="2.1 基本介绍"></a>2.1 基本介绍</h2><p>官方定义：</p>
 <blockquote>
 <p><strong>分页库Pagin Library</strong>是<strong>Jetpack</strong>的一部分，它可以妥善的逐步加载数据，帮助您一次加载和显示一部分数据，这样的按需加载可以减少网络贷款和系统资源的使用。分页库支持加载有限以及无限的list，比如一个持续更新的信息源，分页库可以与<strong>RecycleView</strong>无缝集合，它还可以与LiveData或RxJava集成，观察界面中的数据变化。</p>
