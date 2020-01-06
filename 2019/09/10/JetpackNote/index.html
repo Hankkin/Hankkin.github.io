@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Retrofit," />
+  <meta name="keywords" content="JetpackNote," />
 
 
 
@@ -79,20 +79,29 @@
 
 
 
-<meta name="description" content="###绪论：之前我们分析了使用Retrofit怎么用OkHttp持久化管理Cookie，今天打算继续跟大家来分享一些关于怎么去设置OKHttp？如果你还不知道怎么持久化管理Cookie，请看这篇文章： Retrofit+OKHttp 教你怎么持久化管理Cookie，好了，废话不多说，开始今天的分享： 大家都知道Retrofit是Square公司基于OkHttp推出的一个高解耦的网络框架，至于为什么">
-<meta name="keywords" content="Retrofit">
+<meta name="description" content="JetpackNote 是一款基于谷歌官方组件Jetpack开发的笔记项目，项目中包含了对各大组件的源码分析、Demo使用：Navigation、Lifecycles、Paging、LiveData、ViewModel等…        \n项目使用Kotlin语言进行编写，依赖库截止代码编写时为最新版本，的几篇源码分析我们分别对Navigation、Lifecycles、ViewModel、L">
+<meta name="keywords" content="JetpackNote">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Retrofit--使用Retrofit时怎样去设置OKHttp">
-<meta property="og:url" content="http://yoursite.com/2016/05/12/Retrofit2/index.html">
+<meta property="og:title" content="7. JetpackNote---基于Jetpack的学习笔记APP">
+<meta property="og:url" content="http://yoursite.com/2019/09/10/JetpackNote/index.html">
 <meta property="og:site_name" content="Hankkin的博客">
-<meta property="og:description" content="###绪论：之前我们分析了使用Retrofit怎么用OkHttp持久化管理Cookie，今天打算继续跟大家来分享一些关于怎么去设置OKHttp？如果你还不知道怎么持久化管理Cookie，请看这篇文章： Retrofit+OKHttp 教你怎么持久化管理Cookie，好了，废话不多说，开始今天的分享： 大家都知道Retrofit是Square公司基于OkHttp推出的一个高解耦的网络框架，至于为什么">
+<meta property="og:description" content="JetpackNote 是一款基于谷歌官方组件Jetpack开发的笔记项目，项目中包含了对各大组件的源码分析、Demo使用：Navigation、Lifecycles、Paging、LiveData、ViewModel等…        \n项目使用Kotlin语言进行编写，依赖库截止代码编写时为最新版本，的几篇源码分析我们分别对Navigation、Lifecycles、ViewModel、L">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20160512174753189">
-<meta property="og:updated_time" content="2018-05-05T16:29:15.281Z">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8mN6ly1g6teej3gy1j305k05kmxm.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8mN6ly1g6tbzuet1dg308w0j1gun.gif">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8mN6ly1g6tcu5ar4pj30xi0u04gg.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8mN6ly1g6tds8lt63j32400u0jze.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6te5x7pntj30u01t040f.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8mN6ly1g6te52prx6j30u01t0dhz.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6te80mruvj30u01t077l.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8mN6ly1g6te9v6h0rj30u01t0dih.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8mN6ly1g6teba99vsj30u01t0tak.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8mN6ly1g6teej3gy1j305k05kmxm.jpg">
+<meta property="og:updated_time" content="2020-01-06T15:20:23.237Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Retrofit--使用Retrofit时怎样去设置OKHttp">
-<meta name="twitter:description" content="###绪论：之前我们分析了使用Retrofit怎么用OkHttp持久化管理Cookie，今天打算继续跟大家来分享一些关于怎么去设置OKHttp？如果你还不知道怎么持久化管理Cookie，请看这篇文章： Retrofit+OKHttp 教你怎么持久化管理Cookie，好了，废话不多说，开始今天的分享： 大家都知道Retrofit是Square公司基于OkHttp推出的一个高解耦的网络框架，至于为什么">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160512174753189">
+<meta name="twitter:title" content="7. JetpackNote---基于Jetpack的学习笔记APP">
+<meta name="twitter:description" content="JetpackNote 是一款基于谷歌官方组件Jetpack开发的笔记项目，项目中包含了对各大组件的源码分析、Demo使用：Navigation、Lifecycles、Paging、LiveData、ViewModel等…        \n项目使用Kotlin语言进行编写，依赖库截止代码编写时为最新版本，的几篇源码分析我们分别对Navigation、Lifecycles、ViewModel、L">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8mN6ly1g6teej3gy1j305k05kmxm.jpg">
 
 
 
@@ -122,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/12/Retrofit2/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/09/10/JetpackNote/"/>
 
 
 
 
 
-  <title>Retrofit--使用Retrofit时怎样去设置OKHttp | Hankkin的博客</title>
+  <title>7. JetpackNote---基于Jetpack的学习笔记APP | Hankkin的博客</title>
   
 
 
@@ -269,7 +278,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/12/Retrofit2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/10/JetpackNote/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hankkin">
@@ -286,7 +295,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Retrofit--使用Retrofit时怎样去设置OKHttp</h1>
+          <h1 class="post-title" itemprop="name headline">7. JetpackNote---基于Jetpack的学习笔记APP</h1>
         
 
         <div class="post-meta">
@@ -298,8 +307,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-12T22:22:02+08:00">
-                2016-05-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-10T17:30:51+08:00">
+                2019-09-10
               </time>
             
 
@@ -321,8 +330,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Retrofit/" itemprop="url" rel="index">
-                    <span itemprop="name">Retrofit</span>
+                  <a href="/categories/Jetpack/" itemprop="url" rel="index">
+                    <span itemprop="name">Jetpack</span>
                   </a>
                 </span>
 
@@ -339,8 +348,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/05/12/Retrofit2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2016/05/12/Retrofit2/" itemprop="commentCount"></span>
+                <a href="/2019/09/10/JetpackNote/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/09/10/JetpackNote/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -348,7 +357,7 @@
 
           
           
-             <span id="/2016/05/12/Retrofit2/" class="leancloud_visitors" data-flag-title="Retrofit--使用Retrofit时怎样去设置OKHttp">
+             <span id="/2019/09/10/JetpackNote/" class="leancloud_visitors" data-flag-title="7. JetpackNote---基于Jetpack的学习笔记APP">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -373,7 +382,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,435
+                  1,383
                 </span>
               
 
@@ -389,7 +398,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  5
                 </span>
               
             </div>
@@ -410,52 +419,52 @@
       
 
       
-        <p>###绪论：<br>之前我们分析了使用Retrofit怎么用OkHttp持久化管理Cookie，今天打算继续跟大家来分享一些关于怎么去设置OKHttp？如果你还不知道怎么持久化管理Cookie，请看这篇文章：<a href="http://blog.csdn.net/lyhhj/article/details/51345386" target="_blank" rel="noopener"> Retrofit+OKHttp 教你怎么持久化管理Cookie</a>，好了，废话不多说，开始今天的分享：</p>
-<p>大家都知道Retrofit是Square公司基于OkHttp推出的一个高解耦的网络框架，至于为什么又出来一个这个东东，想必可能是觉得使用OKHttp一般都需要自己再包一层吧，当然你也可以不用再自己费劲去封装，因为网上很多大牛前辈已经做了，你可以看鸿洋大神封装的OKHttp，<a href="http://blog.csdn.net/lmj623565791/article/details/49734867" target="_blank" rel="noopener"> Android 一个改善的okHttp封装库</a>，只要你能想到的，这里面都有，因为我已经用这个做过一个APP了。</p>
-<p>切入正题：我们先看一下Retrofit里面都包括那些东西吧：<br><img src="http://img.blog.csdn.net/20160512174753189" alt="这里写图片描述"><br>我们可以看到Retrofit里面东西非常少，http包里面的注解的东西，剩下的就这几个类和这几个接口，因为Retrofit把网络请求交给了OkHttp去做，我们来详细介绍一个这个类：</p>
-<ul>
-<li><p><em>Call:</em><br>这个接口主要的作用就是发送一个Http请求，Retrofit的默认请求方式是OKHttpCall<t>,当然你也可以根据自己的业务逻辑自己定义Call。</t></p>
-</li>
-<li><p><em>CallAdapter：</em><br>这个接口的主要作用就是将Call对象转化成另一个对象，原谅我的水平有限，没太看懂里面的代码</p>
-</li>
-<li><p><em>CallBack：</em><br>看接口名想必大家都能看出来，这是回掉接口，里面有两个回调方法<br>onResponse()<br>onFailure().</p>
-</li>
-<li><p><em>Converter:</em><br>这个接口主要的作用是将服务器返回数据解析为你所需要的JSON，XML等对象。</p>
-</li>
-<li><p><em>OkHttpCall：</em><br>OkHttpCall实现了上面的Call接口，通过这个类直接用OkHttp的request去执行网络请求，实现异步，同步请求，接口回调…</p>
-</li>
-<li><em>ServiceMethod:</em><br>这个类主要是用来通过解析注解、传参，将它们封装成Request，然后通过具体的返回值类型，让我们自己配置的工厂生成具体的CallAdapter。</li>
-</ul>
-<p>其它的一些类就不一一介绍了，毕竟这篇文章的主题不是源码解析，如果你想从源码的角度去了解Retrofit，我推荐你可以去看这两篇文章：<br><a href="http://blog.csdn.net/lmj623565791/article/details/51304204" target="_blank" rel="noopener">Retrofit2 完全解析 探索与okhttp之间的关系</a><br><a href="http://www.jianshu.com/p/45cb536be2f4" target="_blank" rel="noopener">Retrofit分析-漂亮的解耦套路</a><br>好了，我们看了Retrofit包里面并没有网络请求的部分，因为它是依赖OKHttp实现的一个网络框架，那么有关网络的一部分设置比如cookie的设置、网络超时的设置、请求header设置等等这些我们就该去设置OKHttp。</p>
-<p><strong>1.回顾一下之前的持久化管理cookie：</strong></p>
-<p>保存本地cookie：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CookieHandler cookieHandler = new CookieManager(new PersistentCookieStore(context),</span><br><span class="line">                CookiePolicy.ACCEPT_ALL);</span><br></pre></td></tr></table></figure></p>
-<p>添加cookieJar：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.cookieJar(new JavaNetCookieJar(cookieHandler))</span><br></pre></td></tr></table></figure>
-<p><strong>2.设置网络超时：</strong><br>读、写、连接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.readTimeout(10000, TimeUnit.MILLISECONDS)</span><br><span class="line">                .connectTimeout(10000,TimeUnit.MILLISECONDS)</span><br><span class="line">                .writeTimeout(1000,TimeUnit.MILLISECONDS)</span><br></pre></td></tr></table></figure></p>
-<p><strong>3.设置HttpLoggingInterceptor拦截器：</strong><br>我们可以设置拦截器来打印网络请求的返回结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HttpLoggingInterceptor logging = new HttpLoggingInterceptor();</span><br><span class="line">        logging.setLevel(HttpLoggingInterceptor.Level.BODY);</span><br></pre></td></tr></table></figure>
-<p>其中Interceptors的level是可以自行设置的：<br>注释写的很清楚了，就不废话了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">public enum Level &#123;</span><br><span class="line">    /** No logs. */</span><br><span class="line">    NONE,</span><br><span class="line">    /**</span><br><span class="line">     * Logs request and response lines.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt;Example:</span><br><span class="line">     * &lt;pre&gt;&#123;@code</span><br><span class="line">     * --&gt; POST /greeting http/1.1 (3-byte body)</span><br><span class="line">     *</span><br><span class="line">     * &lt;-- 200 OK (22ms, 6-byte body)</span><br><span class="line">     * &#125;&lt;/pre&gt;</span><br><span class="line">     */</span><br><span class="line">    BASIC,</span><br><span class="line">    /**</span><br><span class="line">     * Logs request and response lines and their respective headers.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt;Example:</span><br><span class="line">     * &lt;pre&gt;&#123;@code</span><br><span class="line">     * --&gt; POST /greeting http/1.1</span><br><span class="line">     * Host: example.com</span><br><span class="line">     * Content-Type: plain/text</span><br><span class="line">     * Content-Length: 3</span><br><span class="line">     * --&gt; END POST</span><br><span class="line">     *</span><br><span class="line">     * &lt;-- 200 OK (22ms)</span><br><span class="line">     * Content-Type: plain/text</span><br><span class="line">     * Content-Length: 6</span><br><span class="line">     * &lt;-- END HTTP</span><br><span class="line">     * &#125;&lt;/pre&gt;</span><br><span class="line">     */</span><br><span class="line">    HEADERS,</span><br><span class="line">    /**</span><br><span class="line">     * Logs request and response lines and their respective headers and bodies (if present).</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt;Example:</span><br><span class="line">     * &lt;pre&gt;&#123;@code</span><br><span class="line">     * --&gt; POST /greeting http/1.1</span><br><span class="line">     * Host: example.com</span><br><span class="line">     * Content-Type: plain/text</span><br><span class="line">     * Content-Length: 3</span><br><span class="line">     *</span><br><span class="line">     * Hi?</span><br><span class="line">     * --&gt; END GET</span><br><span class="line">     *</span><br><span class="line">     * &lt;-- 200 OK (22ms)</span><br><span class="line">     * Content-Type: plain/text</span><br><span class="line">     * Content-Length: 6</span><br><span class="line">     *</span><br><span class="line">     * Hello!</span><br><span class="line">     * &lt;-- END HTTP</span><br><span class="line">     * &#125;&lt;/pre&gt;</span><br><span class="line">     */</span><br><span class="line">    BODY</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>4.设置缓存：</strong></p>
-<ul>
-<li>开启OKHttp缓存：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">File httpCacheDirectory = new File(UIUtils.getContext().getExternalCacheDir(), &quot;xxx&quot;);</span><br><span class="line">client.setCache(new Cache(httpCacheDirectory,10 * 1024 * 1024));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>先获取系统外部存储的路径，”xxx”可以自己命名，文件夹可以在 android/data/&lt;包名&gt;/cache/resposes 看到里面的内容。</p>
-<ul>
-<li>设置拦截器（缓存）拦截Request：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Request request = chain.request();</span><br><span class="line">                if (！AppUtil.isNetworkReachable(UIUtils.getContext())) &#123;</span><br><span class="line">                    request = request.newBuilder()</span><br><span class="line">                            .cacheControl(CacheControl.FORCE_CACHE)</span><br><span class="line">                            .url(path).build();</span><br><span class="line">                    UIUtils.showToastSafe(&quot;暂无网络&quot;);</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>设置Response：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Response response = chain.proceed(request);</span><br><span class="line">    if(AppUtil.isNetworkReachable(UIUtils.getContext()))</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        int maxAge = 60 * 60; // read from cache for 60 minute</span><br><span class="line">        response.newBuilder()</span><br><span class="line">                .removeHeader(&quot;Pragma&quot;)</span><br><span class="line">                .header(&quot;Cache-Control&quot;, &quot;public, max-age=&quot; + maxAge)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        int maxStale = 60 * 60 * 24 * 7; // tolerate 4-weeks stale</span><br><span class="line">        response.newBuilder()</span><br><span class="line">                .removeHeader(&quot;Pragma&quot;)</span><br><span class="line">                .header(&quot;Cache-Control&quot;, &quot;public, only-if-cached, max-stale=&quot; + maxStale)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>先判断网络，网络好的时候，移除header后添加haunch失效时间为1小时，网络未连接的情况下设置缓存时间为7天。</p>
-<p><strong>5.设置通用Header</strong><br>Retrofit 2.0支持在每个方法的上面添加注解设置头</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Headers(&quot;Content-Type: application/json&quot;)</span><br></pre></td></tr></table></figure>
-<p>很显然这样比较麻烦，那么你可以这样：</p>
-<p>通过拦截器来设置头</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">OkHttpClient httpClient = new OkHttpClient.Builder()  </span><br><span class="line">                .addInterceptor(new Interceptor() &#123;  </span><br><span class="line">                    @Override  </span><br><span class="line">                    public Response intercept(Chain chain) throws IOException &#123;  </span><br><span class="line">                        Request request = chain.request()  </span><br><span class="line">                                .newBuilder()  </span><br><span class="line">                                .addHeader(&quot;Content-Type&quot;, &quot;application/x-www-form-urlencoded; charset=UTF-8&quot;)  </span><br><span class="line">                                .addHeader(&quot;Accept-Encoding&quot;, &quot;gzip, deflate&quot;)  </span><br><span class="line">                                .addHeader(&quot;Connection&quot;, &quot;keep-alive&quot;)  </span><br><span class="line">                                .addHeader(&quot;Accept&quot;, &quot;*/*&quot;)  </span><br><span class="line">                                .addHeader(&quot;Cookie&quot;, &quot;add cookies here&quot;)  </span><br><span class="line">                                .build();  </span><br><span class="line">                        return chain.proceed(request);  </span><br><span class="line">                    &#125;  </span><br><span class="line">  </span><br><span class="line">                &#125;)  </span><br><span class="line">                .build();</span><br></pre></td></tr></table></figure>
-<p>好了，目前用到的就这么多了，如果后期有其他的会再加上，如果有错误的地方或者不合适的地方希望大家多多指正，留言交流，也可以加群交流。</p>
+        <blockquote>
+<p>JetpackNote 是一款基于谷歌官方组件Jetpack开发的笔记项目，项目中包含了对各大组件的源码分析、Demo使用：Navigation、Lifecycles、Paging、LiveData、ViewModel等…<br>        \n项目使用Kotlin语言进行编写，依赖库截止代码编写时为最新版本，的几篇源码分析我们分别对<code>Navigation</code>、<code>Lifecycles</code>、<code>ViewModel</code>、<code>LiveData</code>、进行了分析，也对<strong>JetPack</strong>有了更深入的了解。</p>
+</blockquote>
+<p>如果你对Jetpack组件有了解或者想对源码有更深入的了解，请看我之前的几篇文章：</p>
+<p><a href="https://juejin.im/post/5d1202fc6fb9a07ef90ca7a1" target="_blank" rel="noopener">1. Jetpack源码解析—看完你就知道Navigation是什么了？</a></p>
+<p><a href="https://juejin.im/post/5d12cfea6fb9a07ed4411040" target="_blank" rel="noopener">2. Jetpack源码解析—Navigation为什么切换Fragment会重绘？</a></p>
+<p><a href="https://juejin.im/post/5d15bbb86fb9a07f03574e56" target="_blank" rel="noopener">3. Jetpack源码解析—用Lifecycles管理生命周期</a></p>
+<p><a href="https://juejin.im/post/5d247b036fb9a07eee5ef3df" target="_blank" rel="noopener">4. Jetpack源码解析—LiveData的使用及工作原理</a></p>
+<p><a href="https://juejin.im/post/5d2d4172e51d4510835e0346" target="_blank" rel="noopener">5. Jetpack源码解析—ViewModel基本使用及源码解析</a></p>
+<p><a href="https://juejin.im/user/55dea68160b291d79422c1bb" target="_blank" rel="noopener">6. Jetpack—Paging你知道怎样上拉加载吗？</a></p>
+<p><strong>下载链接：</strong></p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8mN6ly1g6teej3gy1j305k05kmxm.jpg" alt=""></p>
+<h1 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h1><p>在我的<strong>Jetpack_Note</strong>系列中，对每一篇的分析都有相对应的代码片段及使用，我把它做成了一个APP，目前功能还不完善，代码我也上传到了GitHub上，参考了官方的Demo以及目前网上的一些文章，有兴趣的小伙伴可以看一下，别忘了给个Star。</p>
+<p><a href="https://github.com/Hankkin/JetPack_Note" target="_blank" rel="noopener">https://github.com/Hankkin/JetPack_Note</a></p>
+<p>我们先看一下效果吧：</p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8mN6ly1g6tbzuet1dg308w0j1gun.gif" alt=""></p>
+<h1 id="2-JetpackNote是什么？"><a href="#2-JetpackNote是什么？" class="headerlink" title="2. JetpackNote是什么？"></a>2. JetpackNote是什么？</h1><blockquote>
+<p>JetpackNote 是一款基于谷歌官方组件Jetpack开发的笔记项目，项目中包含了对各大组件的源码分析、Demo使用：Navigation、Lifecycles、Paging、LiveData、ViewModel等…项目使用Kotlin语言进行编写，依赖库截止代码编写时为最新版本。</p>
+</blockquote>
+<p>Jetpack是什么想必大家对它都已经有了基本的了解了，官方介绍以及官方文档：</p>
+<p><a href="https://developer.android.com/jetpack" target="_blank" rel="noopener">https://developer.android.com/jetpack</a></p>
+<p>Jetpack 是一套库、工具和指南，可帮助开发者更轻松地编写优质应用。这些组件可帮助您遵循最佳做法、让您摆脱编写样板代码的工作并简化复杂任务，以便您将精力集中放在所需的代码上。</p>
+<p>Jetpack 包含与平台 API 解除捆绑的 <a href="https://developer.android.com/jetpack/androidx" target="_blank" rel="noopener">androidx.*</a> 软件包库。这意味着，它可以提供向后兼容性，且比 Android 平台的更新频率更高，以此确保您始终可以获取最新且最好的 Jetpack 组件版本。</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8mN6ly1g6tcu5ar4pj30xi0u04gg.jpg" alt=""></p>
+<h1 id="3-为什么写JetpackNote？"><a href="#3-为什么写JetpackNote？" class="headerlink" title="3. 为什么写JetpackNote？"></a>3. 为什么写JetpackNote？</h1><p>说的简单些：就是为了记录自己的一个学习过程….</p>
+<p>我为什么要学习Jetpack呢？想尝试一种新的架构方式，从我开始工作到现在，经历过了最初的MVC、<strong>MVP</strong>[MVP-todo、The-MVP…]以及各式各样的MVP]、<strong>MVVM</strong>、<strong>Clean</strong>等，当然我并没有所有的架构都用到过，每个项目基于自己的项目特点以及需求的迭代都会出现一套基于开发者所设计的架构模式，分层、组件化、模块化，我相信每一种设计都是基于项目所在的场景的。即使谷歌官方推荐使用todo-mvp使用契约类….，但终究那不能适合所有项目场景。但是<strong>Jetpack</strong>，它是一套组件、工具和指导；是谷歌正式推出的一整套用来构建APP开发的组件。</p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8mN6ly1g6tds8lt63j32400u0jze.jpg" alt=""></p>
+<p>在Android Developers官网上，Jetpack作为一个Tab和Kotlin、Android Studio等一样的地位也同样占据了一个模块，Jetpack里目前包含的内容，未来想必也是谷歌大力维护和扩展的东西，所以我打算对Jetpack深入学习一番，其实Google Play商店中很多APP都已经开始使用Android Jetpack了，国内目前也有一些公司在使用了，虽然我很少听到，但是就目前关于Jetpack的一个帖子上面的内容经常会有人提到。这只是我对Jetpack学习的一些个人看法和想法啊，觉得有必要的你可以研究一下，反正到最后没有亏吃，是吧….</p>
+<h1 id="4-JetpackNote包含哪些内容"><a href="#4-JetpackNote包含哪些内容" class="headerlink" title="4. JetpackNote包含哪些内容"></a>4. JetpackNote包含哪些内容</h1><h2 id="4-1-Navigation"><a href="#4-1-Navigation" class="headerlink" title="4.1 Navigation"></a>4.1 Navigation</h2><p><a href="https://juejin.im/post/5d1202fc6fb9a07ef90ca7a1" target="_blank" rel="noopener">1. Jetpack源码解析—看完你就知道Navigation是什么了？</a></p>
+<p><a href="https://juejin.im/post/5d12cfea6fb9a07ed4411040" target="_blank" rel="noopener">2. Jetpack源码解析—Navigation为什么切换Fragment会重绘？</a></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8mN6ly1g6te5x7pntj30u01t040f.jpg" style="zoom:33%;"></p>
+<h2 id="4-2-Lifecycles"><a href="#4-2-Lifecycles" class="headerlink" title="4.2 Lifecycles"></a>4.2 Lifecycles</h2><p><a href="https://juejin.im/post/5d15bbb86fb9a07f03574e56" target="_blank" rel="noopener">3. Jetpack源码解析—用Lifecycles管理生命周期</a></p>
+<p>在Lifecycles模块，我通过一个悬浮窗模拟控制台输出，来监听定位权限的日志….</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8mN6ly1g6te52prx6j30u01t0dhz.jpg" style="zoom:33%;"></p>
+<h2 id="4-3-LiveData"><a href="#4-3-LiveData" class="headerlink" title="4.3 LiveData"></a>4.3 LiveData</h2><p>在LiveData模块，通过生命周期观察LiveData的值，并将它打印在控制台中，点击 开始观察数据 按钮，通过演示生命周期函数，返回桌面或者进入后台，查看LiveData对象的值。<br>Map转换则演示通过转换存储在LiveData对象中的值，并向下传递转换后的数据。在此Demo中通过点击Map按钮增加UserId，驱动LiveDataViewModel中的userBean来改变，最后展示在TextView中</p>
+<p><a href="https://juejin.im/post/5d247b036fb9a07eee5ef3df" target="_blank" rel="noopener">4. Jetpack源码解析—LiveData的使用及工作原理</a></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8mN6ly1g6te80mruvj30u01t077l.jpg" style="zoom:33%;"></p>
+<h2 id="4-4-ViewModel"><a href="#4-4-ViewModel" class="headerlink" title="4.4 ViewModel"></a>4.4 ViewModel</h2><p>在ViewModel模块，屏幕中央为一个计时器，通过使用ViewModel存储计时器的值，将屏幕方向发生改变后，数据仍然存在不会销毁。<br>通过点击 查看Fragment共享Demo 可以查看两个Fragment共享了同一个ViewModel中的SeekBar的值。</p>
+<p><a href="https://juejin.im/post/5d2d4172e51d4510835e0346" target="_blank" rel="noopener">5. Jetpack源码解析—ViewModel基本使用及源码解析</a></p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8mN6ly1g6te9v6h0rj30u01t0dih.jpg" style="zoom:33%;"></p>
+<h2 id="4-5-Paging"><a href="#4-5-Paging" class="headerlink" title="4.5 Paging"></a>4.5 Paging</h2><p><a href="https://juejin.im/post/5d63f620f265da03970bc76d" target="_blank" rel="noopener">6. Jetpack—Paging你知道怎样上拉加载吗？</a></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8mN6ly1g6teba99vsj30u01t0tak.jpg" style="zoom:33%;"></p>
+<p>其他还有Room、WorkManager也基本有用到，但是还没有详细进行分析….这就是关于JetpackNote的整体内容，如果不当地方还请指正….</p>
+<h1 id="5-结尾"><a href="#5-结尾" class="headerlink" title="5. 结尾"></a>5. 结尾</h1><p><strong>Github</strong><br><a href="https://github.com/Hankkin/JetPack_Note" target="_blank" rel="noopener">https://github.com/Hankkin/JetPack_Note</a></p>
+<p><strong>下载链接：</strong></p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8mN6ly1g6teej3gy1j305k05kmxm.jpg" alt=""></p>
 
       
     </div>
@@ -479,7 +488,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Retrofit/" rel="tag"># Retrofit</a>
+            <a href="/tags/JetpackNote/" rel="tag"># JetpackNote</a>
           
         </div>
       
@@ -492,8 +501,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/08/Retrofit1/" rel="next" title="Retrofit+OKHttp 教你怎么持久化管理Cookie">
-                <i class="fa fa-chevron-left"></i> Retrofit+OKHttp 教你怎么持久化管理Cookie
+              <a href="/2019/08/25/JetpackNote_paging/" rel="next" title="6. Jetpack---Paging你知道怎样上拉加载吗？">
+                <i class="fa fa-chevron-left"></i> 6. Jetpack---Paging你知道怎样上拉加载吗？
               </a>
             
           </div>
@@ -501,10 +510,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/20/Retrofit3/" rel="prev" title="Retrofit--合理封装回调能让你的项目高逼格">
-                Retrofit--合理封装回调能让你的项目高逼格 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -559,8 +564,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -658,6 +672,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-背景"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-JetpackNote是什么？"><span class="nav-number">2.</span> <span class="nav-text">2. JetpackNote是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-为什么写JetpackNote？"><span class="nav-number">3.</span> <span class="nav-text">3. 为什么写JetpackNote？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-JetpackNote包含哪些内容"><span class="nav-number">4.</span> <span class="nav-text">4. JetpackNote包含哪些内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Navigation"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Navigation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Lifecycles"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 Lifecycles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-LiveData"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 LiveData</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-ViewModel"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 ViewModel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-5-Paging"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 Paging</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-结尾"><span class="nav-number">5.</span> <span class="nav-text">5. 结尾</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
